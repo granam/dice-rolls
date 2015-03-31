@@ -30,13 +30,15 @@ class Dice extends StrictObject
     private function checkRange(StrictInteger $minimum, StrictInteger $maximum)
     {
         if ($minimum->getValue() > $maximum->getValue()) {
-            throw new \LogicException('Minimum ' . $minimum->getValue() . ' can not be higher then maximum' . $maximum->getValue());
-        }
-        if ($minimum->getValue() < 0 || $minimum->getValue() === 0) {
-            throw new \LogicException('Minimum ' . $minimum->getValue() . ' has to be positive integer');
+            throw new Exceptions\InvalidRange(
+                'Minimum (given ' . $minimum->getValue() . ') can not be higher then maximum (given ' . $maximum->getValue() . ')'
+            );
         }
         if ($maximum->getValue() < 0 || $maximum->getValue() === 0) {
-            throw new \LogicException('Maximum ' . $maximum->getValue() . ' has to be positive integer');
+            throw new Exceptions\InvalidRange('Maximum (given ' . $maximum->getValue() . ') has to be positive integer');
+        }
+        if ($minimum->getValue() < 0 || $minimum->getValue() === 0) {
+            throw new Exceptions\InvalidRange('Minimum (given ' . $minimum->getValue() . ') has to be positive integer');
         }
     }
 
@@ -45,7 +47,7 @@ class Dice extends StrictObject
      */
     public function getMinimum()
     {
-        $this->minimum;
+        return $this->minimum;
     }
 
     /**
@@ -53,6 +55,6 @@ class Dice extends StrictObject
      */
     public function getMaximum()
     {
-        $this->maximum;
+        return $this->maximum;
     }
 }
