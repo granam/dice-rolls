@@ -13,7 +13,7 @@ class Roll extends StrictObject
     /**
      * @var int
      */
-    private $rollCount;
+    private $rollNumber;
     /**
      * @var int
      */
@@ -25,16 +25,18 @@ class Roll extends StrictObject
 
     /**
      * @param array|Dice[] $dices
-     * @param int $rollCount
+     * @param int $rollNumber
      * @param int $repeatOnValue
      */
-    public function __construct(array $dices, $rollCount = 1, $repeatOnValue = 0)
+    public function __construct(array $dices, $rollNumber = 1, $repeatOnValue = 0)
     {
-        $repeatOnValue = intval($repeatOnValue);
         $this->checkDices($dices);
+        $rollNumber = intval($rollNumber);
+        $this->checkRollNumber($rollNumber);
+        $repeatOnValue = intval($repeatOnValue);
         $this->checkInfiniteRepeat($dices, $repeatOnValue);
         $this->dices = $dices;
-        $this->rollCount = intval($rollCount);
+        $this->rollNumber = $rollNumber;
         $this->repeatOnValue = $repeatOnValue;
         $this->lastRoll = [];
     }
@@ -46,6 +48,15 @@ class Roll extends StrictObject
         }
     }
 
+    private function checkRollNumber($rollNumber)
+    {
+        if ($rollNumber <= 0) {
+            throw new \LogicException(
+                'Roll number has to be greater than zero. Zero rolls have no sense.'
+            );
+        }
+    }
+
     /**
      * @param array|Dice[] $dices
      * @param $repeatOnValue
@@ -53,7 +64,9 @@ class Roll extends StrictObject
     private function checkInfiniteRepeat(array $dices, $repeatOnValue)
     {
         foreach ($dices as $dice) {
-            if ($dice->getMinimum()->getValue() === $dice->getMaximum()->getValue() && $dice->getMaximum()->getValue() === $repeatOnValue) {
+            if ($dice->getMinimum()->getValue() === $repeatOnValue
+                && $dice->getMaximum()->getValue() === $repeatOnValue
+            ) {
                 throw new \LogicException(
                     'Rolls would be repeated indefinitely. The value to repeat on '
                     . var_export($repeatOnValue, true) . ' is the only value the given dice can roll.'
@@ -63,11 +76,11 @@ class Roll extends StrictObject
     }
 
     /**
-     * @return $this
+     * @return array|DiceRoll[]
      */
     public function roll()
     {
-        for ($rollNumberValue = 1; $rollNumberValue <= $this->rollCount; $rollNumberValue++) {
+        for ($rollNumberValue = 1; $rollNumberValue <= $this->rollNumber; $rollNumberValue++) {
             $rollNumber = new StrictInteger($rollNumberValue);
             foreach ($this->dices as $dice) {
                 $this->lastRoll[] = $diceRoll = $this->rollDice($dice, $rollNumber, false /* not bonus roll */);
@@ -77,14 +90,14 @@ class Roll extends StrictObject
             }
         }
 
-        return $this;
+        return $this->lastRoll;
     }
 
     private function rollDice(Dice $dice, $rollNumber, $isBonusRoll)
     {
         return new DiceRoll(
             $dice,
-            new StrictInteger(mt_rand($dice->getMinimum(), $dice->getMaximum())),
+            new StrictInteger(mt_rand($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue())),
             $rollNumber,
             $isBonusRoll
         );
@@ -101,9 +114,9 @@ class Roll extends StrictObject
     /**
      * @return int
      */
-    public function getRollCount()
+    public function getRollNumber()
     {
-        return $this->rollCount;
+        return $this->rollNumber;
     }
 
     /**

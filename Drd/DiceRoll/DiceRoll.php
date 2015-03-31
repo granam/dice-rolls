@@ -48,7 +48,7 @@ class DiceRoll extends StrictObject
     /**
      * @return boolean
      */
-    public function isIsBonusRoll()
+    public function isBonusRoll()
     {
         return $this->isBonusRoll;
     }
