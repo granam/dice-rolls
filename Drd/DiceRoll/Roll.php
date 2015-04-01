@@ -7,9 +7,9 @@ use Granam\Strict\Object\StrictObject;
 class Roll extends StrictObject
 {
     /**
-     * @var array|Dice[]
+     * @var Dice
      */
-    private $dices;
+    private $dice;
     /**
      * @var int
      */
@@ -24,28 +24,20 @@ class Roll extends StrictObject
     private $lastRoll;
 
     /**
-     * @param array|Dice[] $dices
+     * @param Dice $dice
      * @param int $rollNumber
      * @param int $repeatOnValue
      */
-    public function __construct(array $dices, $rollNumber = 1, $repeatOnValue = 0)
+    public function __construct($dice, $rollNumber = 1, $repeatOnValue = 0)
     {
-        $this->checkDices($dices);
         $rollNumber = intval($rollNumber);
         $this->checkRollNumber($rollNumber);
         $repeatOnValue = intval($repeatOnValue);
-        $this->checkInfiniteRepeat($dices, $repeatOnValue);
-        $this->dices = $dices;
+        $this->checkInfiniteRepeat($dice, $repeatOnValue);
+        $this->dice = $dice;
         $this->rollNumber = $rollNumber;
         $this->repeatOnValue = $repeatOnValue;
         $this->lastRoll = [];
-    }
-
-    private function checkDices(array $dices)
-    {
-        if (count($dices) === 0) {
-            throw new \LogicException('No dice given.');
-        }
     }
 
     private function checkRollNumber($rollNumber)
@@ -58,20 +50,18 @@ class Roll extends StrictObject
     }
 
     /**
-     * @param array|Dice[] $dices
+     * @param Dice $dice
      * @param $repeatOnValue
      */
-    private function checkInfiniteRepeat(array $dices, $repeatOnValue)
+    private function checkInfiniteRepeat($dice, $repeatOnValue)
     {
-        foreach ($dices as $dice) {
-            if ($dice->getMinimum()->getValue() === $repeatOnValue
-                && $dice->getMaximum()->getValue() === $repeatOnValue
-            ) {
-                throw new \LogicException(
-                    'Rolls would be repeated indefinitely. The value to repeat on '
-                    . var_export($repeatOnValue, true) . ' is the only value the given dice can roll.'
-                );
-            }
+        if ($dice->getMinimum()->getValue() === $repeatOnValue
+            && $dice->getMaximum()->getValue() === $repeatOnValue
+        ) {
+            throw new \LogicException(
+                'Rolls would be repeated indefinitely. The value to repeat on '
+                . var_export($repeatOnValue, true) . ' is the only value the given dice can roll.'
+            );
         }
     }
 
@@ -82,11 +72,9 @@ class Roll extends StrictObject
     {
         for ($rollNumberValue = 1; $rollNumberValue <= $this->rollNumber; $rollNumberValue++) {
             $rollNumber = new StrictInteger($rollNumberValue);
-            foreach ($this->dices as $dice) {
-                $this->lastRoll[] = $diceRoll = $this->rollDice($dice, $rollNumber, false /* not bonus roll */);
-                while ($diceRoll->getRolledValue()->getValue() === $this->repeatOnValue) {
-                    $this->lastRoll[] = $diceRoll = $this->rollDice($dice, $rollNumber, true /* bonus roll */);
-                }
+            $this->lastRoll[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, false /* not bonus roll */);
+            while ($diceRoll->getRolledValue()->getValue() === $this->repeatOnValue) {
+                $this->lastRoll[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, true /* bonus roll */);
             }
         }
 
@@ -104,11 +92,11 @@ class Roll extends StrictObject
     }
 
     /**
-     * @return array|Dice[]
+     * @return Dice
      */
-    public function getDices()
+    public function getDice()
     {
-        return $this->dices;
+        return $this->dice;
     }
 
     /**
