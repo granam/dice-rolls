@@ -21,7 +21,7 @@ class Roll extends StrictObject
     /**
      * @var array|DiceRoll[]
      */
-    private $lastRoll;
+    private $lastDiceRolls;
 
     /**
      * @param Dice $dice
@@ -37,7 +37,7 @@ class Roll extends StrictObject
         $this->dice = $dice;
         $this->rollNumber = $rollNumber;
         $this->repeatOnValue = $repeatOnValue;
-        $this->lastRoll = [];
+        $this->lastDiceRolls = [];
     }
 
     private function checkRollNumber($rollNumber)
@@ -66,19 +66,19 @@ class Roll extends StrictObject
     }
 
     /**
-     * @return array|DiceRoll[]
+     * @return int
      */
     public function roll()
     {
         for ($rollNumberValue = 1; $rollNumberValue <= $this->rollNumber; $rollNumberValue++) {
             $rollNumber = new StrictInteger($rollNumberValue);
-            $this->lastRoll[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, false /* not bonus roll */);
+            $this->lastDiceRolls[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, false /* not bonus roll */);
             while ($diceRoll->getRolledValue()->getValue() === $this->repeatOnValue) {
-                $this->lastRoll[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, true /* bonus roll */);
+                $this->lastDiceRolls[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, true /* bonus roll */);
             }
         }
 
-        return $this->lastRoll;
+        return $this->getLastRollSummary();
     }
 
     private function rollDice(Dice $dice, $rollNumber, $isBonusRoll)
@@ -118,9 +118,9 @@ class Roll extends StrictObject
     /**
      * @return array|DiceRoll[]
      */
-    public function getLastRoll()
+    public function getLastDiceRolls()
     {
-        return $this->lastRoll;
+        return $this->lastDiceRolls;
     }
 
     /**
@@ -132,7 +132,7 @@ class Roll extends StrictObject
             function (DiceRoll $diceRoll) {
                 return $diceRoll->getRolledValue();
             },
-            $this->lastRoll
+            $this->lastDiceRolls
         );
     }
 

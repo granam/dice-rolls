@@ -120,7 +120,7 @@ class RollTest extends \PHPUnit_Framework_TestCase
      */
     public function last_roll_is_empty_before_any_roll(Roll $roll)
     {
-        $this->assertSame([], $roll->getLastRoll());
+        $this->assertSame([], $roll->getLastDiceRolls());
     }
 
     /**
@@ -162,10 +162,10 @@ class RollTest extends \PHPUnit_Framework_TestCase
         $maximum->shouldReceive('getValue')
             ->andReturn($maximumValue = 98765);
         $roll = new Roll($dice, $rollNumber = 123, $repeatOnValue = 456);
-        $lastDiceRolls = $roll->roll();
-        $this->assertSame($lastDiceRolls, $roll->getLastRoll());
-        $this->assertGreaterThanOrEqual($minimumValue * $rollNumber, $roll->getLastRollSummary());
-        $this->assertLessThanOrEqual($maximumValue * $rollNumber, $roll->getLastRollSummary());
+        $lastRollSummary = $roll->roll();
+        $this->assertSame($lastRollSummary, $roll->getLastRollSummary());
+        $this->assertGreaterThanOrEqual($minimumValue * $rollNumber, $lastRollSummary);
+        $this->assertLessThanOrEqual($maximumValue * $rollNumber, $lastRollSummary);
         $this->assertSame(
             $roll->getLastRollSummary(),
             array_sum(
@@ -179,7 +179,7 @@ class RollTest extends \PHPUnit_Framework_TestCase
         );
         $summary = 0;
         $currentRollSequence = 1;
-        foreach ($roll->getLastRoll() as $diceRoll) {
+        foreach ($roll->getLastDiceRolls() as $diceRoll) {
             $this->assertInstanceOf(DiceRoll::class, $diceRoll);
             $this->assertSame($dice, $diceRoll->getDice(), 'Uses given dice');
             $summary += $diceRoll->getRolledValue()->getValue();
@@ -211,7 +211,8 @@ class RollTest extends \PHPUnit_Framework_TestCase
         $this->assertLessThanOrEqual($maximumValue, $repeatOnValue);
         $bonusRollCount = 0;
         for ($attempt = 1; $attempt < 1000; $attempt++) {
-            foreach ($roll->roll() as $diceRoll) {
+            $roll->roll();
+            foreach ($roll->getLastDiceRolls() as $diceRoll) {
                 if ($diceRoll->isBonusRoll()) {
                     $bonusRollCount++;
                 }
