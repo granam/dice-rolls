@@ -20,33 +20,19 @@ class RollTest extends \PHPUnit_Framework_TestCase
             ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
         $maximum->shouldReceive('getValue')
             ->andReturn(2);
-        $instance = new Roll($dice);
+        /** @var StrictInteger|\Mockery\MockInterface $rollNumber */
+        $rollNumber = \Mockery::mock(StrictInteger::class);
+        $rollNumber->shouldReceive('getValue')
+            ->andReturn(1);/* count of rolls, if no bonus happens */
+        /** @var StrictInteger|\Mockery\MockInterface $repeatOnValue */
+        $repeatOnValue = \Mockery::mock(StrictInteger::class);
+        $repeatOnValue->shouldReceive('getValue')
+            ->andReturn(0);
+        $instance = new Roll($dice, $rollNumber, $repeatOnValue);
         $this->assertInstanceOf(Roll::class, $instance);
         $this->assertSame($dice, $instance->getDice());
 
         return $instance;
-    }
-
-    /**
-     * @test
-     * @depends can_create_instance
-     */
-    public function default_values_as_expected()
-    {
-        /** @var Dice|\Mockery\MockInterface $dice */
-        $dice = \Mockery::mock(Dice::class);
-        $dice->shouldReceive('getMinimum')
-            ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
-        $minimum->shouldReceive('getValue')
-            ->andReturn(1);
-        $dice->shouldReceive('getMaximum')
-            ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
-        $maximum->shouldReceive('getValue')
-            ->andReturn(2);
-        $roll = new Roll($dice);
-        $this->assertInstanceOf(Roll::class, $roll);
-        $this->assertSame(1, $roll->getRollNumber()->getValue());
-        $this->assertSame(0 /* never */, $roll->getRepeatOnValue()->getValue());
     }
 
     /**
@@ -99,7 +85,11 @@ class RollTest extends \PHPUnit_Framework_TestCase
         $rollNumber = \Mockery::mock(StrictInteger::class);
         $rollNumber->shouldReceive('getValue')
             ->andReturn(0 /* no roll at all */);
-        new Roll($dice, $rollNumber);
+        /** @var StrictInteger|\Mockery\MockInterface $repeatOnValue */
+        $repeatOnValue = \Mockery::mock(StrictInteger::class);
+        $repeatOnValue->shouldReceive('getValue')
+            ->andReturn(0);
+        new Roll($dice, $rollNumber, $repeatOnValue);
     }
 
     /**
@@ -124,7 +114,11 @@ class RollTest extends \PHPUnit_Framework_TestCase
         $rollNumber = \Mockery::mock(StrictInteger::class);
         $rollNumber->shouldReceive('getValue')
             ->andReturn(1 /* single roll */ );
-        $roll = new Roll($dice, $rollNumber);
+        /** @var StrictInteger|\Mockery\MockInterface $repeatOnValue */
+        $repeatOnValue = \Mockery::mock(StrictInteger::class);
+        $repeatOnValue->shouldReceive('getValue')
+            ->andReturn(0);
+        $roll = new Roll($dice, $rollNumber, $repeatOnValue);
         $summary = 0;
         for ($cycle = 1; $cycle < 10; $cycle++) {
             $summary += $value = $roll->roll();
@@ -140,7 +134,7 @@ class RollTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @depends default_values_as_expected
+     * @depends can_create_instance
      */
     public function gives_same_values_as_got()
     {

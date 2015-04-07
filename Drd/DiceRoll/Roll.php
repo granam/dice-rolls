@@ -25,14 +25,12 @@ class Roll extends StrictObject
 
     /**
      * @param Dice $dice
-     * @param StrictInteger $rollNumber (default 1)
-     * @param StrictInteger $repeatOnValue (default 0; never)
+     * @param StrictInteger $rollNumber
+     * @param StrictInteger $repeatOnValue
      */
-    public function __construct(Dice $dice, StrictInteger $rollNumber = null, StrictInteger $repeatOnValue = null)
+    public function __construct(Dice $dice, StrictInteger $rollNumber, StrictInteger $repeatOnValue)
     {
-        $rollNumber = $rollNumber ?: new StrictInteger(1);
         $this->checkRollNumber($rollNumber);
-        $repeatOnValue = $repeatOnValue ?: new StrictInteger(0);
         $this->checkInfiniteRepeat($dice, $repeatOnValue);
         $this->dice = $dice;
         $this->rollNumber = $rollNumber;
