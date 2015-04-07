@@ -28,7 +28,7 @@ class Roll extends StrictObject
      * @param int $rollNumber
      * @param int $repeatOnValue
      */
-    public function __construct($dice, $rollNumber = 1, $repeatOnValue = 0)
+    public function __construct(Dice $dice, $rollNumber = 1, $repeatOnValue = 0)
     {
         $rollNumber = intval($rollNumber);
         $this->checkRollNumber($rollNumber);
