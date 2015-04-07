@@ -11,38 +11,37 @@ class Roll extends StrictObject
      */
     private $dice;
     /**
-     * @var int
+     * @var StrictInteger
      */
     private $rollNumber;
     /**
-     * @var int
+     * @var StrictInteger
      */
     private $repeatOnValue;
     /**
      * @var array|DiceRoll[]
      */
-    private $lastDiceRolls;
+    private $lastDiceRolls = [];
 
     /**
      * @param Dice $dice
-     * @param int $rollNumber
-     * @param int $repeatOnValue
+     * @param StrictInteger $rollNumber (default 1)
+     * @param StrictInteger $repeatOnValue (default 0; never)
      */
-    public function __construct(Dice $dice, $rollNumber = 1, $repeatOnValue = 0)
+    public function __construct(Dice $dice, StrictInteger $rollNumber = null, StrictInteger $repeatOnValue = null)
     {
-        $rollNumber = intval($rollNumber);
+        $rollNumber = $rollNumber ?: new StrictInteger(1);
         $this->checkRollNumber($rollNumber);
-        $repeatOnValue = intval($repeatOnValue);
+        $repeatOnValue = $repeatOnValue ?: new StrictInteger(0);
         $this->checkInfiniteRepeat($dice, $repeatOnValue);
         $this->dice = $dice;
         $this->rollNumber = $rollNumber;
         $this->repeatOnValue = $repeatOnValue;
-        $this->lastDiceRolls = [];
     }
 
-    private function checkRollNumber($rollNumber)
+    private function checkRollNumber(StrictInteger $rollNumber)
     {
-        if ($rollNumber <= 0) {
+        if ($rollNumber->getValue() <= 0) {
             throw new \LogicException(
                 'Roll number has to be greater than zero. Zero rolls have no sense.'
             );
@@ -53,14 +52,14 @@ class Roll extends StrictObject
      * @param Dice $dice
      * @param $repeatOnValue
      */
-    private function checkInfiniteRepeat($dice, $repeatOnValue)
+    private function checkInfiniteRepeat(Dice $dice, StrictInteger $repeatOnValue)
     {
-        if ($dice->getMinimum()->getValue() === $repeatOnValue
-            && $dice->getMaximum()->getValue() === $repeatOnValue
+        if ($dice->getMinimum()->getValue() === $repeatOnValue->getValue()
+            && $dice->getMaximum()->getValue() === $repeatOnValue->getValue()
         ) {
             throw new \LogicException(
                 'Rolls would be repeated indefinitely. The value to repeat on '
-                . var_export($repeatOnValue, true) . ' is the only value the given dice can roll.'
+                . var_export($repeatOnValue->getValue(), true) . ' is the only value the given dice can roll.'
             );
         }
     }
@@ -70,10 +69,11 @@ class Roll extends StrictObject
      */
     public function roll()
     {
-        for ($rollNumberValue = 1; $rollNumberValue <= $this->rollNumber; $rollNumberValue++) {
+        $this->lastDiceRolls = [];
+        for ($rollNumberValue = 1; $rollNumberValue <= $this->rollNumber->getValue(); $rollNumberValue++) {
             $rollNumber = new StrictInteger($rollNumberValue);
             $this->lastDiceRolls[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, false /* not bonus roll */);
-            while ($diceRoll->getRolledValue()->getValue() === $this->repeatOnValue) {
+            while ($diceRoll->getRolledValue()->getValue() === $this->repeatOnValue->getValue()) {
                 $this->lastDiceRolls[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, true /* bonus roll */);
             }
         }
@@ -100,7 +100,7 @@ class Roll extends StrictObject
     }
 
     /**
-     * @return int
+     * @return StrictInteger
      */
     public function getRollNumber()
     {
@@ -108,7 +108,7 @@ class Roll extends StrictObject
     }
 
     /**
-     * @return int
+     * @return StrictInteger
      */
     public function getRepeatOnValue()
     {
