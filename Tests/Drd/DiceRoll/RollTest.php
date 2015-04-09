@@ -148,17 +148,17 @@ class RollTest extends \PHPUnit_Framework_TestCase
             ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
         $maximum->shouldReceive('getValue')
             ->andReturn(98765);
-        /** @var StrictInteger|\Mockery\MockInterface $rollNumber */
-        $rollNumber = \Mockery::mock(StrictInteger::class);
-        $rollNumber->shouldReceive('getValue')
+        /** @var StrictInteger|\Mockery\MockInterface $numberOfRolls */
+        $numberOfRolls = \Mockery::mock(StrictInteger::class);
+        $numberOfRolls->shouldReceive('getValue')
             ->andReturn(123);
         /** @var StrictInteger|\Mockery\MockInterface $repeatOnValue */
         $repeatOnValue = \Mockery::mock(StrictInteger::class);
         $repeatOnValue->shouldReceive('getValue')
             ->andReturn(456);
-        $roll = new Roll($dice, $rollNumber, $repeatOnValue);
+        $roll = new Roll($dice, $numberOfRolls, $repeatOnValue);
         $this->assertSame($dice, $roll->getDice());
-        $this->assertSame($rollNumber, $roll->getRollNumber());
+        $this->assertSame($numberOfRolls, $roll->getNumberOfRolls());
         $this->assertSame($repeatOnValue, $roll->getRepeatOnValue());
     }
 

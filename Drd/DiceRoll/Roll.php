@@ -13,7 +13,7 @@ class Roll extends StrictObject
     /**
      * @var StrictInteger
      */
-    private $rollNumber;
+    private $numberOfRolls;
     /**
      * @var StrictInteger
      */
@@ -25,15 +25,15 @@ class Roll extends StrictObject
 
     /**
      * @param Dice $dice
-     * @param StrictInteger $rollNumber
+     * @param StrictInteger $numberOfRolls
      * @param StrictInteger $repeatOnValue
      */
-    public function __construct(Dice $dice, StrictInteger $rollNumber, StrictInteger $repeatOnValue)
+    public function __construct(Dice $dice, StrictInteger $numberOfRolls, StrictInteger $repeatOnValue)
     {
-        $this->checkRollNumber($rollNumber);
+        $this->checkRollNumber($numberOfRolls);
         $this->checkInfiniteRepeat($dice, $repeatOnValue);
         $this->dice = $dice;
-        $this->rollNumber = $rollNumber;
+        $this->numberOfRolls = $numberOfRolls;
         $this->repeatOnValue = $repeatOnValue;
     }
 
@@ -68,7 +68,7 @@ class Roll extends StrictObject
     public function roll()
     {
         $this->lastDiceRolls = [];
-        for ($rollNumberValue = 1; $rollNumberValue <= $this->rollNumber->getValue(); $rollNumberValue++) {
+        for ($rollNumberValue = 1; $rollNumberValue <= $this->numberOfRolls->getValue(); $rollNumberValue++) {
             $rollNumber = new StrictInteger($rollNumberValue);
             $this->lastDiceRolls[] = $diceRoll = $this->rollDice($this->dice, $rollNumber, false /* not bonus roll */);
             while ($diceRoll->getRolledValue()->getValue() === $this->repeatOnValue->getValue()) {
@@ -100,9 +100,9 @@ class Roll extends StrictObject
     /**
      * @return StrictInteger
      */
-    public function getRollNumber()
+    public function getNumberOfRolls()
     {
-        return $this->rollNumber;
+        return $this->numberOfRolls;
     }
 
     /**
