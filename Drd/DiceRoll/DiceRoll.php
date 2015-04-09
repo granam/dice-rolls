@@ -46,11 +46,11 @@ class DiceRoll extends StrictObject
     }
 
     /**
-     * @return boolean
+     * @return StrictInteger
      */
-    public function isBonusRoll()
+    public function getRolledValue()
     {
-        return $this->isBonusRoll;
+        return $this->rolledValue;
     }
 
     /**
@@ -62,10 +62,11 @@ class DiceRoll extends StrictObject
     }
 
     /**
-     * @return StrictInteger
+     * @return boolean
      */
-    public function getRolledValue()
+    public function isBonusRoll()
     {
-        return $this->rolledValue;
+        return $this->isBonusRoll;
     }
+
 }
