@@ -16,11 +16,10 @@ class DiceRollTest extends \PHPUnit_Framework_TestCase
         $rolledValue = \Mockery::mock(StrictInteger::class);
         /** @var StrictInteger $rollSequence */
         $rollSequence = \Mockery::mock(StrictInteger::class);
-        $instance = new DiceRoll($dice, $rolledValue, $rollSequence, $isBonusRoll = true);
-        $this->assertInstanceOf(Diceroll::class, $instance);
+        $instance = new DiceRoll($dice, $rolledValue, $rollSequence);
+        $this->assertInstanceOf(DiceRoll::class, $instance);
         $this->assertSame($dice, $instance->getDice());
         $this->assertSame($rolledValue, $instance->getRolledValue());
         $this->assertSame($rollSequence, $instance->getRollSequence());
-        $this->assertSame($isBonusRoll, $instance->isBonusRoll());
     }
 }

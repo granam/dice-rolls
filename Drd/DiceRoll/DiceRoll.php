@@ -18,23 +18,17 @@ class DiceRoll extends StrictObject
      * @var StrictInteger
      */
     private $rollSequence;
-    /**
-     * @var bool
-     */
-    private $isBonusRoll;
 
     /**
      * @param Dice $dice
      * @param StrictInteger $rolledValue
      * @param StrictInteger $rollSequence
-     * @param bool $isBonusRoll
      */
-    public function __construct(Dice $dice, StrictInteger $rolledValue, StrictInteger $rollSequence, $isBonusRoll)
+    public function __construct(Dice $dice, StrictInteger $rolledValue, StrictInteger $rollSequence)
     {
         $this->dice = $dice;
         $this->rolledValue = $rolledValue;
         $this->rollSequence = $rollSequence;
-        $this->isBonusRoll = $isBonusRoll;
     }
 
     /**
@@ -59,14 +53,6 @@ class DiceRoll extends StrictObject
     public function getRollSequence()
     {
         return $this->rollSequence;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isBonusRoll()
-    {
-        return $this->isBonusRoll;
     }
 
 }
