@@ -4,7 +4,7 @@ namespace Drd\DiceRoll;
 use Granam\Strict\Integer\StrictInteger;
 use Granam\Strict\Object\StrictObject;
 
-class Dice extends StrictObject
+class Dice extends StrictObject implements DiceInterface
 {
 
     /**
