@@ -4,7 +4,6 @@ namespace Drd\DiceRoll;
 abstract class RollOn implements RollOnInterface
 {
 
-
     /**
      * @return int
      */
