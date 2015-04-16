@@ -7,7 +7,7 @@ use Granam\Strict\Object\StrictObject;
 class DiceRoll extends StrictObject
 {
     /**
-     * @var Dice
+     * @var DiceInterface
      */
     private $dice;
     /**
@@ -20,11 +20,11 @@ class DiceRoll extends StrictObject
     private $rollSequence;
 
     /**
-     * @param Dice $dice
+     * @param DiceInterface $dice
      * @param StrictInteger $rolledValue
      * @param StrictInteger $rollSequence
      */
-    public function __construct(Dice $dice, StrictInteger $rolledValue, StrictInteger $rollSequence)
+    public function __construct(DiceInterface $dice, StrictInteger $rolledValue, StrictInteger $rollSequence)
     {
         $this->dice = $dice;
         $this->rolledValue = $rolledValue;
@@ -32,7 +32,7 @@ class DiceRoll extends StrictObject
     }
 
     /**
-     * @return Dice
+     * @return DiceInterface
      */
     public function getDice()
     {

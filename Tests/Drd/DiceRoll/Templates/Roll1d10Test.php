@@ -32,7 +32,7 @@ class Roll1d10Test extends \PHPUnit_Framework_TestCase
      * @test
      * @depends can_create_instance
      */
-    public function maximum_is_six(Roll1d10 $roll1d10)
+    public function maximum_is_ten(Roll1d10 $roll1d10)
     {
         $this->assertSame(10, $roll1d10->getDice()->getMaximum()->getValue());
     }
@@ -46,7 +46,6 @@ class Roll1d10Test extends \PHPUnit_Framework_TestCase
     public function single_roll_only(Roll1d10 $roll1d10)
     {
         $this->assertSame(1, $roll1d10->getNumberOfRolls()->getValue());
-        $this->assertLessThan(1, $roll1d10->getRepeatOnValue()->getValue());
         $this->assertGreaterThanOrEqual($roll1d10->getDice()->getMinimum()->getValue(), $roll1d10->roll());
         $this->assertLessThanOrEqual($roll1d10->getDice()->getMaximum()->getValue(), $roll1d10->roll());
     }
