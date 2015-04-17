@@ -20,8 +20,13 @@ class RollOnTest extends \PHPUnit_Framework_TestCase
                 $secondDiceRoll = \Mockery::mock(DiceRoll::class),
             ]);
         $rollOn->shouldAllowMockingProtectedMethods();
+        $evaluatedDices = [];
+        $rolledValue = 12345;
         $rollOn->shouldReceive('evaluateDiceRoll')
-            ->andReturn($rolledValue = 11111);
+            ->andReturnUsing(function() use (&$evaluatedDices, $rolledValue) {
+                $evaluatedDices[] = func_get_args()[0];
+                return $rolledValue;
+            });
         $roll->shouldReceive('getBonusRollOn')
             ->andReturn($bonusRollOn = \Mockery::mock(RollOn::class));
         $bonusRollOn->shouldReceive('getLastRollSummary')
@@ -31,5 +36,8 @@ class RollOnTest extends \PHPUnit_Framework_TestCase
         $malusRollOn->shouldReceive('getLastRollSummary')
             ->andReturn($malusRolledValue = 567);
         $this->assertSame((count($dices) * $rolledValue) + $bonusRolledValue + $malusRolledValue, $rollOn->getLastRollSummary());
+        $this->assertSame(count($dices), count($evaluatedDices), 'Count of input dices does not match count of evaluated dices');
+        $this->assertSame($dices[0], $evaluatedDices[0]);
+        $this->assertSame($dices[1], $evaluatedDices[1]);
     }
 }
