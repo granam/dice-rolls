@@ -6,7 +6,7 @@ use Drd\DiceRoll\Roll;
 use Drd\DiceRoll\RollOn;
 use Granam\Strict\Integer\StrictInteger;
 
-class OneBonusRollOn4Plus extends RollOn
+class Bonus1RollOn4Plus extends RollOn
 {
     /**
      * @var Roll
@@ -17,7 +17,7 @@ class OneBonusRollOn4Plus extends RollOn
     {
         $this->roll = new Roll(
             $dice1d6,
-            new StrictInteger(1), // rol just once
+            new StrictInteger(1), // roll just once
             new NoRollOn(),
             $this // in case of high roll (4 - 6) the bonus roll continues
         );
