@@ -6,7 +6,7 @@ use Drd\DiceRoll\Roll;
 use Drd\DiceRoll\RollOn;
 use Granam\Strict\Integer\StrictInteger;
 
-class OneMalusRollOn3Minus extends RollOn
+class Malus1RollOn3Minus extends RollOn
 {
     /**
      * @var Roll
