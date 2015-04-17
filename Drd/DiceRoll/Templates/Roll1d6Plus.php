@@ -8,12 +8,15 @@ class Roll1d6Plus extends Roll
 {
     public function __construct()
     {
-        $noRollOn = new NoRollOn();
         parent::__construct(
             new Dice1d6(),
             new StrictInteger(1),
-            $noRollOn, // bonus
-            $noRollOn // malus
+            new SameBonusRollOn6(
+                function() { // its needed for lazy loading to avoid chained instance creations
+                    return new Roll1d6Plus();
+                }
+            ), // bonus
+            new NoRollOn() // no malus
         );
     }
 }

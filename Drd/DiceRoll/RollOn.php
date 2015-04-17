@@ -14,7 +14,15 @@ abstract class RollOn implements RollOnInterface
             $summary += $this->evaluateDiceRoll($diceRoll);
         }
 
-        return $summary + $this->getRoll()->getBonusRollOn()->getLastRollSummary() + $this->getRoll()->getMalusRollOn()->getLastRollSummary();
+        if ($this->getRoll()->getBonusRollOn()->happened()) {
+            $summary += $this->getRoll()->getBonusRollOn()->getLastRollSummary();
+        }
+
+        if ($this->getRoll()->getMalusRollOn()->happened()) {
+            $summary += $this->getRoll()->getMalusRollOn()->getLastRollSummary();
+        }
+
+        return $summary;
     }
 
     /**
@@ -24,4 +32,12 @@ abstract class RollOn implements RollOnInterface
      * @return int
      */
     abstract protected function evaluateDiceRoll(DiceRoll $diceRoll);
+
+    /**
+     * @return bool
+     */
+    public function happened()
+    {
+        return count($this->getRoll()->getLastStandardDiceRolls()) > 0;
+    }
 }

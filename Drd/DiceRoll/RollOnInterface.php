@@ -20,4 +20,9 @@ interface RollOnInterface
      */
     public function getLastRollSummary();
 
+    /**
+     * @return bool
+     */
+    public function happened();
+
 }

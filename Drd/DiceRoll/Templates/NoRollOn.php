@@ -42,4 +42,9 @@ class NoRollOn implements RollOnInterface
         return 0;
     }
 
+    public function happened()
+    {
+        return false;
+    }
+
 }

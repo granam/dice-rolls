@@ -31,10 +31,14 @@ class RollOnTest extends \PHPUnit_Framework_TestCase
             ->andReturn($bonusRollOn = \Mockery::mock(RollOn::class));
         $bonusRollOn->shouldReceive('getLastRollSummary')
             ->andReturn($bonusRolledValue = 123);
+        $bonusRollOn->shouldReceive('happened')
+            ->andReturn(true);
         $roll->shouldReceive('getMalusRollOn')
             ->andReturn($malusRollOn = \Mockery::mock(RollOn::class));
         $malusRollOn->shouldReceive('getLastRollSummary')
             ->andReturn($malusRolledValue = 567);
+        $malusRollOn->shouldReceive('happened')
+            ->andReturn(true);
         $this->assertSame((count($dices) * $rolledValue) + $bonusRolledValue + $malusRolledValue, $rollOn->getLastRollSummary());
         $this->assertSame(count($dices), count($evaluatedDices), 'Count of input dices does not match count of evaluated dices');
         $this->assertSame($dices[0], $evaluatedDices[0]);
