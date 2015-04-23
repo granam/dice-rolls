@@ -8,19 +8,18 @@ interface RollOnInterface
      *
      * @return bool
      */
-    public function shouldRepeatRoll($rolledValue);
+    public function shouldHappen($rolledValue);
 
     /**
+     * The roll, used in case of bonus / malus
+     *
      * @return Roll
      */
     public function getRoll();
 
     /**
-     * @return int
-     */
-    public function getLastRollSummary();
-
-    /**
+     * Has the bonus / malus roll already happened?
+     *
      * @return bool
      */
     public function happened();
