@@ -16,6 +16,10 @@ class Roll extends StrictObject implements RollInterface
      */
     private $numberOfRolls;
     /**
+     * @var DiceRollEvaluatorInterface
+     */
+    private $diceRollBuilder;
+    /**
      * @var RollOnInterface
      */
     private $bonusRollOn;
@@ -39,12 +43,14 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @param DiceInterface $dice
      * @param StrictInteger $numberOfRolls
+     * @param DiceRollBuilderInterface $diceRollBuilder ,
      * @param RollOnInterface $bonusRollOn
-     * @param RollOnInterface $malusRollOn
+     * @param RollOnInterface $malusRollOn malus roll itself is responsible for negative or positive numbers
      */
     public function __construct(
         DiceInterface $dice,
         StrictInteger $numberOfRolls,
+        DiceRollBuilderInterface $diceRollBuilder,
         RollOnInterface $bonusRollOn,
         RollOnInterface $malusRollOn
     )
@@ -52,9 +58,9 @@ class Roll extends StrictObject implements RollInterface
         $this->checkDice($dice);
         $this->checkNumberOfRolls($numberOfRolls);
         $this->checkBonusAndMalusConflicts($dice, $bonusRollOn, $malusRollOn);
-        $this->checkInfiniteRepeat($dice, $bonusRollOn, $malusRollOn);
         $this->dice = $dice;
         $this->numberOfRolls = $numberOfRolls;
+        $this->diceRollBuilder = $diceRollBuilder;
         $this->bonusRollOn = $bonusRollOn;
         $this->malusRollOn = $malusRollOn;
     }
@@ -104,7 +110,7 @@ class Roll extends StrictObject implements RollInterface
     {
         $rollOnValues = [];
         for ($rollValue = $minimumRollValue; $rollValue <= $maximumRollValue; $rollValue++) {
-            if ($rollOn->shouldRepeatRoll($rollValue)) {
+            if ($rollOn->shouldHappen($rollValue)) {
                 $rollOnValues[] = $rollValue;
             }
         }
@@ -112,78 +118,85 @@ class Roll extends StrictObject implements RollInterface
         return $rollOnValues;
     }
 
-    private function checkInfiniteRepeat(DiceInterface $dice, RollOnInterface $bonusRollOn, RollOnInterface $malusRollOn)
-    {
-        $this->checkBonusInfiniteRepeat($dice, $bonusRollOn);
-        $this->checkMalusInfiniteRepeat($dice, $malusRollOn);
-    }
-
-    private function checkBonusInfiniteRepeat(DiceInterface $dice, RollOnInterface $bonusRollOn)
-    {
-        if ($this->isInfiniteRepeat($dice, $bonusRollOn)) {
-            throw new \LogicException(
-                "Bonus rolls would be repeated indefinitely. Every of the value in range "
-                . "{$dice->getMinimum()->getValue()} - {$dice->getMaximum()->getValue()} triggers bonus roll."
-            );
-        }
-    }
-
-    private function checkMalusInfiniteRepeat(DiceInterface $dice, RollOnInterface $malusRollOn)
-    {
-        if ($this->isInfiniteRepeat($dice, $malusRollOn)) {
-            throw new \LogicException(
-                "Malus rolls would be repeated indefinitely. Every of the value in range "
-                . "{$dice->getMinimum()->getValue()} - {$dice->getMaximum()->getValue()} triggers malus roll."
-            );
-        }
-    }
-
-    private function isInfiniteRepeat(DiceInterface $dice, RollOnInterface $rollOn)
-    {
-        $infinite = true;
-        for ($value = $dice->getMinimum()->getValue(); $infinite && $value <= $dice->getMaximum()->getValue(); $value++) {
-            $infinite &= $rollOn->shouldRepeatRoll($value);
-        }
-
-        return $infinite;
-    }
-
     /**
      * @return int
      */
     public function roll()
     {
-        $this->lastDiceRolls = [];
-        $this->lastStandardDiceRolls = [];
-        for ($rollSequenceValue = 1; $rollSequenceValue <= $this->numberOfRolls->getValue(); $rollSequenceValue++) {
-            $rollSequence = new StrictInteger($rollSequenceValue);
-            $this->lastDiceRolls[] = $this->lastStandardDiceRolls[] = $diceRoll = $this->rollDice($this->dice, $rollSequence);
-        }
+        $this->resetLastDiceRolls();
+        $this->processStandardRolls();
         $standardRollSummary = $this->getLastStandardRollSummary();
-        if ($this->bonusRollOn->shouldRepeatRoll($standardRollSummary)) {
-            $this->bonusRollOn->getRoll()->roll();
-            $this->lastDiceRolls = array_merge($this->lastDiceRolls, $this->bonusRollOn->getRoll()->getLastDiceRolls());
-        } else if ($this->malusRollOn->shouldRepeatRoll($standardRollSummary)) {
-            $this->malusRollOn->getRoll()->roll();
-            $this->lastDiceRolls = array_merge($this->lastDiceRolls, $this->malusRollOn->getRoll()->getLastDiceRolls());
+        if ($this->bonusRollOn->shouldHappen($standardRollSummary)) {
+            $this->processBonusRolls();
+        } else if ($this->malusRollOn->shouldHappen($standardRollSummary)) {
+            $this->processMalusRolls();
         }
 
         return $this->getLastRollSummary();
     }
 
+    private function resetLastDiceRolls()
+    {
+        $this->lastDiceRolls = []; // all the dice rolls, including those from bonus and malus rolls
+        $this->lastStandardDiceRolls = []; // dice rolls without bonus and malus rolls
+    }
+
+    private function processStandardRolls()
+    {
+        for ($rollSequenceValue = 1; $rollSequenceValue <= $this->numberOfRolls->getValue(); $rollSequenceValue++) {
+            $rollSequence = new StrictInteger($rollSequenceValue);
+            $standardDiceRoll = $this->rollDice($rollSequence);
+            $this->addLastStandardDiceRoll($standardDiceRoll);
+        }
+    }
+
     /**
-     * @param DiceInterface $dice
      * @param StrictInteger $rollSequence
      *
      * @return DiceRoll
      */
-    private function rollDice(DiceInterface $dice, $rollSequence)
+    private function rollDice(StrictInteger $rollSequence)
     {
-        return new DiceRoll(
-            $dice,
-            new StrictInteger(mt_rand($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue())),
+        return $this->getDiceRollBuilder()->create(
+            $this->dice,
+            new StrictInteger($this->rollValue($this->dice)),
             $rollSequence
         );
+    }
+
+    /**
+     * @param DiceInterface $dice
+     *
+     * @return int
+     */
+    private function rollValue(DiceInterface $dice)
+    {
+        return mt_rand($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue());
+    }
+
+    private function addLastStandardDiceRoll(DiceRoll $diceRoll)
+    {
+        $this->lastDiceRolls[] = $this->lastStandardDiceRolls[] = $diceRoll;
+    }
+
+    private function processBonusRolls()
+    {
+        $this->bonusRollOn->getRoll()->roll();
+        $this->addLastDiceRolls($this->bonusRollOn->getRoll()->getLastDiceRolls());
+    }
+
+    /**
+     * @param array|DiceRoll[] $diceRolls
+     */
+    private function addLastDiceRolls(array $diceRolls)
+    {
+        $this->lastDiceRolls = array_merge($this->lastDiceRolls, $diceRolls);
+    }
+
+    private function processMalusRolls()
+    {
+        $this->malusRollOn->getRoll()->roll();
+        $this->addLastDiceRolls($this->malusRollOn->getRoll()->getLastDiceRolls());
     }
 
     /**
@@ -200,6 +213,14 @@ class Roll extends StrictObject implements RollInterface
     public function getNumberOfRolls()
     {
         return $this->numberOfRolls;
+    }
+
+    /**
+     * @return DiceRollBuilderInterface
+     */
+    public function getDiceRollBuilder()
+    {
+        return $this->diceRollBuilder;
     }
 
     /**
@@ -231,12 +252,22 @@ class Roll extends StrictObject implements RollInterface
      */
     public function getLastRolledNumbers()
     {
+        return $this->extractRolledNumbers($this->lastDiceRolls);
+    }
+
+    /**
+     * @param array|DiceRoll[] $diceRolls
+     *
+     * @return array|StrictInteger[]
+     */
+    private function extractRolledNumbers(array $diceRolls)
+    {
         return array_merge(
             array_map(
                 function (DiceRoll $diceRoll) {
                     return $diceRoll->getRolledValue();
                 },
-                $this->lastDiceRolls
+                $diceRolls
             )
         );
     }
@@ -246,7 +277,34 @@ class Roll extends StrictObject implements RollInterface
      */
     public function getLastRollSummary()
     {
-        return $this->getLastStandardRollSummary() + $this->bonusRollOn->getLastRollSummary() + $this->malusRollOn->getLastRollSummary();
+        return $this->summarizeDiceRolls($this->lastDiceRolls);
+    }
+
+    /**
+     * @param array|DiceRoll[] $diceRolls
+     *
+     * @return int
+     */
+    private function summarizeDiceRolls(array $diceRolls)
+    {
+        return $this->summarizeValues($this->extractRolledNumbers($diceRolls));
+    }
+
+    /**
+     * @param array|StrictInteger[] $values
+     *
+     * @return int
+     */
+    private function summarizeValues(array $values)
+    {
+        return array_sum(
+            array_map(
+                function (StrictInteger $value) {
+                    return $value->getValue();
+                },
+                $values
+            )
+        );
     }
 
     /**
@@ -254,14 +312,7 @@ class Roll extends StrictObject implements RollInterface
      */
     private function getLastStandardRollSummary()
     {
-        return array_sum(
-            array_map(
-                function (DiceRoll $diceRoll) {
-                    return $diceRoll->getRolledValue()->getValue();
-                },
-                $this->lastStandardDiceRolls
-            )
-        );
+        return $this->summarizeDiceRolls($this->lastStandardDiceRolls);
     }
 
     /**
