@@ -74,6 +74,37 @@ class RollTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @depends zero_roll_count_cause_exception
+     * @expectedException \LogicException
+     */
+    public function higher_minimal_then_maximal_roll_cause_exception()
+    {
+        /** @var Dice|\Mockery\MockInterface $dice */
+        $dice = \Mockery::mock(Dice::class);
+        $dice->shouldReceive('getMinimum')
+            ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
+        $minimum->shouldReceive('getValue')
+            ->andReturn($minimumValue = 12345);
+        $dice->shouldReceive('getMaximum')
+            ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
+        $maximum->shouldReceive('getValue')
+            ->andReturn($minimumValue - 1);
+        /** @var StrictInteger|\Mockery\MockInterface $numberOfRolls */
+        $numberOfRolls = \Mockery::mock(StrictInteger::class);
+        $numberOfRolls->shouldReceive('getValue')
+            ->andReturn(1);
+        /** @var DiceRollBuilder $diceRollBuilder */
+        $diceRollBuilder = \Mockery::mock(DiceRollBuilder::class);
+        /** @var RollOnInterface|\Mockery\MockInterface $bonusRollOn */
+        $bonusRollOn = \Mockery::mock(RollOnInterface::class);
+        /** @var RollOnInterface|\Mockery\MockInterface $malusRollOn */
+        $malusRollOn = \Mockery::mock(RollOnInterface::class);
+        $malusRollOn->shouldReceive('shouldHappen');
+        new Roll($dice, $numberOfRolls, $diceRollBuilder, $bonusRollOn, $malusRollOn);
+    }
+
+    /**
+     * @test
      * @depends can_create_instance
      */
     public function last_roll_is_kept_only()
@@ -289,10 +320,52 @@ class RollTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf(DiceRoll::class, $diceRoll);
             $this->assertSame($dice, $diceRoll->getDice(), 'Uses given dice');
             $summary += $diceRoll->getRolledValue()->getValue();
-            $this->assertSame($currentRollSequence, $diceRoll->getRollSequence() /* integer from the moc */, 'Roll sequence is not successive');
+            $this->assertSame($currentRollSequence, $diceRoll->getRollSequence() /* integer from the mock */, 'Roll sequence is not successive');
             $currentRollSequence++;
         }
         $this->assertSame($roll->getLastRollSummary(), $summary);
+        $this->assertSame($roll->getLastDiceRolls(), $roll->getLastStandardDiceRolls());
+    }
+
+
+    /**
+     * @test
+     * @depends can_roll
+     * @expectedException \LogicException
+     */
+    public function bonus_and_malus_triggered_on_same_values_cause_exception()
+    {
+        /** @var Dice|\Mockery\MockInterface $dice */
+        $dice = \Mockery::mock(Dice::class);
+        $dice->shouldReceive('getMinimum')
+            ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
+        $minimum->shouldReceive('getValue')
+            ->andReturn($minimumValue = 1);
+        $dice->shouldReceive('getMaximum')
+            ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
+        $maximum->shouldReceive('getValue')
+            ->andReturn($maximumValue = 2);
+        $this->assertGreaterThan($minimumValue, $maximumValue);
+        /** @var StrictInteger|\Mockery\MockInterface $numberOfRolls */
+        $numberOfRolls = \Mockery::mock(StrictInteger::class);
+        $numberOfRolls->shouldReceive('getValue')
+            ->andReturn(1);
+        /** @var DiceRollBuilder|\Mockery\MockInterface $diceRollBuilder */
+        $diceRollBuilder = \Mockery::mock(DiceRollBuilder::class);
+        $diceRoll = \Mockery::mock(DiceRoll::class);
+        $diceRoll->shouldReceive('getRolledValue')
+            ->andReturn($diceRollValue = \Mockery::mock(StrictInteger::class));
+        $diceRollValue->shouldReceive('getValue')
+            ->andReturn($diceRollIntValue = 2);
+        /** @var RollOnInterface|\Mockery\MockInterface $bonusRollOn */
+        $bonusRollOn = \Mockery::mock(RollOnInterface::class);
+        $bonusRollOn->shouldReceive('shouldHappen')
+            ->andReturn(true /* happens anytime */);
+        /** @var RollOnInterface|\Mockery\MockInterface $malusRollOn */
+        $malusRollOn = \Mockery::mock(RollOnInterface::class);
+        $malusRollOn->shouldReceive('shouldHappen')
+            ->andReturn(true /* happens anytime */);
+        new Roll($dice, $numberOfRolls, $diceRollBuilder, $bonusRollOn, $malusRollOn);
     }
 
     /**
@@ -336,8 +409,6 @@ class RollTest extends \PHPUnit_Framework_TestCase
             ->andReturn(true);
         $bonusRollOn->shouldReceive('shouldHappen')
             ->andReturn(false);
-        $bonusRollOn->shouldReceive('getLastRollSummary')
-            ->andReturn($bonusLastRollSummary = 111);
         $bonusRollOn->shouldReceive('getRoll')
             ->andReturn($bonusRoll = \Mockery::mock(Roll::class));
         $bonusRoll->shouldReceive('roll')
@@ -355,7 +426,7 @@ class RollTest extends \PHPUnit_Framework_TestCase
         $malusRollOn->shouldReceive('getLastRollSummary')
             ->andReturn(0);
         $roll = new Roll($dice, $numberOfRolls, $diceRollBuilder, $bonusRollOn, $malusRollOn);
-        $this->assertSame(true, $roll->getBonusRollOn()->shouldHappen($maximumValue));
+        $this->assertTrue($roll->getBonusRollOn()->shouldHappen($maximumValue));
         $bonusRollCount = 0;
         for ($attempt = 1; $attempt < 1000; $attempt++) {
             $roll->roll();
@@ -369,6 +440,83 @@ class RollTest extends \PHPUnit_Framework_TestCase
             }
         }
         $this->assertGreaterThan(0, $bonusRollCount);
-        $this->assertGreaterThanOrEqual($minimumValue + $bonusLastRollSummary, $roll->getLastRollSummary());
+        $this->assertGreaterThanOrEqual($minimumValue + $bonusDiceRollIntValue, $roll->getLastRollSummary());
+        $this->assertSame(count($roll->getLastStandardDiceRolls()) + $bonusRollCount, count($roll->getLastDiceRolls()));
+    }
+
+    /**
+     * @test
+     * @depends bonus_roll_can_happen
+     */
+    public function malus_roll_can_happen()
+    {
+        /** @var Dice|\Mockery\MockInterface $dice */
+        $dice = \Mockery::mock(Dice::class);
+        $dice->shouldReceive('getMinimum')
+            ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
+        $minimum->shouldReceive('getValue')
+            ->andReturn($minimumValue = 1);
+        $dice->shouldReceive('getMaximum')
+            ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
+        $maximum->shouldReceive('getValue')
+            ->andReturn($maximumValue = 2);
+        $this->assertGreaterThan($minimumValue, $maximumValue);
+        /** @var StrictInteger|\Mockery\MockInterface $numberOfRolls */
+        $numberOfRolls = \Mockery::mock(StrictInteger::class);
+        $numberOfRolls->shouldReceive('getValue')
+            ->andReturn(1);
+        /** @var DiceRollBuilder|\Mockery\MockInterface $diceRollBuilder */
+        $diceRollBuilder = \Mockery::mock(DiceRollBuilder::class);
+        $diceRoll = \Mockery::mock(DiceRoll::class);
+        $diceRollCreateParameters = [];
+        $diceRollBuilder->shouldReceive('create')
+            ->andReturnUsing(function () use (&$diceRollCreateParameters, $diceRoll) {
+                $diceRollCreateParameters[] = func_get_args();
+                return $diceRoll;
+            });
+        $diceRoll->shouldReceive('getRolledValue')
+            ->andReturn($diceRollValue = \Mockery::mock(StrictInteger::class));
+        $diceRollValue->shouldReceive('getValue')
+            ->andReturn($diceRollIntValue = 1);
+        /** @var RollOnInterface|\Mockery\MockInterface $bonusRollOn */
+        $bonusRollOn = \Mockery::mock(RollOnInterface::class);
+        $bonusRollOn->shouldReceive('shouldHappen')
+            ->andReturn(false);
+        $bonusRollOn->shouldReceive('getLastRollSummary')
+            ->andReturn(0);
+        /** @var RollOnInterface|\Mockery\MockInterface $malusRollOn */
+        $malusRollOn = \Mockery::mock(RollOnInterface::class);
+        $malusRollOn->shouldReceive('shouldHappen')
+            ->with($diceRollIntValue)
+            ->andReturn(true);
+        $malusRollOn->shouldReceive('shouldHappen')
+            ->andReturn(false);
+        $malusRollOn->shouldReceive('getRoll')
+            ->andReturn($malusRoll = \Mockery::mock(Roll::class));
+        $malusRoll->shouldReceive('roll')
+            ->atLeast()->once();
+        $malusRoll->shouldReceive('getLastDiceRolls')
+            ->andReturn([$malusDiceRoll = \Mockery::mock(DiceRoll::class)]);
+        $malusDiceRoll->shouldReceive('getRolledValue')
+            ->andReturn($malusDiceRollValue = \Mockery::mock(StrictInteger::class));
+        $malusDiceRollValue->shouldReceive('getValue')
+            ->andReturn($malusDiceRollIntValue = -12345);
+        $roll = new Roll($dice, $numberOfRolls, $diceRollBuilder, $bonusRollOn, $malusRollOn);
+        $this->assertTrue($roll->getMalusRollOn()->shouldHappen($minimumValue));
+        $malusRollCount = 0;
+        for ($attempt = 1; $attempt < 1000; $attempt++) {
+            $roll->roll();
+            foreach ($roll->getLastDiceRolls() as $diceRoll) {
+                if ($diceRoll === $malusDiceRoll) {
+                    $malusRollCount++;
+                }
+            }
+            if ($malusRollCount > 0) {
+                break;
+            }
+        }
+        $this->assertGreaterThan(0, $malusRollCount);
+        $this->assertGreaterThanOrEqual($minimumValue + $malusDiceRollIntValue, $roll->getLastRollSummary());
+        $this->assertSame(count($roll->getLastStandardDiceRolls()) + $malusRollCount, count($roll->getLastDiceRolls()));
     }
 }
