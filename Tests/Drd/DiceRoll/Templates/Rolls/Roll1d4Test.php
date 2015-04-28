@@ -1,5 +1,5 @@
 <?php
-namespace Drd\DiceRoll\Templates;
+namespace Drd\DiceRoll\Templates\Rolls;
 
 class Roll1d4Test extends \PHPUnit_Framework_TestCase
 {

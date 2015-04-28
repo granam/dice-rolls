@@ -1,5 +1,5 @@
 <?php
-namespace Drd\DiceRoll\Templates;
+namespace Drd\DiceRoll\Templates\Dices;
 
 use Drd\DiceRoll\Dice;
 use Granam\Strict\Integer\StrictInteger;

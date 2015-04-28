@@ -4,13 +4,18 @@ namespace Drd\DiceRoll;
 class AbstractRollOnTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected function tearDown()
+    {
+        \Mockery::close();
+    }
+
     /**
      * @test
      */
     public function can_create_inherited_instance()
     {
-        $rollFactory = function () {
-        };
+        /** @var RollBuilderInterface $rollFactory */
+        $rollFactory = \Mockery::mock(RollBuilderInterface::class);
         $instance = new TestAbstractRollOn($rollFactory);
         $this->assertInstanceOf(AbstractRollOn::class, $instance);
 
@@ -24,9 +29,11 @@ class AbstractRollOnTest extends \PHPUnit_Framework_TestCase
     public function happened_after_roll()
     {
         $roll = \Mockery::mock(Roll::class);
-        $rollFactory = function () use ($roll) {
-            return $roll;
-        };
+        /** @var RollBuilderInterface|\Mockery\MockInterface $rollFactory */
+        $rollFactory = \Mockery::mock(RollBuilderInterface::class);
+        $rollFactory->shouldReceive('createRoll')
+            ->once()
+            ->andReturn($roll);
         $testAbstractRollOn = new TestAbstractRollOn($rollFactory);
         $this->assertFalse($testAbstractRollOn->happened());
         $this->assertSame($roll, $testAbstractRollOn->getRoll());

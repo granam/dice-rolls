@@ -1,5 +1,5 @@
 <?php
-namespace Drd\DiceRoll\Templates;
+namespace Drd\DiceRoll\Templates\RollOn;
 
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\Roll;
@@ -12,7 +12,7 @@ class NoRollOn implements RollOnInterface
      *
      * @return bool
      */
-    public function shouldRepeatRoll($rolledValue)
+    public function shouldHappen($rolledValue)
     {
         return false;
     }

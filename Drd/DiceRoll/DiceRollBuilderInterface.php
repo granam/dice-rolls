@@ -5,5 +5,12 @@ use Granam\Strict\Integer\StrictInteger;
 
 interface DiceRollBuilderInterface
 {
-    public function create(Dice $dice, StrictInteger $rolledValue, StrictInteger $rollSequence);
+    /**
+     * @param DiceInterface $dice
+     * @param StrictInteger $rolledValue
+     * @param StrictInteger $rollSequence
+     *
+     * @return DiceRoll
+     */
+    public function create(DiceInterface $dice, StrictInteger $rolledValue, StrictInteger $rollSequence);
 }
