@@ -9,7 +9,7 @@ use Drd\DiceRoll\Templates\RollOn\Bonus1RollOn4Plus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Granam\Strict\Integer\StrictInteger;
 
-class Roll1d6PlusBonus4PlusAs1 extends Roll
+class Roll1d6PlusBonus1On4Plus extends Roll
 {
     public function __construct()
     {

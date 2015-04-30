@@ -3,6 +3,7 @@ namespace Drd\DiceRoll\Templates\Evaluators;
 
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\DiceRollEvaluatorInterface;
+use Granam\Strict\Integer\StrictInteger;
 use Granam\Strict\Object\StrictObject;
 
 class FourOrMoreAsOneEvaluator extends StrictObject implements DiceRollEvaluatorInterface
@@ -10,12 +11,12 @@ class FourOrMoreAsOneEvaluator extends StrictObject implements DiceRollEvaluator
 
     /**
      * @param DiceRoll $diceRoll
-     * @return int
+     * @return StrictInteger
      */
     public function evaluateDiceRoll(DiceRoll $diceRoll)
     {
-        return $diceRoll->getRolledValue()->getValue() >= 4
-            ? 1
-            : 0;
+        return $diceRoll->getRolledNumber()->getValue() >= 4
+            ? new StrictInteger(1)
+            : new StrictInteger(0);
     }
 }
