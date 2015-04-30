@@ -80,5 +80,6 @@ class Roll1d6PlusBonus1On4PlusTest extends \PHPUnit_Framework_TestCase
             + $roll1d6PlusBonus1On4Plus->getBonusRollOn()->getRoll()->getLastStandardDiceRolls()[0]->getValue()->getValue()
         );
         $this->assertGreaterThanOrEqual(4, $roll1d6PlusBonus1On4Plus->getBonusRollOn()->getRoll()->getLastStandardDiceRolls()[0]->getRolledNumber()->getValue());
+        $this->assertFalse($roll1d6PlusBonus1On4Plus->getMalusRollOn()->happened());
     }
 }
