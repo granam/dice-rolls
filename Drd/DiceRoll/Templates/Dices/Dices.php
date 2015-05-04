@@ -1,5 +1,5 @@
 <?php
-namespace Drd\DiceRoll\Dices\Dices;
+namespace Drd\DiceRoll\Templates\Dices;
 
 use Drd\DiceRoll\Dice;
 use Drd\DiceRoll\DiceInterface;
@@ -35,6 +35,10 @@ class Dices extends StrictObject implements DiceInterface
      */
     private function checkDices(array $dices)
     {
+        if (count($dices) === 0) {
+            throw new \LogicException('No dice given.');
+        }
+
         foreach ($dices as $dice) {
             if (!is_a($dice, DiceInterface::class)) {
                 throw new \LogicException('Given dices have to DiceInterface, got ' . is_object($dice) ? get_class($dice) : gettype($dice));
@@ -62,7 +66,7 @@ class Dices extends StrictObject implements DiceInterface
         return new StrictInteger(
             array_sum(
                 array_map(
-                    function (Dice $dice) {
+                    function (DiceInterface $dice) {
                         return $dice->getMinimum()->getValue();
                     },
                     $this->dices
@@ -91,7 +95,7 @@ class Dices extends StrictObject implements DiceInterface
         return new StrictInteger(
             array_sum(
                 array_map(
-                    function (Dice $dice) {
+                    function (DiceInterface $dice) {
                         return $dice->getMaximum()->getValue();
                     },
                     $this->dices
