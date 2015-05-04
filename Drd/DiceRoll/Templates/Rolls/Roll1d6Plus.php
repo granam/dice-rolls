@@ -7,6 +7,7 @@ use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\BonusRollOn6;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
+use Drd\DiceRoll\Templates\Rolls\Builders\Roll1d6PlusBuilder;
 use Granam\Strict\Integer\StrictInteger;
 
 class Roll1d6Plus extends Roll

@@ -7,6 +7,8 @@ use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\BonusRollOn12;
 use Drd\DiceRoll\Templates\RollOn\MalusRollOn2;
+use Drd\DiceRoll\Templates\Rolls\Builders\Roll3MinusAsMinus1RecursiveBuilder;
+use Drd\DiceRoll\Templates\Rolls\Builders\Roll4PlusAs1RecursiveBuilder;
 use Granam\Strict\Integer\StrictInteger;
 
 /**

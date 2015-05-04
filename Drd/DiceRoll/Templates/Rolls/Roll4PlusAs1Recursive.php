@@ -7,6 +7,7 @@ use Drd\DiceRoll\Roll;
 use Drd\DiceRoll\Templates\Evaluators\FourOrMoreAsOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\Bonus1RollOn4Plus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
+use Drd\DiceRoll\Templates\Rolls\Builders\Roll4PlusAs1RecursiveBuilder;
 use Granam\Strict\Integer\StrictInteger;
 
 class Roll4PlusAs1Recursive extends Roll

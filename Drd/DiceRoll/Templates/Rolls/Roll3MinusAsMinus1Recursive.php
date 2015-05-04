@@ -7,6 +7,7 @@ use Drd\DiceRoll\Roll;
 use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\Malus1RollOn3Minus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
+use Drd\DiceRoll\Templates\Rolls\Builders\Roll3MinusAsMinus1RecursiveBuilder;
 use Granam\Strict\Integer\StrictInteger;
 
 class Roll3MinusAsMinus1Recursive extends Roll

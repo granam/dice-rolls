@@ -1,8 +1,9 @@
 <?php
-namespace Drd\DiceRoll\Templates\Rolls;
+namespace Drd\DiceRoll\Templates\Rolls\Builders;
 
 use Drd\DiceRoll\DiceInterface;
 use Drd\DiceRoll\RollBuilderInterface;
+use Drd\DiceRoll\Templates\Rolls\Roll4PlusAs1Recursive;
 
 class Roll4PlusAs1RecursiveBuilder implements RollBuilderInterface
 {
