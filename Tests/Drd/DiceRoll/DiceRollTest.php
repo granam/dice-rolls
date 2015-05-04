@@ -21,7 +21,7 @@ class DiceRollTest extends \PHPUnit_Framework_TestCase
         $instance = new DiceRoll($dice, $rolledValue, $diceRollEvaluator, $rollSequence);
         $this->assertInstanceOf(DiceRoll::class, $instance);
         $this->assertSame($dice, $instance->getDice());
-        $this->assertSame($rolledValue, $instance->getRolledValue());
+        $this->assertSame($rolledValue, $instance->getRolledNumber());
         $this->assertSame($rollSequence, $instance->getRollSequence());
     }
 }

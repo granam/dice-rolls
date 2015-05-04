@@ -13,7 +13,7 @@ class DiceRoll extends StrictObject
     /**
      * @var StrictInteger
      */
-    private $rolledValue;
+    private $rolledNumber;
     /**
      * @var DiceRollEvaluatorInterface
      */
@@ -25,14 +25,14 @@ class DiceRoll extends StrictObject
 
     /**
      * @param DiceInterface $dice
-     * @param StrictInteger $rolledValue
+     * @param StrictInteger $rolledNumber
      * @param DiceRollEvaluatorInterface $diceRollEvaluator
      * @param StrictInteger $rollSequence
      */
-    public function __construct(DiceInterface $dice, StrictInteger $rolledValue, DiceRollEvaluatorInterface $diceRollEvaluator, StrictInteger $rollSequence)
+    public function __construct(DiceInterface $dice, StrictInteger $rolledNumber, DiceRollEvaluatorInterface $diceRollEvaluator, StrictInteger $rollSequence)
     {
         $this->dice = $dice;
-        $this->rolledValue = $rolledValue;
+        $this->rolledNumber = $rolledNumber;
         $this->diceRollEvaluator = $diceRollEvaluator;
         $this->rollSequence = $rollSequence;
     }
@@ -48,15 +48,15 @@ class DiceRoll extends StrictObject
     /**
      * @return StrictInteger
      */
-    public function getRolledValue()
+    public function getRolledNumber()
     {
-        return $this->rolledValue;
+        return $this->rolledNumber;
     }
 
     /**
-     * @return int
+     * @return StrictInteger
      */
-    public function getValue()
+    public function getEvaluatedValue()
     {
         return $this->diceRollEvaluator->evaluateDiceRoll($this);
     }

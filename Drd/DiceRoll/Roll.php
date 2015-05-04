@@ -125,10 +125,10 @@ class Roll extends StrictObject implements RollInterface
     {
         $this->resetLastDiceRolls();
         $this->processStandardRolls();
-        $standardRollSummary = $this->getLastStandardRollSummary();
-        if ($this->bonusRollOn->shouldHappen($standardRollSummary)) {
+        $standardRollNumbersSum = $this->getLastStandardRollNumbersSum();
+        if ($this->bonusRollOn->shouldHappen($standardRollNumbersSum)) {
             $this->processBonusRolls();
-        } else if ($this->malusRollOn->shouldHappen($standardRollSummary)) {
+        } else if ($this->malusRollOn->shouldHappen($standardRollNumbersSum)) {
             $this->processMalusRolls();
         }
 
@@ -159,7 +159,7 @@ class Roll extends StrictObject implements RollInterface
     {
         return $this->getDiceRollBuilder()->create(
             $this->dice,
-            new StrictInteger($this->rollValue($this->dice)),
+            new StrictInteger($this->rollNumber($this->dice)),
             $rollSequence
         );
     }
@@ -169,7 +169,7 @@ class Roll extends StrictObject implements RollInterface
      *
      * @return int
      */
-    private function rollValue(DiceInterface $dice)
+    private function rollNumber(DiceInterface $dice)
     {
         return mt_rand($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue());
     }
@@ -265,7 +265,7 @@ class Roll extends StrictObject implements RollInterface
         return array_merge(
             array_map(
                 function (DiceRoll $diceRoll) {
-                    return $diceRoll->getRolledValue();
+                    return $diceRoll->getRolledNumber();
                 },
                 $diceRolls
             )
@@ -287,7 +287,24 @@ class Roll extends StrictObject implements RollInterface
      */
     private function summarizeDiceRolls(array $diceRolls)
     {
-        return $this->summarizeValues($this->extractRolledNumbers($diceRolls));
+        return $this->summarizeValues($this->extractRolledValues($diceRolls));
+    }
+
+    /**
+     * @param array|DiceRoll[] $diceRolls
+     *
+     * @return array|StrictInteger[]
+     */
+    private function extractRolledValues(array $diceRolls)
+    {
+        return array_merge(
+            array_map(
+                function (DiceRoll $diceRoll) {
+                    return $diceRoll->getEvaluatedValue();
+                },
+                $diceRolls
+            )
+        );
     }
 
     /**
@@ -310,9 +327,9 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @return int
      */
-    private function getLastStandardRollSummary()
+    private function getLastStandardRollNumbersSum()
     {
-        return $this->summarizeDiceRolls($this->lastStandardDiceRolls);
+        return $this->summarizeValues($this->extractRolledNumbers($this->lastStandardDiceRolls));
     }
 
     /**
