@@ -35,15 +35,15 @@ class DiceRollBuilderTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Dice $dice */
         $dice = \Mockery::mock(Dice::class);
-        /** @var StrictInteger|\Mockery\MockInterface $rolledValue */
-        $rolledValue = \Mockery::mock(StrictInteger::class);
+        /** @var StrictInteger|\Mockery\MockInterface $rolledNumber */
+        $rolledNumber = \Mockery::mock(StrictInteger::class);
         /** @var StrictInteger $rollSequence */
         $rollSequence = \Mockery::mock(StrictInteger::class);
-        $diceRoll = $diceRollBuilder->create($dice, $rolledValue, $rollSequence);
+        $diceRoll = $diceRollBuilder->create($dice, $rolledNumber, $rollSequence);
         $this->assertInstanceOf(DiceRoll::class, $diceRoll);
         $this->assertSame($dice, $diceRoll->getDice());
-        $this->assertSame($rolledValue, $diceRoll->getRolledValue());
-        $rolledValue->shouldReceive('getValue')
+        $this->assertSame($rolledNumber, $diceRoll->getRolledNumber());
+        $rolledNumber->shouldReceive('getValue')
             ->andReturn($value = 'foo');
         /** @var \Mockery\MockInterface $diceRollEvaluator */
         $diceRollEvaluator = $diceRollBuilder->getDiceRollEvaluator();
@@ -51,7 +51,7 @@ class DiceRollBuilderTest extends \PHPUnit_Framework_TestCase
             ->with($diceRoll)
             ->once()
             ->andReturn($evaluatedValue = 'bar');
-        $this->assertSame($evaluatedValue, $diceRoll->getValue());
+        $this->assertSame($evaluatedValue, $diceRoll->getEvaluatedValue());
         $this->assertSame($rollSequence, $diceRoll->getRollSequence());
         $this->assertSame($diceRollBuilder->getDiceRollEvaluator(), $diceRoll->getDiceRollEvaluator());
     }

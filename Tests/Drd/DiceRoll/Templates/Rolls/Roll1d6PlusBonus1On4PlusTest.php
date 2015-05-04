@@ -76,8 +76,8 @@ class Roll1d6PlusBonus1On4PlusTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThanOrEqual($bonusDiceRollCount - 1, $roll1d6PlusBonus1On4Plus->getBonusRollOn()->getRoll()->getLastRollSummary());
         $this->assertLessThanOrEqual(
             $rolledValue, // standard roll + one or MORE bonus rolls
-            $roll1d6PlusBonus1On4Plus->getLastStandardDiceRolls()[0]->getValue()->getValue()
-            + $roll1d6PlusBonus1On4Plus->getBonusRollOn()->getRoll()->getLastStandardDiceRolls()[0]->getValue()->getValue()
+            $roll1d6PlusBonus1On4Plus->getLastStandardDiceRolls()[0]->getEvaluatedValue()->getValue()
+            + $roll1d6PlusBonus1On4Plus->getBonusRollOn()->getRoll()->getLastStandardDiceRolls()[0]->getEvaluatedValue()->getValue()
         );
         $this->assertGreaterThanOrEqual(4, $roll1d6PlusBonus1On4Plus->getBonusRollOn()->getRoll()->getLastStandardDiceRolls()[0]->getRolledNumber()->getValue());
         $this->assertFalse($roll1d6PlusBonus1On4Plus->getMalusRollOn()->happened());

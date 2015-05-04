@@ -26,14 +26,14 @@ class DiceRollBuilder extends StrictObject implements DiceRollBuilderInterface
 
     /**
      * @param DiceInterface $dice
-     * @param StrictInteger $rolledValue
+     * @param StrictInteger $rolledNumber
      * @param StrictInteger $rollSequence
      *
      * @return DiceRoll
      */
-    public function create(DiceInterface $dice, StrictInteger $rolledValue, StrictInteger $rollSequence)
+    public function create(DiceInterface $dice, StrictInteger $rolledNumber, StrictInteger $rollSequence)
     {
-        return new DiceRoll($dice, $rolledValue, $this->diceRollEvaluator, $rollSequence);
+        return new DiceRoll($dice, $rolledNumber, $this->diceRollEvaluator, $rollSequence);
     }
 
 }
