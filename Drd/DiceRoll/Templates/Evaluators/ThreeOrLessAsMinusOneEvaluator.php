@@ -15,7 +15,7 @@ class ThreeOrLessAsMinusOneEvaluator extends StrictObject implements DiceRollEva
      */
     public function evaluateDiceRoll(DiceRoll $diceRoll)
     {
-        return $diceRoll->getRolledNumber()->getValue() < 3
+        return $diceRoll->getRolledNumber()->getValue() <= 3
             ? new StrictInteger(-1)
             : new StrictInteger(0);
     }
