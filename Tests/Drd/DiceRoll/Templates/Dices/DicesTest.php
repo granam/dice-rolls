@@ -18,6 +18,7 @@ class DicesTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException \LogicException
+     * @depends can_create_instance
      */
     public function without_dices_exception_is_thrown()
     {
@@ -27,6 +28,7 @@ class DicesTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException \LogicException
+     * @depends can_create_instance
      */
     public function non_dice_parameter_cause_exception()
     {
@@ -36,6 +38,7 @@ class DicesTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException \LogicException
+     * @depends can_create_instance
      */
     public function null_as_dice_parameter_cause_exception()
     {
@@ -44,6 +47,7 @@ class DicesTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @depends can_create_instance
      */
     public function minimum_is_sum_of_dices_minimum()
     {
@@ -65,6 +69,7 @@ class DicesTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @depends can_create_instance
      */
     public function maximum_is_sum_of_dices_maximum()
     {
