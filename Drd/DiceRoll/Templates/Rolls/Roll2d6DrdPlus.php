@@ -15,7 +15,7 @@ use Granam\Strict\Integer\StrictInteger;
  *
  * 2x1d6; 12 = bonus roll by 1x1d6 => 1-3 = 0, 4-6 = +1 and rolls again; 2 = malus roll by 1x1d6 => 1-3 = -1 and rolls again, 4-6 = 0
  */
-class Roll2d6PlusBonus1Plus1On12Malus1MinusOn2 extends Roll
+class Roll2d6DrdPlus extends Roll
 {
     public function __construct()
     {
