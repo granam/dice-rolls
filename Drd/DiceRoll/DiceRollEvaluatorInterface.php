@@ -1,12 +1,14 @@
 <?php
 namespace Drd\DiceRoll;
 
+use Granam\Strict\Integer\StrictInteger;
+
 interface DiceRollEvaluatorInterface
 {
 
     /**
      * @param DiceRoll $diceRoll
-     * @return int
+     * @return StrictInteger
      */
     public function evaluateDiceRoll(DiceRoll $diceRoll);
 }
