@@ -1,34 +1,39 @@
 {
-    "name": "drd/dice-roll",
-    "license": "MIT",
-    "authors": [
-        {
-          "name": "Jaroslav Týc",
-          "homepage": "http://jaroslav.com",
-          "role": "Original author"
-        }
-    ],
-    "type": "project",
-    "description": "Configurable roll of a dice",
-    "keywords": [
-        "php",
-        "dice",
-        "roll",
-        "configurable"
-    ],
-    "homepage": "https://github.com/jaroslavtyc/drd-dice-roll",
-    "autoload": {
-        "psr-4": { "Drd\\": "Drd/" }
-    },
-    "require": {
-        "php": ">=5.5",
-      "granam/exception-hierarchy": "dev-master",
-      "granam/strict-object": "dev-master",
-      "granam/strict-scalar": "dev-master",
-      "granam/strict-integer": "dev-master"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~4.4",
-        "mockery/mockery": ">=0.9"
+  "name": "drd/dice-roll",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jaroslav Týc",
+      "homepage": "http://jaroslav.com",
+      "role": "Original author"
     }
+  ],
+  "type": "project",
+  "description": "Configurable roll of a dice",
+  "keywords": [
+    "php",
+    "dice",
+    "roll",
+    "configurable",
+    "drd",
+    "drd+",
+    "drd2",
+    "D&D",
+    "Dungeon and dragons"
+  ],
+  "homepage": "https://github.com/jaroslavtyc/drd-dice-roll",
+  "autoload": {
+    "psr-4": {"Drd\\": "Drd/"}
+  },
+  "require": {
+    "php": ">=5.5",
+    "granam/exception-hierarchy": "dev-master",
+    "granam/strict-object": "dev-master",
+    "granam/strict-scalar": "dev-master",
+    "granam/strict-integer": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.4",
+    "mockery/mockery": ">=0.9"
+  }
 }
