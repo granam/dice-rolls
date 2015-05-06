@@ -2,12 +2,12 @@
 namespace Drd\DiceRoll\Templates\Rolls;
 
 use Drd\DiceRoll\DiceInterface;
-use Drd\DiceRoll\Templates\Evaluators\SixOrMoreAsOneEvaluator;
-use Drd\DiceRoll\Templates\RollOn\BonusRollOn12;
+use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneEvaluator;
+use Drd\DiceRoll\Templates\RollOn\Malus1RollOn3Minus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Granam\Strict\Integer\StrictInteger;
 
-class Roll6PlusAs1RecursiveTest extends \PHPUnit_Framework_TestCase
+class Roll3MinusAsMinus1Test extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -28,12 +28,12 @@ class Roll6PlusAs1RecursiveTest extends \PHPUnit_Framework_TestCase
         $maximum->shouldReceive('getValue')
             ->once()
             ->andReturn($maximumValue = $minimumValue + 1);
-        $instance = new Roll6PlusAs1Recursive($dice);
+        $instance = new Roll3MinusAsMinus1($dice);
         $this->assertNotNull($instance);
     }
 
     /**
-     * @return Roll6PlusAs1Recursive
+     * @return Roll3MinusAsMinus1
      *
      * @test
      * @depends can_create_instance
@@ -54,73 +54,72 @@ class Roll6PlusAs1RecursiveTest extends \PHPUnit_Framework_TestCase
         $maximum->shouldReceive('getValue')
             ->once()
             ->andReturn($maximumValue = $minimumValue + 1);
-        $roll = new Roll6PlusAs1Recursive($dice);
+        $roll = new Roll3MinusAsMinus1($dice);
         $this->assertSame($dice, $roll->getDice());
 
         return $roll;
     }
 
     /**
-     * @param Roll6PlusAs1Recursive $roll
+     * @param Roll3MinusAsMinus1 $roll
      *
      * @test
      * @depends returns_given_dice
      */
-    public function just_a_single_roll(Roll6PlusAs1Recursive $roll)
+    public function just_a_single_roll(Roll3MinusAsMinus1 $roll)
     {
         $this->assertEquals(1, $roll->getNumberOfRolls()->getValue());
     }
 
     /**
-     * @param Roll6PlusAs1Recursive $roll
+     * @param Roll3MinusAsMinus1 $roll
      *
      * @test
      * @depends returns_given_dice
      */
-    public function dice_roll_builder_uses_proper_evaluator(Roll6PlusAs1Recursive $roll)
+    public function dice_roll_builder_uses_proper_evaluator(Roll3MinusAsMinus1 $roll)
     {
         /** @var StrictInteger $rolledNumber */
         $rolledNumber = \Mockery::mock(StrictInteger::class);
         /** @var StrictInteger $rollSequence */
         $rollSequence = \Mockery::mock(StrictInteger::class);
         $diceRoll = $roll->getDiceRollBuilder()->create($roll->getDice(), $rolledNumber, $rollSequence);
-        $this->assertInstanceOf(SixOrMoreAsOneEvaluator::class, $diceRoll->getDiceRollEvaluator());
+        $this->assertInstanceOf(ThreeOrLessAsMinusOneEvaluator::class, $diceRoll->getDiceRollEvaluator());
     }
 
     /**
-     * @param Roll6PlusAs1Recursive $roll
-     * @return Roll6PlusAs1Recursive
+     * @param Roll3MinusAsMinus1 $roll
      *
      * @test
      * @depends returns_given_dice
      */
-    public function uses_proper_bonus_roll_on(Roll6PlusAs1Recursive $roll)
+    public function no_bonus_roll(Roll3MinusAsMinus1 $roll)
     {
-        $this->assertInstanceOf(BonusRollOn12::class, $roll->getBonusRollOn());
+        $this->assertInstanceOf(NoRollOn::class, $roll->getBonusRollOn());
+    }
+
+    /**
+     * @param Roll3MinusAsMinus1 $roll
+     * @return Roll3MinusAsMinus1
+     *
+     * @test
+     * @depends returns_given_dice
+     */
+    public function uses_proper_malus_roll_on(Roll3MinusAsMinus1 $roll)
+    {
+        $this->assertInstanceOf(Malus1RollOn3Minus::class, $roll->getMalusRollOn());
 
         return $roll;
     }
 
     /**
-     * @param Roll6PlusAs1Recursive $roll
+     * @param Roll3MinusAsMinus1 $roll
      *
      * @test
-     * @depends uses_proper_bonus_roll_on
+     * @depends uses_proper_malus_roll_on
      */
-    public function bonus_roll_on_creates_roll_of_tested_type(Roll6PlusAs1Recursive $roll)
+    public function malus_roll_on_creates_roll_of_tested_type(Roll3MinusAsMinus1 $roll)
     {
-        $this->assertInstanceOf(Roll6PlusAs1Recursive::class, $roll->getBonusRollOn()->getRoll());
+        $this->assertInstanceOf(Roll3MinusAsMinus1::class, $roll->getMalusRollOn()->getRoll());
     }
-
-    /**
-     * @param Roll6PlusAs1Recursive $roll
-     *
-     * @test
-     * @depends returns_given_dice
-     */
-    public function no_malus_roll(Roll6PlusAs1Recursive $roll)
-    {
-        $this->assertInstanceOf(NoRollOn::class, $roll->getMalusRollOn());
-    }
-
 }

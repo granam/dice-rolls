@@ -2,10 +2,10 @@
 namespace Drd\DiceRoll\Templates\Rolls\Builders;
 
 use Drd\DiceRoll\DiceInterface;
-use Drd\DiceRoll\Templates\Rolls\Roll4PlusAs1Recursive;
+use Drd\DiceRoll\Templates\Rolls\Roll6PlusAs1;
 use Granam\Strict\Integer\StrictInteger;
 
-class Roll4PlusAs1RecursiveBuilderTest extends \PHPUnit_Framework_TestCase
+class Roll6PlusAs1BuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @return Roll1d6PlusBuilder
@@ -16,7 +16,7 @@ class Roll4PlusAs1RecursiveBuilderTest extends \PHPUnit_Framework_TestCase
     {
         /** @var DiceInterface $dice */
         $dice = \Mockery::mock(DiceInterface::class);
-        $instance = new Roll4PlusAs1RecursiveBuilder($dice);
+        $instance = new Roll6PlusAs1Builder($dice);
         $this->assertNotNull($instance);
     }
 
@@ -24,11 +24,11 @@ class Roll4PlusAs1RecursiveBuilderTest extends \PHPUnit_Framework_TestCase
      * @test
      * @depends can_create_instance
      */
-    public function creates_4_plus_recursive_roll()
+    public function creates_6_plus_recursive_roll()
     {
         /** @var DiceInterface|\Mockery\MockInterface $dice */
         $dice = \Mockery::mock(DiceInterface::class);
-        $builder = new Roll4PlusAs1RecursiveBuilder($dice);
+        $builder = new Roll6PlusAs1Builder($dice);
         $dice->shouldReceive('getMinimum')
             ->once()
             ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
@@ -41,18 +41,18 @@ class Roll4PlusAs1RecursiveBuilderTest extends \PHPUnit_Framework_TestCase
         $maximum->shouldReceive('getValue')
             ->once()
             ->andReturn($maximumValue = $minimumValue + 1);
-        $this->assertInstanceOf(Roll4PlusAs1Recursive::class, $builder->createRoll());
+        $this->assertInstanceOf(Roll6PlusAs1::class, $builder->createRoll());
     }
 
     /**
      * @test
-     * @depends creates_4_plus_recursive_roll
+     * @depends creates_6_plus_recursive_roll
      */
     public function created_roll_got_the_builder_dice()
     {
         /** @var DiceInterface|\Mockery\MockInterface $dice */
         $dice = \Mockery::mock(DiceInterface::class);
-        $builder = new Roll4PlusAs1RecursiveBuilder($dice);
+        $builder = new Roll6PlusAs1Builder($dice);
         $dice->shouldReceive('getMinimum')
             ->once()
             ->andReturn($minimum = \Mockery::mock(StrictInteger::class));

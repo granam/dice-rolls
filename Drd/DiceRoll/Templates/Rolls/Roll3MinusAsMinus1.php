@@ -7,10 +7,10 @@ use Drd\DiceRoll\Roll;
 use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\Malus1RollOn3Minus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
-use Drd\DiceRoll\Templates\Rolls\Builders\Roll3MinusAsMinus1RecursiveBuilder;
+use Drd\DiceRoll\Templates\Rolls\Builders\Roll3MinusAsMinus1Builder;
 use Granam\Strict\Integer\StrictInteger;
 
-class Roll3MinusAsMinus1Recursive extends Roll
+class Roll3MinusAsMinus1 extends Roll
 {
     public function __construct(DiceInterface $dice)
     {
@@ -20,7 +20,7 @@ class Roll3MinusAsMinus1Recursive extends Roll
             new DiceRollBuilder(new ThreeOrLessAsMinusOneEvaluator()), // value of 1-3 is turned into malus -1
             new NoRollOn(), // no bonus roll
             new Malus1RollOn3Minus( // in case of malus (-1) rolling continues, otherwise rolling stops
-                new Roll3MinusAsMinus1RecursiveBuilder($dice) // in case of bonus the same type of roll happens
+                new Roll3MinusAsMinus1Builder($dice) // in case of bonus the same type of roll happens
             )
         );
     }

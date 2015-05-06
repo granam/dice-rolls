@@ -3,10 +3,11 @@ namespace Drd\DiceRoll\Templates\Rolls\Builders;
 
 use Drd\DiceRoll\DiceInterface;
 use Drd\DiceRoll\RollBuilderInterface;
-use Drd\DiceRoll\Templates\Rolls\Roll4PlusAs1Recursive;
+use Drd\DiceRoll\Templates\Rolls\Roll6PlusAs1;
 
-class Roll4PlusAs1RecursiveBuilder implements RollBuilderInterface
+class Roll6PlusAs1Builder implements RollBuilderInterface
 {
+
     /**
      * @var DiceInterface
      */
@@ -18,10 +19,10 @@ class Roll4PlusAs1RecursiveBuilder implements RollBuilderInterface
     }
 
     /**
-     * @return Roll4PlusAs1Recursive
+     * @return Roll6PlusAs1
      */
     public function createRoll()
     {
-        return new Roll4PlusAs1Recursive($this->dice);
+        return new Roll6PlusAs1($this->dice);
     }
 }
