@@ -3,37 +3,37 @@ namespace Drd\DiceRoll\Templates\RollOn;
 
 use Drd\DiceRoll\RollBuilderInterface;
 
-class Malus1RollOn3MinusTest extends \PHPUnit_Framework_TestCase
+class RollOn4PlusTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      * @test
      *
-     * @return Malus1RollOn3Minus
+     * @return RollOn4Plus
      */
     public function can_create_instance()
     {
         /** @var RollBuilderInterface $rollFactory */
         $rollFactory = \Mockery::mock(RollBuilderInterface::class);
-        $instance = new Malus1RollOn3Minus($rollFactory);
+        $instance = new RollOn4Plus($rollFactory);
         $this->assertNotNull($instance);
 
         return $instance;
     }
 
     /**
-     * @param Malus1RollOn3Minus $malus1RollOn3Minus
+     * @param RollOn4Plus $bonus1RollOn4Plus
      *
      * @test
      * @depends can_create_instance
      */
-    public function should_repeat_roll_on_four_plus(Malus1RollOn3Minus $malus1RollOn3Minus)
+    public function should_repeat_roll_on_four_plus(RollOn4Plus $bonus1RollOn4Plus)
     {
         for ($rollValue = 1; $rollValue <= 6; $rollValue++) {
-            if ($rollValue <= 3) {
-                $this->assertTrue($malus1RollOn3Minus->shouldHappen($rollValue));
+            if ($rollValue >= 4) {
+                $this->assertTrue($bonus1RollOn4Plus->shouldHappen($rollValue));
             } else {
-                $this->assertFalse($malus1RollOn3Minus->shouldHappen($rollValue), "Value of $rollValue should not trigger repeat roll");
+                $this->assertFalse($bonus1RollOn4Plus->shouldHappen($rollValue), "Value of $rollValue should not trigger repeat roll");
             }
         }
     }

@@ -3,7 +3,7 @@ namespace Drd\DiceRoll\Templates\Rolls;
 
 use Drd\DiceRoll\DiceInterface;
 use Drd\DiceRoll\Templates\Evaluators\SixOrMoreAsOneEvaluator;
-use Drd\DiceRoll\Templates\RollOn\BonusRollOn12;
+use Drd\DiceRoll\Templates\RollOn\RollOn12;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Granam\Strict\Integer\StrictInteger;
 
@@ -96,7 +96,7 @@ class Roll6PlusAs1Test extends \PHPUnit_Framework_TestCase
      */
     public function uses_proper_bonus_roll_on(Roll6PlusAs1 $roll)
     {
-        $this->assertInstanceOf(BonusRollOn12::class, $roll->getBonusRollOn());
+        $this->assertInstanceOf(RollOn12::class, $roll->getBonusRollOn());
 
         return $roll;
     }

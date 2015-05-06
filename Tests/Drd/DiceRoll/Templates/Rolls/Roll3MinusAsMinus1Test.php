@@ -3,7 +3,7 @@ namespace Drd\DiceRoll\Templates\Rolls;
 
 use Drd\DiceRoll\DiceInterface;
 use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneEvaluator;
-use Drd\DiceRoll\Templates\RollOn\Malus1RollOn3Minus;
+use Drd\DiceRoll\Templates\RollOn\RollOn3Minus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Granam\Strict\Integer\StrictInteger;
 
@@ -107,7 +107,7 @@ class Roll3MinusAsMinus1Test extends \PHPUnit_Framework_TestCase
      */
     public function uses_proper_malus_roll_on(Roll3MinusAsMinus1 $roll)
     {
-        $this->assertInstanceOf(Malus1RollOn3Minus::class, $roll->getMalusRollOn());
+        $this->assertInstanceOf(RollOn3Minus::class, $roll->getMalusRollOn());
 
         return $roll;
     }

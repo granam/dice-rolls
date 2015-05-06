@@ -3,7 +3,7 @@ namespace Drd\DiceRoll\Templates\RollOn;
 
 use Drd\DiceRoll\AbstractRollOn;
 
-class Malus1RollOn3Minus extends AbstractRollOn
+class RollOn6 extends AbstractRollOn
 {
 
     /**
@@ -13,7 +13,7 @@ class Malus1RollOn3Minus extends AbstractRollOn
      */
     public function shouldHappen($rolledValue)
     {
-        return intval($rolledValue) <= 3;
+        return intval($rolledValue) === 6;
     }
 
 }
