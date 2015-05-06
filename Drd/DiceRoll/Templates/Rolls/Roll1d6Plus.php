@@ -18,7 +18,7 @@ class Roll1d6Plus extends Roll
             new Dice1d6(),
             new StrictInteger(1),
             new DiceRollBuilder(new OneToOneEvaluator()),
-            new BonusRollOn6(new Roll1d6PlusBuilder()), // bonus
+            new BonusRollOn6(new Roll1d6PlusBuilder()), // on 6 rolls recursively continue
             new NoRollOn() // no malus
         );
     }
