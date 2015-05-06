@@ -45,7 +45,7 @@ class Roll1d10Test extends \PHPUnit_Framework_TestCase
      */
     public function single_roll_only(Roll1d10 $roll1d10)
     {
-        $this->assertSame(1, $roll1d10->getNumberOfRolls()->getValue());
+        $this->assertSame(1, $roll1d10->getNumberOfStandardRolls()->getValue());
         $this->assertGreaterThanOrEqual($roll1d10->getDice()->getMinimum()->getValue(), $roll1d10->roll());
         $this->assertLessThanOrEqual($roll1d10->getDice()->getMaximum()->getValue(), $roll1d10->roll());
     }

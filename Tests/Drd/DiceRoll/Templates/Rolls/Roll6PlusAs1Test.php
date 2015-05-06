@@ -68,7 +68,7 @@ class Roll6PlusAs1Test extends \PHPUnit_Framework_TestCase
      */
     public function just_a_single_roll(Roll6PlusAs1 $roll)
     {
-        $this->assertEquals(1, $roll->getNumberOfRolls()->getValue());
+        $this->assertEquals(1, $roll->getNumberOfStandardRolls()->getValue());
     }
 
     /**

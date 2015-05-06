@@ -234,7 +234,7 @@ class RollTest extends \PHPUnit_Framework_TestCase
             ->andReturn(false);
         $roll = new Roll($dice, $numberOfRolls, $diceRollBuilder, $bonusRollOn, $malusRollOn);
         $this->assertSame($dice, $roll->getDice());
-        $this->assertSame($numberOfRolls, $roll->getNumberOfRolls());
+        $this->assertSame($numberOfRolls, $roll->getNumberOfStandardRolls());
         $this->assertSame($bonusRollOn, $roll->getBonusRollOn());
         $this->assertSame($malusRollOn, $roll->getMalusRollOn());
     }

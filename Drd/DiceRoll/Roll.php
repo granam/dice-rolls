@@ -14,7 +14,7 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @var StrictInteger
      */
-    private $numberOfRolls;
+    private $numberOfStandardRolls;
     /**
      * @var DiceRollEvaluatorInterface
      */
@@ -42,30 +42,30 @@ class Roll extends StrictObject implements RollInterface
 
     /**
      * @param DiceInterface $dice
-     * @param StrictInteger $numberOfRolls
+     * @param StrictInteger $numberOfStandardRolls
      * @param DiceRollBuilderInterface $diceRollBuilder ,
      * @param RollOnInterface $bonusRollOn
      * @param RollOnInterface $malusRollOn malus roll itself is responsible for negative or positive numbers
      */
     public function __construct(
         DiceInterface $dice,
-        StrictInteger $numberOfRolls,
+        StrictInteger $numberOfStandardRolls,
         DiceRollBuilderInterface $diceRollBuilder,
         RollOnInterface $bonusRollOn,
         RollOnInterface $malusRollOn
     )
     {
         $this->checkDice($dice);
-        $this->checkNumberOfRolls($numberOfRolls);
+        $this->checkNumberOfStandardRolls($numberOfStandardRolls);
         $this->checkBonusAndMalusConflicts($dice, $bonusRollOn, $malusRollOn);
         $this->dice = $dice;
-        $this->numberOfRolls = $numberOfRolls;
+        $this->numberOfStandardRolls = $numberOfStandardRolls;
         $this->diceRollBuilder = $diceRollBuilder;
         $this->bonusRollOn = $bonusRollOn;
         $this->malusRollOn = $malusRollOn;
     }
 
-    private function checkNumberOfRolls(StrictInteger $rollNumber)
+    private function checkNumberOfStandardRolls(StrictInteger $rollNumber)
     {
         if ($rollNumber->getValue() <= 0) {
             throw new \LogicException(
@@ -143,7 +143,7 @@ class Roll extends StrictObject implements RollInterface
 
     private function processStandardRolls()
     {
-        for ($rollSequenceValue = 1; $rollSequenceValue <= $this->numberOfRolls->getValue(); $rollSequenceValue++) {
+        for ($rollSequenceValue = 1; $rollSequenceValue <= $this->numberOfStandardRolls->getValue(); $rollSequenceValue++) {
             $rollSequence = new StrictInteger($rollSequenceValue);
             $standardDiceRoll = $this->rollDice($rollSequence);
             $this->addLastStandardDiceRoll($standardDiceRoll);
@@ -210,9 +210,9 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @return StrictInteger
      */
-    public function getNumberOfRolls()
+    public function getNumberOfStandardRolls()
     {
-        return $this->numberOfRolls;
+        return $this->numberOfStandardRolls;
     }
 
     /**

@@ -45,7 +45,7 @@ class Roll1d6PlusBonus1On4PlusTest extends \PHPUnit_Framework_TestCase
      */
     public function at_least_one_roll(Roll1d6PlusBonus1On4Plus $roll1d6PlusBonus1On4Plus)
     {
-        $this->assertSame(1, $roll1d6PlusBonus1On4Plus->getNumberOfRolls()->getValue());
+        $this->assertSame(1, $roll1d6PlusBonus1On4Plus->getNumberOfStandardRolls()->getValue());
         $this->assertGreaterThanOrEqual($roll1d6PlusBonus1On4Plus->getDice()->getMinimum()->getValue(), $roll1d6PlusBonus1On4Plus->roll());
         $this->greaterThanOrEqual(1, count($roll1d6PlusBonus1On4Plus->getLastDiceRolls()));
     }
