@@ -1,6 +1,8 @@
-### Let's roll!
-### Custom dices & rolls
-### Install
+[Let's roll!](#lets-roll)
+
+[Custom dices & rolls](#custom-dices--rolls)
+
+[Install](#install)
 
 ## Let's roll!
 
