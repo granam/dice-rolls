@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jaroslavtyc/drd-dice-roll.svg?branch=master)](https://travis-ci.org/jaroslavtyc/drd-dice-roll)
+
 [Let's roll!](#lets-roll)
 
 [Custom dices & rolls](#custom-dices--rolls)
