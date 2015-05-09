@@ -24,9 +24,10 @@ $roll2d6DrdPlus = new Roll2d6DrdPlus();
 while ($roll2d6DrdPlus->roll() <= 12) {
     echo 'Still no bonus :( ...';
 }
-echo 'There it is! Bonus roll comes, with final value of ' . $roll2d6DrdPlus->getLastRollSummary() . '
+echo 'There it is! Bonus roll comes, with final value of '
+. $roll2d6DrdPlus->getLastRollSummary() . '
 Rolls where quite dramatic, consider by yourself: ';
-foreach ($roll2d6DrdPlus->getLastDiceRolls as $diceRoll) {
+foreach ($roll2d6DrdPlus->getLastDiceRolls() as $diceRoll) {
     echo 'Rolled number ' . $diceRoll->getRolledNumber() . ', evaluated as value ' . $diceRoll->getEvaluatedValue(); 
 }
 ```
