@@ -1,16 +1,16 @@
 <?php
 namespace Drd\DiceRoll;
 
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 interface DiceRollBuilderInterface
 {
     /**
      * @param DiceInterface $dice
-     * @param StrictInteger $rolledNumber
-     * @param StrictInteger $rollSequence
+     * @param IntegerObject $rolledNumber
+     * @param IntegerObject $rollSequence
      *
      * @return DiceRoll
      */
-    public function create(DiceInterface $dice, StrictInteger $rolledNumber, StrictInteger $rollSequence);
+    public function create(DiceInterface $dice, IntegerObject $rolledNumber, IntegerObject $rollSequence);
 }

@@ -5,7 +5,7 @@ use Drd\DiceRoll\DiceInterface;
 use Drd\DiceRoll\Templates\Evaluators\SixOrMoreAsOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\RollOn12;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 class Roll6PlusAs1Test extends \PHPUnit_Framework_TestCase
 {
@@ -18,13 +18,13 @@ class Roll6PlusAs1Test extends \PHPUnit_Framework_TestCase
         $dice = \Mockery::mock(DiceInterface::class);
         $dice->shouldReceive('getMinimum')
             ->atLeast()->once()
-            ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($minimum = \Mockery::mock(IntegerObject::class));
         $minimum->shouldReceive('getValue')
             ->once()
             ->andReturn($minimumValue = 1);
         $dice->shouldReceive('getMaximum')
             ->atLeast()->once()
-            ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($maximum = \Mockery::mock(IntegerObject::class));
         $maximum->shouldReceive('getValue')
             ->once()
             ->andReturn($maximumValue = $minimumValue + 1);
@@ -44,13 +44,13 @@ class Roll6PlusAs1Test extends \PHPUnit_Framework_TestCase
         $dice = \Mockery::mock(DiceInterface::class);
         $dice->shouldReceive('getMinimum')
             ->atLeast()->once()
-            ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($minimum = \Mockery::mock(IntegerObject::class));
         $minimum->shouldReceive('getValue')
             ->once()
             ->andReturn($minimumValue = 1);
         $dice->shouldReceive('getMaximum')
             ->atLeast()->once()
-            ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($maximum = \Mockery::mock(IntegerObject::class));
         $maximum->shouldReceive('getValue')
             ->once()
             ->andReturn($maximumValue = $minimumValue + 1);
@@ -79,10 +79,10 @@ class Roll6PlusAs1Test extends \PHPUnit_Framework_TestCase
      */
     public function dice_roll_builder_uses_proper_evaluator(Roll6PlusAs1 $roll)
     {
-        /** @var StrictInteger $rolledNumber */
-        $rolledNumber = \Mockery::mock(StrictInteger::class);
-        /** @var StrictInteger $rollSequence */
-        $rollSequence = \Mockery::mock(StrictInteger::class);
+        /** @var IntegerObject $rolledNumber */
+        $rolledNumber = \Mockery::mock(IntegerObject::class);
+        /** @var IntegerObject $rollSequence */
+        $rollSequence = \Mockery::mock(IntegerObject::class);
         $diceRoll = $roll->getDiceRollBuilder()->create($roll->getDice(), $rolledNumber, $rollSequence);
         $this->assertInstanceOf(SixOrMoreAsOneEvaluator::class, $diceRoll->getDiceRollEvaluator());
     }

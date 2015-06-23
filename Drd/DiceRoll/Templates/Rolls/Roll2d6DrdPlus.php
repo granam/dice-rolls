@@ -9,7 +9,7 @@ use Drd\DiceRoll\Templates\RollOn\RollOn12;
 use Drd\DiceRoll\Templates\RollOn\RollOn2;
 use Drd\DiceRoll\Templates\Rolls\Builders\Roll3MinusAsMinus1Builder;
 use Drd\DiceRoll\Templates\Rolls\Builders\Roll4PlusAs1Builder;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 /**
  * 2x1d6; 12 = bonus roll by 1x1d6 => 1-3 = 0, 4-6 = +1 and rolls again; 2 = malus roll by 1x1d6 => 1-3 = -1 and rolls again, 4-6 = 0
@@ -21,7 +21,7 @@ class Roll2d6DrdPlus extends Roll
         $dice1d6 = new Dice1d6();
         parent::__construct(
             $dice1d6,
-            new StrictInteger(2), // number of rolls = 2
+            new IntegerObject(2), // number of rolls = 2
             new DiceRollBuilder(new OneToOneEvaluator()), // rolled value remains untouched
             new RollOn12( // bonus happens on sum roll value of 12 (both rolls summarized)
                 new Roll4PlusAs1Builder($dice1d6) // bonus roll by 1d6; 1-3 = +0; 4-6 = +1; repeatedly in case of bonus

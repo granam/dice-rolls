@@ -2,7 +2,7 @@
 namespace Drd\DiceRoll\Templates\Evaluators;
 
 use Drd\DiceRoll\DiceRoll;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 class OneToOneEvaluatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +27,7 @@ class OneToOneEvaluatorTest extends \PHPUnit_Framework_TestCase
         $diceRoll = \Mockery::mock(DiceRoll::class);
         $diceRoll->shouldReceive('getRolledNumber')
             ->once()
-            ->andReturn($rolledNumber = \Mockery::mock(StrictInteger::class));
+            ->andReturn($rolledNumber = \Mockery::mock(IntegerObject::class));
         $rolledNumber->shouldReceive('getValue')
             ->atLeast()->once()
             ->andReturnValues($values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);

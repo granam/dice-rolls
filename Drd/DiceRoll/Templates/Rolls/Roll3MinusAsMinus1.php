@@ -8,7 +8,7 @@ use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\RollOn3Minus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Drd\DiceRoll\Templates\Rolls\Builders\Roll3MinusAsMinus1Builder;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 class Roll3MinusAsMinus1 extends Roll
 {
@@ -16,7 +16,7 @@ class Roll3MinusAsMinus1 extends Roll
     {
         parent::__construct(
             $dice,
-            new StrictInteger(1), // just a single roll of the dice
+            new IntegerObject(1), // just a single roll of the dice
             new DiceRollBuilder(new ThreeOrLessAsMinusOneEvaluator()), // value of 1-3 is turned into malus -1
             new NoRollOn(), // no bonus roll
             new RollOn3Minus( // in case of malus (-1) rolling continues, otherwise rolling stops

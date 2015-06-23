@@ -3,7 +3,7 @@ namespace Drd\DiceRoll\Templates\Evaluators;
 
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\DiceRollEvaluatorInterface;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 use Granam\Strict\Object\StrictObject;
 
 class OneToOneEvaluator extends StrictObject implements DiceRollEvaluatorInterface
@@ -11,7 +11,7 @@ class OneToOneEvaluator extends StrictObject implements DiceRollEvaluatorInterfa
 
     /**
      * @param DiceRoll $diceRoll
-     * @return StrictInteger
+     * @return IntegerObject
      */
     public function evaluateDiceRoll(DiceRoll $diceRoll)
     {

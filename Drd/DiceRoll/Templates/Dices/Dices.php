@@ -3,7 +3,7 @@ namespace Drd\DiceRoll\Templates\Dices;
 
 use Drd\DiceRoll\Dice;
 use Drd\DiceRoll\DiceInterface;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 use Granam\Strict\Object\StrictObject;
 
 class Dices extends StrictObject implements DiceInterface
@@ -13,11 +13,11 @@ class Dices extends StrictObject implements DiceInterface
      */
     private $dices;
     /**
-     * @var StrictInteger
+     * @var IntegerObject
      */
     private $minimum;
     /**
-     * @var StrictInteger
+     * @var IntegerObject
      */
     private $maximum;
 
@@ -47,7 +47,7 @@ class Dices extends StrictObject implements DiceInterface
     }
 
     /**
-     * @return StrictInteger
+     * @return IntegerObject
      */
     public function getMinimum()
     {
@@ -59,11 +59,11 @@ class Dices extends StrictObject implements DiceInterface
     }
 
     /**
-     * @return StrictInteger
+     * @return IntegerObject
      */
     private function createMinimum()
     {
-        return new StrictInteger(
+        return new IntegerObject(
             array_sum(
                 array_map(
                     function (DiceInterface $dice) {
@@ -76,7 +76,7 @@ class Dices extends StrictObject implements DiceInterface
     }
 
     /**
-     * @return StrictInteger
+     * @return IntegerObject
      */
     public function getMaximum()
     {
@@ -88,11 +88,11 @@ class Dices extends StrictObject implements DiceInterface
     }
 
     /**
-     * @return StrictInteger
+     * @return IntegerObject
      */
     private function createMaximum()
     {
-        return new StrictInteger(
+        return new IntegerObject(
             array_sum(
                 array_map(
                     function (DiceInterface $dice) {

@@ -2,12 +2,12 @@
 namespace Drd\DiceRoll\Templates\Dices;
 
 use Drd\DiceRoll\Dice;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 class Dice1d10 extends Dice {
 
     public function __construct()
     {
-        parent::__construct(new StrictInteger(1), new StrictInteger(10));
+        parent::__construct(new IntegerObject(1), new IntegerObject(10));
     }
 }

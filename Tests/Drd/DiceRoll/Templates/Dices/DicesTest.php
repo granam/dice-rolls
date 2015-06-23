@@ -2,7 +2,7 @@
 namespace Drd\DiceRoll\Templates\Dices;
 
 use Drd\DiceRoll\DiceInterface;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 class DicesTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,13 +54,13 @@ class DicesTest extends \PHPUnit_Framework_TestCase
         $dices = new Dices([$firstDice = \Mockery::mock(DiceInterface::class), $secondDice = \Mockery::mock(DiceInterface::class)]);
         $firstDice->shouldReceive('getMinimum')
             ->once()
-            ->andReturn($firstMinimum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($firstMinimum = \Mockery::mock(IntegerObject::class));
         $firstMinimum->shouldReceive('getValue')
             ->once()
             ->andReturn($firstMinimumValue = 123);
         $secondDice->shouldReceive('getMinimum')
             ->once()
-            ->andReturn($secondMinimum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($secondMinimum = \Mockery::mock(IntegerObject::class));
         $secondMinimum->shouldReceive('getValue')
             ->once()
             ->andReturn($secondMinimumValue = 456);
@@ -76,13 +76,13 @@ class DicesTest extends \PHPUnit_Framework_TestCase
         $dices = new Dices([$firstDice = \Mockery::mock(DiceInterface::class), $secondDice = \Mockery::mock(DiceInterface::class)]);
         $firstDice->shouldReceive('getMaximum')
             ->once()
-            ->andReturn($firstMaximum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($firstMaximum = \Mockery::mock(IntegerObject::class));
         $firstMaximum->shouldReceive('getValue')
             ->once()
             ->andReturn($firstMaximumValue = 123);
         $secondDice->shouldReceive('getMaximum')
             ->once()
-            ->andReturn($secondMaximum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($secondMaximum = \Mockery::mock(IntegerObject::class));
         $secondMaximum->shouldReceive('getValue')
             ->once()
             ->andReturn($secondMaximumValue = 456);

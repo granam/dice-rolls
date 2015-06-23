@@ -1,7 +1,7 @@
 <?php
 namespace Drd\DiceRoll;
 
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 class DiceRollBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,10 +35,10 @@ class DiceRollBuilderTest extends \PHPUnit_Framework_TestCase
     {
         /** @var Dice $dice */
         $dice = \Mockery::mock(Dice::class);
-        /** @var StrictInteger|\Mockery\MockInterface $rolledNumber */
-        $rolledNumber = \Mockery::mock(StrictInteger::class);
-        /** @var StrictInteger $rollSequence */
-        $rollSequence = \Mockery::mock(StrictInteger::class);
+        /** @var IntegerObject|\Mockery\MockInterface $rolledNumber */
+        $rolledNumber = \Mockery::mock(IntegerObject::class);
+        /** @var IntegerObject $rollSequence */
+        $rollSequence = \Mockery::mock(IntegerObject::class);
         $diceRoll = $diceRollBuilder->create($dice, $rolledNumber, $rollSequence);
         $this->assertInstanceOf(DiceRoll::class, $diceRoll);
         $this->assertSame($dice, $diceRoll->getDice());

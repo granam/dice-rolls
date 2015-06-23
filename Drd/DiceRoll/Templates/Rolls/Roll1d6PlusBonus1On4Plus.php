@@ -8,7 +8,7 @@ use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\RollOn4Plus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Drd\DiceRoll\Templates\Rolls\Builders\Roll4PlusAs1Builder;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 class Roll1d6PlusBonus1On4Plus extends Roll
 {
@@ -17,7 +17,7 @@ class Roll1d6PlusBonus1On4Plus extends Roll
         $dice1d6 = new Dice1d6();
         parent::__construct(
             $dice1d6,
-            new StrictInteger(1), // just a single roll of the dice
+            new IntegerObject(1), // just a single roll of the dice
             new DiceRollBuilder(new OneToOneEvaluator()), // rolled value = final roll value
             new RollOn4Plus(new Roll4PlusAs1Builder($dice1d6)), // 4-6 => roll again; bonus roll 1d6, 4-6 = +1 and roll again
             new NoRollOn() // no malus roll

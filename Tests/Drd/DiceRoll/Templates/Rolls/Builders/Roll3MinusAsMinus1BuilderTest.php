@@ -3,7 +3,7 @@ namespace Drd\DiceRoll\Templates\Rolls\Builders;
 
 use Drd\DiceRoll\DiceInterface;
 use Drd\DiceRoll\Templates\Rolls\Roll3MinusAsMinus1;
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 
 class Roll3MinusAsMinus1BuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,13 +31,13 @@ class Roll3MinusAsMinus1BuilderTest extends \PHPUnit_Framework_TestCase
         $builder = new Roll3MinusAsMinus1Builder($dice);
         $dice->shouldReceive('getMinimum')
             ->once()
-            ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($minimum = \Mockery::mock(IntegerObject::class));
         $minimum->shouldReceive('getValue')
             ->once()
             ->andReturn($minimumValue = 1);
         $dice->shouldReceive('getMaximum')
             ->once()
-            ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($maximum = \Mockery::mock(IntegerObject::class));
         $maximum->shouldReceive('getValue')
             ->once()
             ->andReturn($maximumValue = $minimumValue + 1);
@@ -55,13 +55,13 @@ class Roll3MinusAsMinus1BuilderTest extends \PHPUnit_Framework_TestCase
         $builder = new Roll3MinusAsMinus1Builder($dice);
         $dice->shouldReceive('getMinimum')
             ->once()
-            ->andReturn($minimum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($minimum = \Mockery::mock(IntegerObject::class));
         $minimum->shouldReceive('getValue')
             ->once()
             ->andReturn($minimumValue = 1);
         $dice->shouldReceive('getMaximum')
             ->once()
-            ->andReturn($maximum = \Mockery::mock(StrictInteger::class));
+            ->andReturn($maximum = \Mockery::mock(IntegerObject::class));
         $maximum->shouldReceive('getValue')
             ->once()
             ->andReturn($maximumValue = $minimumValue + 1);

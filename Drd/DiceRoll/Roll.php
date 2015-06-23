@@ -1,7 +1,7 @@
 <?php
 namespace Drd\DiceRoll;
 
-use Granam\Strict\Integer\StrictInteger;
+use Granam\Integer\IntegerObject;
 use Granam\Strict\Object\StrictObject;
 
 class Roll extends StrictObject implements RollInterface
@@ -12,7 +12,7 @@ class Roll extends StrictObject implements RollInterface
      */
     private $dice;
     /**
-     * @var StrictInteger
+     * @var IntegerObject
      */
     private $numberOfStandardRolls;
     /**
@@ -42,14 +42,14 @@ class Roll extends StrictObject implements RollInterface
 
     /**
      * @param DiceInterface $dice
-     * @param StrictInteger $numberOfStandardRolls
+     * @param IntegerObject $numberOfStandardRolls
      * @param DiceRollBuilderInterface $diceRollBuilder ,
      * @param RollOnInterface $bonusRollOn
      * @param RollOnInterface $malusRollOn malus roll itself is responsible for negative or positive numbers
      */
     public function __construct(
         DiceInterface $dice,
-        StrictInteger $numberOfStandardRolls,
+        IntegerObject $numberOfStandardRolls,
         DiceRollBuilderInterface $diceRollBuilder,
         RollOnInterface $bonusRollOn,
         RollOnInterface $malusRollOn
@@ -65,7 +65,7 @@ class Roll extends StrictObject implements RollInterface
         $this->malusRollOn = $malusRollOn;
     }
 
-    private function checkNumberOfStandardRolls(StrictInteger $rollNumber)
+    private function checkNumberOfStandardRolls(IntegerObject $rollNumber)
     {
         if ($rollNumber->getValue() <= 0) {
             throw new \LogicException(
@@ -144,22 +144,22 @@ class Roll extends StrictObject implements RollInterface
     private function processStandardRolls()
     {
         for ($rollSequenceValue = 1; $rollSequenceValue <= $this->numberOfStandardRolls->getValue(); $rollSequenceValue++) {
-            $rollSequence = new StrictInteger($rollSequenceValue);
+            $rollSequence = new IntegerObject($rollSequenceValue);
             $standardDiceRoll = $this->rollDice($rollSequence);
             $this->addLastStandardDiceRoll($standardDiceRoll);
         }
     }
 
     /**
-     * @param StrictInteger $rollSequence
+     * @param IntegerObject $rollSequence
      *
      * @return DiceRoll
      */
-    private function rollDice(StrictInteger $rollSequence)
+    private function rollDice(IntegerObject $rollSequence)
     {
         return $this->getDiceRollBuilder()->create(
             $this->dice,
-            new StrictInteger($this->rollNumber($this->dice)),
+            new IntegerObject($this->rollNumber($this->dice)),
             $rollSequence
         );
     }
@@ -208,7 +208,7 @@ class Roll extends StrictObject implements RollInterface
     }
 
     /**
-     * @return StrictInteger
+     * @return IntegerObject
      */
     public function getNumberOfStandardRolls()
     {
@@ -248,7 +248,7 @@ class Roll extends StrictObject implements RollInterface
     }
 
     /**
-     * @return array|StrictInteger[]
+     * @return array|IntegerObject[]
      */
     public function getLastRolledNumbers()
     {
@@ -258,7 +258,7 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @param array|DiceRoll[] $diceRolls
      *
-     * @return array|StrictInteger[]
+     * @return array|IntegerObject[]
      */
     private function extractRolledNumbers(array $diceRolls)
     {
@@ -293,7 +293,7 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @param array|DiceRoll[] $diceRolls
      *
-     * @return array|StrictInteger[]
+     * @return array|IntegerObject[]
      */
     private function extractRolledValues(array $diceRolls)
     {
@@ -308,7 +308,7 @@ class Roll extends StrictObject implements RollInterface
     }
 
     /**
-     * @param array|StrictInteger[] $values
+     * @param array|IntegerObject[] $values
      *
      * @return int
      */
@@ -316,7 +316,7 @@ class Roll extends StrictObject implements RollInterface
     {
         return array_sum(
             array_map(
-                function (StrictInteger $value) {
+                function (IntegerObject $value) {
                     return $value->getValue();
                 },
                 $values
