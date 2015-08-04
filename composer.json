@@ -27,7 +27,6 @@
   },
   "require": {
     "php": ">=5.5",
-    "granam/exception-hierarchy": "~1.0",
     "granam/strict-object": "~1.0",
     "granam/strict-scalar": "~1.0",
     "granam/strict-integer": "~1.0"
