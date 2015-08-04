@@ -27,10 +27,9 @@
   },
   "require": {
     "php": ">=5.5",
-    "granam/exception-hierarchy": "dev-master",
-    "granam/strict-object": "dev-master",
-    "granam/scalar": "dev-master",
-    "granam/integer": "dev-master"
+    "granam/strict-object": "~1.1",
+    "granam/scalar": "~1.0",
+    "granam/integer": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.4",
