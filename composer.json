@@ -28,7 +28,6 @@
   "require": {
     "php": ">=5.5",
     "granam/strict-object": "~1.1",
-    "granam/scalar": "~1.0",
     "granam/integer": "~1.0"
   },
   "require-dev": {

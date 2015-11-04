@@ -1,11 +1,12 @@
 <?php
 namespace Drd\DiceRoll;
 
-interface RollInterface {
+interface RollInterface
+{
 
     /**
      * @return int
      */
-    public function roll();
+    public function getLastRollSummary();
 
 }
