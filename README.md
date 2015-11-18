@@ -31,12 +31,10 @@ foreach ($roll2d6DrdPlus->getLastDiceRolls() as $diceRoll) {
     echo 'Rolled number ' . $diceRoll->getRolledNumber() . ', evaluated as value ' . $diceRoll->getEvaluatedValue(); 
 }
 ```
-There are plenty of predefined, templates of dices and rolls.
+There are plenty of predefined templates of dices and rolls as 1d4, 1d6, 1d10.
+You can mix them and any one else u create by Dices class.
 
-Dices 1d4, 1d6, 1d10, combination of any of them by Dices class.
-Rolls by one of that dices, evaluated as "what you rolled is what i got", or rolled value 4+ = 1 and rolled value 3- = 0, or 6+ = 1 and 5- = 0.
-
-Just think about your needs and check templates. Your requirements would be already satisfied by them.
+Just think about your needs and check templates. Your requirements may be already satisfied by them.
 
 
 ## Custom dices & rolls
