@@ -72,8 +72,10 @@ In your composer.json add new requirement
 "require": {
     "drd/dice-roll": "~1.0"
 }
+```
 
 And run update of that package
+
 ```
 composer.phar update drd/dice-roll
 ```
