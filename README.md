@@ -32,7 +32,7 @@ foreach ($roll2d6DrdPlus->getLastDiceRolls() as $diceRoll) {
 }
 ```
 There are plenty of predefined templates of dices and rolls as 1d4, 1d6, 1d10.
-You can mix them and any one else u create by Dices class.
+You can mix them and any other you create by Dices class.
 
 Just think about your needs and check templates. Your requirements may be already satisfied by them.
 
