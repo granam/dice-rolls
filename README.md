@@ -60,7 +60,7 @@ $roll = new Roll(
     new NoRollOn() /* no malus roll at all */
 );
 
-// here is it!
+// here it is!
 $roll->roll();
 
 ```
