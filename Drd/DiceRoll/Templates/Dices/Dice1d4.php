@@ -2,12 +2,13 @@
 namespace Drd\DiceRoll\Templates\Dices;
 
 use Drd\DiceRoll\Dice;
-use Granam\Integer\IntegerObject;
+use Drd\DiceRoll\Templates\Counts\Four;
+use Drd\DiceRoll\Templates\Counts\One;
 
 class Dice1d4 extends Dice {
 
     public function __construct()
     {
-        parent::__construct(new IntegerObject(1), new IntegerObject(4));
+        parent::__construct(One::getIt(), Four::getIt());
     }
 }

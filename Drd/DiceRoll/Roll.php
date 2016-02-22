@@ -1,6 +1,7 @@
 <?php
 namespace Drd\DiceRoll;
 
+use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
 use Granam\Strict\Object\StrictObject;
 
@@ -12,7 +13,7 @@ class Roll extends StrictObject implements RollInterface
      */
     private $dice;
     /**
-     * @var IntegerObject
+     * @var IntegerInterface
      */
     private $numberOfStandardRolls;
     /**
@@ -42,14 +43,14 @@ class Roll extends StrictObject implements RollInterface
 
     /**
      * @param DiceInterface $dice
-     * @param IntegerObject $numberOfStandardRolls
+     * @param IntegerInterface $numberOfStandardRolls
      * @param DiceRollBuilderInterface $diceRollBuilder ,
      * @param RollOnInterface $bonusRollOn
      * @param RollOnInterface $malusRollOn malus roll itself is responsible for negative or positive numbers
      */
     public function __construct(
         DiceInterface $dice,
-        IntegerObject $numberOfStandardRolls,
+        IntegerInterface $numberOfStandardRolls,
         DiceRollBuilderInterface $diceRollBuilder,
         RollOnInterface $bonusRollOn,
         RollOnInterface $malusRollOn
@@ -65,7 +66,7 @@ class Roll extends StrictObject implements RollInterface
         $this->malusRollOn = $malusRollOn;
     }
 
-    private function checkNumberOfStandardRolls(IntegerObject $rollNumber)
+    private function checkNumberOfStandardRolls(IntegerInterface $rollNumber)
     {
         if ($rollNumber->getValue() <= 0) {
             throw new \LogicException(
@@ -151,11 +152,11 @@ class Roll extends StrictObject implements RollInterface
     }
 
     /**
-     * @param IntegerObject $rollSequence
+     * @param IntegerInterface $rollSequence
      *
      * @return DiceRoll
      */
-    private function rollDice(IntegerObject $rollSequence)
+    private function rollDice(IntegerInterface $rollSequence)
     {
         return $this->getDiceRollBuilder()->create(
             $this->dice,
@@ -208,7 +209,7 @@ class Roll extends StrictObject implements RollInterface
     }
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getNumberOfStandardRolls()
     {
@@ -248,7 +249,7 @@ class Roll extends StrictObject implements RollInterface
     }
 
     /**
-     * @return array|IntegerObject[]
+     * @return array|IntegerInterface[]
      */
     public function getLastRolledNumbers()
     {
@@ -258,7 +259,7 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @param array|DiceRoll[] $diceRolls
      *
-     * @return array|IntegerObject[]
+     * @return array|IntegerInterface[]
      */
     private function extractRolledNumbers(array $diceRolls)
     {
@@ -293,7 +294,7 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @param array|DiceRoll[] $diceRolls
      *
-     * @return array|IntegerObject[]
+     * @return array|IntegerInterface[]
      */
     private function extractRolledValues(array $diceRolls)
     {
@@ -308,7 +309,7 @@ class Roll extends StrictObject implements RollInterface
     }
 
     /**
-     * @param array|IntegerObject[] $values
+     * @param array|IntegerInterface[] $values
      *
      * @return int
      */
@@ -316,7 +317,7 @@ class Roll extends StrictObject implements RollInterface
     {
         return array_sum(
             array_map(
-                function (IntegerObject $value) {
+                function (IntegerInterface $value) {
                     return $value->getValue();
                 },
                 $values

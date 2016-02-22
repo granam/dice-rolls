@@ -1,33 +1,33 @@
 <?php
 namespace Drd\DiceRoll;
 
-use Granam\Integer\IntegerObject;
+use Granam\Integer\IntegerInterface;
 use Granam\Strict\Object\StrictObject;
 
 class Dice extends StrictObject implements DiceInterface
 {
 
     /**
-     * @var IntegerObject
+     * @var IntegerInterface
      */
     private $minimum;
     /**
-     * @var IntegerObject
+     * @var IntegerInterface
      */
     private $maximum;
 
     /**
-     * @param IntegerObject $minimum
-     * @param IntegerObject $maximum
+     * @param IntegerInterface $minimum
+     * @param IntegerInterface $maximum
      */
-    public function __construct(IntegerObject $minimum, IntegerObject $maximum)
+    public function __construct(IntegerInterface $minimum, IntegerInterface $maximum)
     {
         $this->checkRange($minimum, $maximum);
         $this->minimum = $minimum;
         $this->maximum = $maximum;
     }
 
-    private function checkRange(IntegerObject $minimum, IntegerObject $maximum)
+    private function checkRange(IntegerInterface $minimum, IntegerInterface $maximum)
     {
         if ($minimum->getValue() > $maximum->getValue()) {
             throw new Exceptions\InvalidRange(
@@ -43,7 +43,7 @@ class Dice extends StrictObject implements DiceInterface
     }
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getMinimum()
     {
@@ -51,7 +51,7 @@ class Dice extends StrictObject implements DiceInterface
     }
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getMaximum()
     {

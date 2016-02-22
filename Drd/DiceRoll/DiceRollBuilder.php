@@ -1,7 +1,7 @@
 <?php
 namespace Drd\DiceRoll;
 
-use Granam\Integer\IntegerObject;
+use Granam\Integer\IntegerInterface;
 use Granam\Strict\Object\StrictObject;
 
 class DiceRollBuilder extends StrictObject implements DiceRollBuilderInterface
@@ -26,12 +26,12 @@ class DiceRollBuilder extends StrictObject implements DiceRollBuilderInterface
 
     /**
      * @param DiceInterface $dice
-     * @param IntegerObject $rolledNumber
-     * @param IntegerObject $rollSequence
+     * @param IntegerInterface $rolledNumber
+     * @param IntegerInterface $rollSequence
      *
      * @return DiceRoll
      */
-    public function create(DiceInterface $dice, IntegerObject $rolledNumber, IntegerObject $rollSequence)
+    public function create(DiceInterface $dice, IntegerInterface $rolledNumber, IntegerInterface $rollSequence)
     {
         return new DiceRoll($dice, $rolledNumber, $this->diceRollEvaluator, $rollSequence);
     }

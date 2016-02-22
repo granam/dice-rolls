@@ -1,7 +1,7 @@
 <?php
 namespace Drd\DiceRoll;
 
-use Granam\Integer\IntegerObject;
+use Granam\Integer\IntegerInterface;
 use Granam\Strict\Object\StrictObject;
 
 class DiceRoll extends StrictObject
@@ -11,7 +11,7 @@ class DiceRoll extends StrictObject
      */
     private $dice;
     /**
-     * @var IntegerObject
+     * @var IntegerInterface
      */
     private $rolledNumber;
     /**
@@ -19,17 +19,17 @@ class DiceRoll extends StrictObject
      */
     private $diceRollEvaluator;
     /**
-     * @var IntegerObject
+     * @var IntegerInterface
      */
     private $rollSequence;
 
     /**
      * @param DiceInterface $dice
-     * @param IntegerObject $rolledNumber
+     * @param IntegerInterface $rolledNumber
      * @param DiceRollEvaluatorInterface $diceRollEvaluator
-     * @param IntegerObject $rollSequence
+     * @param IntegerInterface $rollSequence
      */
-    public function __construct(DiceInterface $dice, IntegerObject $rolledNumber, DiceRollEvaluatorInterface $diceRollEvaluator, IntegerObject $rollSequence)
+    public function __construct(DiceInterface $dice, IntegerInterface $rolledNumber, DiceRollEvaluatorInterface $diceRollEvaluator, IntegerInterface $rollSequence)
     {
         $this->dice = $dice;
         $this->rolledNumber = $rolledNumber;
@@ -46,7 +46,7 @@ class DiceRoll extends StrictObject
     }
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getRolledNumber()
     {
@@ -54,7 +54,7 @@ class DiceRoll extends StrictObject
     }
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getEvaluatedValue()
     {
@@ -70,7 +70,7 @@ class DiceRoll extends StrictObject
     }
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getRollSequence()
     {

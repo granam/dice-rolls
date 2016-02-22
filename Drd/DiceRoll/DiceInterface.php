@@ -1,17 +1,17 @@
 <?php
 namespace Drd\DiceRoll;
 
-use Granam\Integer\IntegerObject;
+use Granam\Integer\IntegerInterface;
 
 interface DiceInterface
 {
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getMinimum();
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getMaximum();
 }

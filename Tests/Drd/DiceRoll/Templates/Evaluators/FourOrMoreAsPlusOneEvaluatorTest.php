@@ -30,7 +30,7 @@ class FourOrMoreAsPlusOneEvaluatorTest extends \PHPUnit_Framework_TestCase
             ->andReturn($rolledNumber = \Mockery::mock(IntegerObject::class));
         $rolledNumber->shouldReceive('getValue')
             ->atLeast()->once()
-            ->andReturnValues($values = [-4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+            ->andReturnValues($values = range(-4, 10, 1));
         foreach ($values as $value) {
             $evaluated = $evaluator->evaluateDiceRoll($diceRoll);
             if ($value > 3) {
