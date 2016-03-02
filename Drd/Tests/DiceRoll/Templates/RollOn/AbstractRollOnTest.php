@@ -22,8 +22,8 @@ abstract class AbstractRollOnTest extends TestWithMockery
      */
     public function I_get_expected_dice_rolls()
     {
-        $rollOn = $this->createRollOn($this->createRoller($diceRolls = 'foo'));
-        $this->assertSame($diceRolls, $rollOn->rollDices());
+        $rollOn = $this->createRollOn($this->createRoller($rollSequenceStart = 123, $diceRolls = 'foo'));
+        $this->assertSame($diceRolls, $rollOn->rollDices($rollSequenceStart));
     }
 
     /**
@@ -38,13 +38,15 @@ abstract class AbstractRollOnTest extends TestWithMockery
     }
 
     /**
+     * @param $rollSequenceStart
      * @param $diceRolls
      * @return \Mockery\MockInterface|Roller
      */
-    protected function createRoller($diceRolls = [])
+    protected function createRoller($rollSequenceStart = 1, $diceRolls = [])
     {
         $roller = $this->mockery(Roller::class);
         $roller->shouldReceive('roll')
+            ->with($rollSequenceStart)
             ->andReturn($roll = $this->mockery(Roll::class));
         $roll->shouldReceive('getDiceRolls')
             ->andReturn($diceRolls);

@@ -3,7 +3,9 @@ namespace Drd\DiceRoll;
 
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
+use Granam\Integer\Tools\ToInteger;
 use Granam\Strict\Object\StrictObject;
+use Granam\Tools\ValueDescriber;
 
 class Roller extends StrictObject
 {
@@ -109,47 +111,62 @@ class Roller extends StrictObject
     }
 
     /**
+     * @param int $rollSequenceStart = 1
      * @return Roll
      */
-    public function roll()
+    public function roll($rollSequenceStart = 1)
     {
         $standardDiceRolls = [];
-        for ($rollSequenceValue = 1; $rollSequenceValue <= $this->numberOfStandardRolls->getValue(); $rollSequenceValue++) {
+        $this->guardSequenceStartGreaterThanZero($rollSequenceStart);
+        $rollSequenceEnd = $this->numberOfStandardRolls->getValue() + $rollSequenceStart - 1;
+        for ($rollSequenceValue = ToInteger::toInteger($rollSequenceStart, true /* paranoid */);
+             $rollSequenceValue <= $rollSequenceEnd;
+             $rollSequenceValue++
+        ) {
             $rollSequence = new IntegerObject($rollSequenceValue);
             $standardDiceRolls[] = $this->rollDice($rollSequence);
         }
         // TODO propagate sequence across all rolls
         $standardRollsSum = $this->summarizeValues($this->extractRolledNumbers($standardDiceRolls));
-        $bonusDiceRolls = $this->rollBonusDices($standardRollsSum);
-        $malusDiceRolls = $this->rollMalusDices($standardRollsSum);
+        $bonusDiceRolls = $this->rollBonusDices($standardRollsSum, $rollSequenceEnd);
+        $malusDiceRolls = $this->rollMalusDices($standardRollsSum, $rollSequenceEnd);
 
         return new Roll($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }
 
+    private function guardSequenceStartGreaterThanZero($start)
+    {
+        if (!is_numeric($start) || $start < 1) {
+            throw new \LogicException('Roll sequence start has to be at least 1, got ' . ValueDescriber::describe($start));
+        }
+    }
+
     /**
      * @param $standardRollsSum
+     * @param int $rollSequenceStart
      * @return array|DiceRoll[]
      */
-    private function rollBonusDices($standardRollsSum)
+    private function rollBonusDices($standardRollsSum, $rollSequenceStart)
     {
         if (!$this->bonusRollOn->shouldHappen($standardRollsSum)) {
             return [];
         }
 
-        return $this->bonusRollOn->rollDices();
+        return $this->bonusRollOn->rollDices($rollSequenceStart);
     }
 
     /**
      * @param $standardRollsSum
+     * @param int $rollSequenceStart
      * @return array|DiceRoll[]
      */
-    private function rollMalusDices($standardRollsSum)
+    private function rollMalusDices($standardRollsSum, $rollSequenceStart)
     {
         if (!$this->malusRollOn->shouldHappen($standardRollsSum)) {
             return [];
         }
 
-        return $this->malusRollOn->rollDices();
+        return $this->malusRollOn->rollDices($rollSequenceStart);
     }
 
     /**
