@@ -4,10 +4,10 @@ namespace Drd\DiceRoll;
 use Granam\Integer\IntegerInterface;
 use Granam\Strict\Object\StrictObject;
 
-class DiceRoll extends StrictObject
+class DiceRoll extends StrictObject implements IntegerInterface
 {
     /**
-     * @var DiceInterface
+     * @var Dice
      */
     private $dice;
     /**
@@ -15,30 +15,35 @@ class DiceRoll extends StrictObject
      */
     private $rolledNumber;
     /**
-     * @var DiceRollEvaluatorInterface
-     */
-    private $diceRollEvaluator;
-    /**
      * @var IntegerInterface
      */
     private $rollSequence;
+    /**
+     * @var DiceRollEvaluator
+     */
+    private $diceRollEvaluator;
 
     /**
-     * @param DiceInterface $dice
+     * @param Dice $dice
      * @param IntegerInterface $rolledNumber
-     * @param DiceRollEvaluatorInterface $diceRollEvaluator
      * @param IntegerInterface $rollSequence
+     * @param DiceRollEvaluator $diceRollEvaluator
      */
-    public function __construct(DiceInterface $dice, IntegerInterface $rolledNumber, DiceRollEvaluatorInterface $diceRollEvaluator, IntegerInterface $rollSequence)
+    public function __construct(
+        Dice $dice,
+        IntegerInterface $rolledNumber,
+        IntegerInterface $rollSequence,
+        DiceRollEvaluator $diceRollEvaluator
+    )
     {
         $this->dice = $dice;
         $this->rolledNumber = $rolledNumber;
-        $this->diceRollEvaluator = $diceRollEvaluator;
         $this->rollSequence = $rollSequence;
+        $this->diceRollEvaluator = $diceRollEvaluator;
     }
 
     /**
-     * @return DiceInterface
+     * @return Dice
      */
     public function getDice()
     {
@@ -56,13 +61,13 @@ class DiceRoll extends StrictObject
     /**
      * @return IntegerInterface
      */
-    public function getEvaluatedValue()
+    public function getRollSequence()
     {
-        return $this->diceRollEvaluator->evaluateDiceRoll($this);
+        return $this->rollSequence;
     }
 
     /**
-     * @return DiceRollEvaluatorInterface
+     * @return DiceRollEvaluator
      */
     public function getDiceRollEvaluator()
     {
@@ -70,11 +75,18 @@ class DiceRoll extends StrictObject
     }
 
     /**
-     * @return IntegerInterface
+     * @return int
      */
-    public function getRollSequence()
+    public function getValue()
     {
-        return $this->rollSequence;
+        return $this->diceRollEvaluator->evaluateDiceRoll($this)->getValue();
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getValue();
+    }
 }

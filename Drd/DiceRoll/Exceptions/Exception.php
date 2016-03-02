@@ -1,6 +1,7 @@
 <?php
 namespace Drd\DiceRoll\Exceptions;
 
-interface Exception {
+interface Exception
+{
 
 }

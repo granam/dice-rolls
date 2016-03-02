@@ -1,8 +1,6 @@
 <?php
 namespace Drd\DiceRoll\Templates\RollOn;
 
-use Drd\DiceRoll\AbstractRollOn;
-
 class RollOn3Minus extends AbstractRollOn
 {
 

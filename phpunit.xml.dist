@@ -10,15 +10,18 @@
         processIsolation="false"
         backupGlobals="false"
         colors="true"
-        >
+>
     <testsuites>
         <testsuite name="all">
-            <directory>./Tests</directory>
+            <directory>./Drd/Tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="false">
             <directory>./Drd</directory>
+            <exclude>
+                <directory>./Drd/Tests</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>

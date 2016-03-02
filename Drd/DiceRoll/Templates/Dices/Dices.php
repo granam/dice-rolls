@@ -2,11 +2,11 @@
 namespace Drd\DiceRoll\Templates\Dices;
 
 use Drd\DiceRoll\Dice;
-use Drd\DiceRoll\DiceInterface;
+use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
 use Granam\Strict\Object\StrictObject;
 
-class Dices extends StrictObject implements DiceInterface
+class Dices extends StrictObject implements Dice
 {
     /**
      * @var array|Dice[]
@@ -40,14 +40,14 @@ class Dices extends StrictObject implements DiceInterface
         }
 
         foreach ($dices as $dice) {
-            if (!is_a($dice, DiceInterface::class)) {
+            if (!is_a($dice, Dice::class)) {
                 throw new \LogicException('Given dices have to DiceInterface, got ' . is_object($dice) ? get_class($dice) : gettype($dice));
             }
         }
     }
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getMinimum()
     {
@@ -66,7 +66,7 @@ class Dices extends StrictObject implements DiceInterface
         return new IntegerObject(
             array_sum(
                 array_map(
-                    function (DiceInterface $dice) {
+                    function (Dice $dice) {
                         return $dice->getMinimum()->getValue();
                     },
                     $this->dices
@@ -76,7 +76,7 @@ class Dices extends StrictObject implements DiceInterface
     }
 
     /**
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function getMaximum()
     {
@@ -95,7 +95,7 @@ class Dices extends StrictObject implements DiceInterface
         return new IntegerObject(
             array_sum(
                 array_map(
-                    function (DiceInterface $dice) {
+                    function (Dice $dice) {
                         return $dice->getMaximum()->getValue();
                     },
                     $this->dices

@@ -2,11 +2,24 @@
 namespace Drd\DiceRoll\Templates\RollOn;
 
 use Drd\DiceRoll\DiceRoll;
-use Drd\DiceRoll\Roll;
-use Drd\DiceRoll\RollOnInterface;
+use Drd\DiceRoll\RollOn;
 
-class NoRollOn implements RollOnInterface
+class NoRollOn implements RollOn
 {
+    private static $noRollOn;
+
+    /**
+     * @return NoRollOn
+     */
+    public static function getIt()
+    {
+        if (!isset(self::$noRollOn)) {
+            self::$noRollOn = new static();
+        }
+
+        return self::$noRollOn;
+    }
+
     /**
      * @param int $rolledValue
      *
@@ -18,33 +31,11 @@ class NoRollOn implements RollOnInterface
     }
 
     /**
-     * @return Roll
+     * @return array|DiceRoll[]
      */
-    public function getRoll()
+    public function rollDices()
     {
-        throw new \LogicException('This roll-on has no roll.');
-    }
-
-    /**
-     * Transforms rolled value into its final value
-     *
-     * @param DiceRoll $diceRoll
-     * @return int
-     */
-    public function evaluateDiceRoll(/** @noinspection PhpUnusedParameterInspection */
-        DiceRoll $diceRoll)
-    {
-        throw new \LogicException('This roll-on is not supposed to evaluate anything.');
-    }
-
-    public function getLastRollSummary()
-    {
-        return 0;
-    }
-
-    public function happened()
-    {
-        return false;
+        return [];
     }
 
 }

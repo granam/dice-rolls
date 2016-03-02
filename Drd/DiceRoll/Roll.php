@@ -2,273 +2,61 @@
 namespace Drd\DiceRoll;
 
 use Granam\Integer\IntegerInterface;
-use Granam\Integer\IntegerObject;
 use Granam\Strict\Object\StrictObject;
 
-class Roll extends StrictObject implements RollInterface
+class Roll extends StrictObject
 {
 
-    /**
-     * @var DiceInterface
-     */
-    private $dice;
-    /**
-     * @var IntegerInterface
-     */
-    private $numberOfStandardRolls;
-    /**
-     * @var DiceRollEvaluatorInterface
-     */
-    private $diceRollBuilder;
-    /**
-     * @var RollOnInterface
-     */
-    private $bonusRollOn;
-    /**
-     * @var RollOnInterface
-     */
-    private $malusRollOn;
     /**
      * Standard dice rolls, without bonus and malus rolls
      *
      * @var array|DiceRoll[]
      */
-    private $lastStandardDiceRolls = [];
+    private $standardDiceRolls;
     /**
-     * All dice rolls, including bonus and malus ones
-     *
      * @var array|DiceRoll[]
      */
-    private $lastDiceRolls = [];
+    private $bonusDiceRolls;
+    /**
+     * @var array|DiceRoll[]
+     */
+    private $malusDiceRolls;
+    /**
+     * @var int|null
+     */
+    private $value;
 
     /**
-     * @param DiceInterface $dice
-     * @param IntegerInterface $numberOfStandardRolls
-     * @param DiceRollBuilderInterface $diceRollBuilder ,
-     * @param RollOnInterface $bonusRollOn
-     * @param RollOnInterface $malusRollOn malus roll itself is responsible for negative or positive numbers
+     * @param array|DiceRoll[] $standardDiceRolls
+     * @param array|DiceRoll[] $bonusDiceRolls = array()
+     * @param array|DiceRoll[] $malusDiceRolls = array()
      */
-    public function __construct(
-        DiceInterface $dice,
-        IntegerInterface $numberOfStandardRolls,
-        DiceRollBuilderInterface $diceRollBuilder,
-        RollOnInterface $bonusRollOn,
-        RollOnInterface $malusRollOn
-    )
+    public function __construct(array $standardDiceRolls, array $bonusDiceRolls = [], array $malusDiceRolls = [])
     {
-        $this->checkDice($dice);
-        $this->checkNumberOfStandardRolls($numberOfStandardRolls);
-        $this->checkBonusAndMalusConflicts($dice, $bonusRollOn, $malusRollOn);
-        $this->dice = $dice;
-        $this->numberOfStandardRolls = $numberOfStandardRolls;
-        $this->diceRollBuilder = $diceRollBuilder;
-        $this->bonusRollOn = $bonusRollOn;
-        $this->malusRollOn = $malusRollOn;
-    }
-
-    private function checkNumberOfStandardRolls(IntegerInterface $rollNumber)
-    {
-        if ($rollNumber->getValue() <= 0) {
-            throw new \LogicException(
-                'Roll number has to be greater than zero. Zero rolls have no sense.'
-            );
-        }
-    }
-
-    private function checkDice(DiceInterface $dice)
-    {
-        if ($dice->getMinimum()->getValue() > $dice->getMaximum()->getValue()) {
-            throw new \LogicException(
-                "DiceInterface minimum value has to be at least same or lesser then maximum value."
-                . " Got minimum {$dice->getMinimum()->getValue()} and maximum {$dice->getMaximum()->getValue()}"
-            );
-        }
-    }
-
-    /**
-     * @param DiceInterface $dice
-     * @param RollOnInterface $bonusRollOn
-     * @param RollOnInterface $malusRollOn
-     */
-    private function checkBonusAndMalusConflicts(DiceInterface $dice, RollOnInterface $bonusRollOn, RollOnInterface $malusRollOn)
-    {
-        $bonusRollOnValues = $this->getRollOnValues($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue(), $bonusRollOn);
-        $malusRollOnValues = $this->getRollOnValues($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue(), $malusRollOn);
-        $conflicts = array_intersect($bonusRollOnValues, $malusRollOnValues);
-        if (count($conflicts) > 0) {
-            throw new \LogicException('Bonus and malus rolls would happen on same values: ' . implode(',', $conflicts));
-        }
-    }
-
-    /**
-     * @param int $minimumRollValue
-     * @param int $maximumRollValue
-     * @param RollOnInterface $rollOn
-     *
-     * @return array|int
-     */
-    private function getRollOnValues($minimumRollValue, $maximumRollValue, RollOnInterface $rollOn)
-    {
-        $rollOnValues = [];
-        for ($rollValue = $minimumRollValue; $rollValue <= $maximumRollValue; $rollValue++) {
-            if ($rollOn->shouldHappen($rollValue)) {
-                $rollOnValues[] = $rollValue;
-            }
-        }
-
-        return $rollOnValues;
-    }
-
-    /**
-     * @return int
-     */
-    public function roll()
-    {
-        $this->resetLastDiceRolls();
-        $this->processStandardRolls();
-        $standardRollNumbersSum = $this->getLastStandardRollNumbersSum();
-        if ($this->bonusRollOn->shouldHappen($standardRollNumbersSum)) {
-            $this->processBonusRolls();
-        } else if ($this->malusRollOn->shouldHappen($standardRollNumbersSum)) {
-            $this->processMalusRolls();
-        }
-
-        return $this->getLastRollSummary();
-    }
-
-    private function resetLastDiceRolls()
-    {
-        $this->lastDiceRolls = []; // all the dice rolls, including those from bonus and malus rolls
-        $this->lastStandardDiceRolls = []; // dice rolls without bonus and malus rolls
-    }
-
-    private function processStandardRolls()
-    {
-        for ($rollSequenceValue = 1; $rollSequenceValue <= $this->numberOfStandardRolls->getValue(); $rollSequenceValue++) {
-            $rollSequence = new IntegerObject($rollSequenceValue);
-            $standardDiceRoll = $this->rollDice($rollSequence);
-            $this->addLastStandardDiceRoll($standardDiceRoll);
-        }
-    }
-
-    /**
-     * @param IntegerInterface $rollSequence
-     *
-     * @return DiceRoll
-     */
-    private function rollDice(IntegerInterface $rollSequence)
-    {
-        return $this->getDiceRollBuilder()->create(
-            $this->dice,
-            new IntegerObject($this->rollNumber($this->dice)),
-            $rollSequence
-        );
-    }
-
-    /**
-     * @param DiceInterface $dice
-     *
-     * @return int
-     */
-    private function rollNumber(DiceInterface $dice)
-    {
-        return mt_rand($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue());
-    }
-
-    private function addLastStandardDiceRoll(DiceRoll $diceRoll)
-    {
-        $this->lastDiceRolls[] = $this->lastStandardDiceRolls[] = $diceRoll;
-    }
-
-    private function processBonusRolls()
-    {
-        $this->bonusRollOn->getRoll()->roll();
-        $this->addLastDiceRolls($this->bonusRollOn->getRoll()->getLastDiceRolls());
-    }
-
-    /**
-     * @param array|DiceRoll[] $diceRolls
-     */
-    private function addLastDiceRolls(array $diceRolls)
-    {
-        $this->lastDiceRolls = array_merge($this->lastDiceRolls, $diceRolls);
-    }
-
-    private function processMalusRolls()
-    {
-        $this->malusRollOn->getRoll()->roll();
-        $this->addLastDiceRolls($this->malusRollOn->getRoll()->getLastDiceRolls());
-    }
-
-    /**
-     * @return DiceInterface
-     */
-    public function getDice()
-    {
-        return $this->dice;
-    }
-
-    /**
-     * @return IntegerInterface
-     */
-    public function getNumberOfStandardRolls()
-    {
-        return $this->numberOfStandardRolls;
-    }
-
-    /**
-     * @return DiceRollBuilderInterface
-     */
-    public function getDiceRollBuilder()
-    {
-        return $this->diceRollBuilder;
-    }
-
-    /**
-     * @return RollOnInterface
-     */
-    public function getBonusRollOn()
-    {
-        return $this->bonusRollOn;
-    }
-
-    /**
-     * @return RollOnInterface
-     */
-    public function getMalusRollOn()
-    {
-        return $this->malusRollOn;
+        $this->standardDiceRolls = $standardDiceRolls;
+        $this->bonusDiceRolls = $bonusDiceRolls;
+        $this->malusDiceRolls = $malusDiceRolls;
     }
 
     /**
      * @return array|DiceRoll[]
      */
-    public function getLastDiceRolls()
+    public function getDiceRolls()
     {
-        return $this->lastDiceRolls;
+        return array_merge($this->standardDiceRolls, $this->bonusDiceRolls, $this->malusDiceRolls);
     }
 
     /**
      * @return array|IntegerInterface[]
      */
-    public function getLastRolledNumbers()
-    {
-        return $this->extractRolledNumbers($this->lastDiceRolls);
-    }
-
-    /**
-     * @param array|DiceRoll[] $diceRolls
-     *
-     * @return array|IntegerInterface[]
-     */
-    private function extractRolledNumbers(array $diceRolls)
+    public function getRolledNumbers()
     {
         return array_merge(
             array_map(
                 function (DiceRoll $diceRoll) {
                     return $diceRoll->getRolledNumber();
                 },
-                $diceRolls
+                $this->getDiceRolls()
             )
         );
     }
@@ -276,68 +64,56 @@ class Roll extends StrictObject implements RollInterface
     /**
      * @return int
      */
-    public function getLastRollSummary()
+    public function getValue()
     {
-        return $this->summarizeDiceRolls($this->lastDiceRolls);
+        if (!isset($this->value)) {
+            $this->value = array_sum($this->getRolledValues());
+        }
+
+        return $this->value;
     }
 
     /**
-     * @param array|DiceRoll[] $diceRolls
-     *
-     * @return int
+     * @return array|int[]
      */
-    private function summarizeDiceRolls(array $diceRolls)
-    {
-        return $this->summarizeValues($this->extractRolledValues($diceRolls));
-    }
-
-    /**
-     * @param array|DiceRoll[] $diceRolls
-     *
-     * @return array|IntegerInterface[]
-     */
-    private function extractRolledValues(array $diceRolls)
+    private function getRolledValues()
     {
         return array_merge(
             array_map(
                 function (DiceRoll $diceRoll) {
-                    return $diceRoll->getEvaluatedValue();
+                    return $diceRoll->getValue();
                 },
-                $diceRolls
+                $this->getDiceRolls()
             )
         );
     }
 
-    /**
-     * @param array|IntegerInterface[] $values
-     *
-     * @return int
-     */
-    private function summarizeValues(array $values)
+    public function __toString()
     {
-        return array_sum(
-            array_map(
-                function (IntegerInterface $value) {
-                    return $value->getValue();
-                },
-                $values
-            )
-        );
-    }
-
-    /**
-     * @return int
-     */
-    private function getLastStandardRollNumbersSum()
-    {
-        return $this->summarizeValues($this->extractRolledNumbers($this->lastStandardDiceRolls));
+        return (string)$this->getValue();
     }
 
     /**
      * @return array|DiceRoll[]
      */
-    public function getLastStandardDiceRolls()
+    public function getStandardDiceRolls()
     {
-        return $this->lastStandardDiceRolls;
+        return $this->standardDiceRolls;
+    }
+
+    /**
+     * @return array|DiceRoll[]
+     */
+    public function getBonusDiceRolls()
+    {
+        return $this->bonusDiceRolls;
+    }
+
+    /**
+     * @return array|DiceRoll[]
+     */
+    public function getMalusDiceRolls()
+    {
+        return $this->malusDiceRolls;
     }
 }
