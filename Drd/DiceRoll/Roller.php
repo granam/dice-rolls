@@ -126,10 +126,10 @@ class Roller extends StrictObject
             $rollSequence = new IntegerObject($rollSequenceValue);
             $standardDiceRolls[] = $this->rollDice($rollSequence);
         }
-        // TODO propagate sequence across all rolls
         $standardRollsSum = $this->summarizeValues($this->extractRolledNumbers($standardDiceRolls));
-        $bonusDiceRolls = $this->rollBonusDices($standardRollsSum, $rollSequenceEnd);
-        $malusDiceRolls = $this->rollMalusDices($standardRollsSum, $rollSequenceEnd);
+        $nextSequenceStep = $rollSequenceEnd + 1;
+        $bonusDiceRolls = $this->rollBonusDices($standardRollsSum, $nextSequenceStep);
+        $malusDiceRolls = $this->rollMalusDices($standardRollsSum, $nextSequenceStep);
 
         return new Roll($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }

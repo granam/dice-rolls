@@ -4,6 +4,7 @@ namespace Drd\Tests\DiceRoll;
 use Drd\DiceRoll\Dice;
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\DiceRollEvaluator;
+use Drd\DiceRoll\Roll;
 use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\RollOn;
 use Granam\Integer\IntegerInterface;
@@ -19,7 +20,7 @@ class RollerTest extends TestWithMockery
     {
         $rollerWithMalus = new Roller(
             $dice = $this->createDice(),
-            $numberOfStandardRolls = $this->createNumberOfStandardRolls(),
+            $numberOfStandardRolls = $this->createNumber(),
             $diceRollEvaluator = $this->createDiceRollEvaluator(),
             $bonusRollOn = $this->createBonusRollOn(),
             $malusRollOn = $this->createMalusRollOn()
@@ -55,7 +56,7 @@ class RollerTest extends TestWithMockery
      * @param int $number
      * @return \Mockery\MockInterface|IntegerInterface
      */
-    private function createNumberOfStandardRolls($number = 1)
+    private function createNumber($number = 1)
     {
         $numberOfStandardRolls = $this->mockery(IntegerInterface::class);
         $numberOfStandardRolls->shouldReceive('getValue')
@@ -81,20 +82,22 @@ class RollerTest extends TestWithMockery
 
     /**
      * @param array|int $shouldHappenOn
-     * @param array|DiceRoll[] $diceRolls
+     * @param int $numberOfDiceRolls = 1
+     * @param Dice $dice = null
      * @return RollOn|\Mockery\MockInterface
      */
-    private function createBonusRollOn($shouldHappenOn = [], $diceRolls = [])
+    private function createBonusRollOn($shouldHappenOn = [], $numberOfDiceRolls = 1, Dice $dice = null)
     {
-        return $this->createRollOn($shouldHappenOn, $diceRolls);
+        return $this->createRollOn($shouldHappenOn, $numberOfDiceRolls, $dice);
     }
 
     /**
      * @param array|int[] $shouldHappenOn
-     * @param array|DiceRoll[] $diceRolls
+     * @param int $numberOfDiceRolls
+     * @param Dice $dice = null
      * @return \Mockery\MockInterface|RollOn
      */
-    private function createRollOn($shouldHappenOn, array $diceRolls)
+    private function createRollOn($shouldHappenOn, $numberOfDiceRolls, Dice $dice = null)
     {
         $rollOn = $this->mockery(RollOn::class);
         $rollOn->shouldReceive('shouldHappen')
@@ -102,19 +105,38 @@ class RollerTest extends TestWithMockery
                 return in_array($value, $shouldHappenOn);
             });
         $rollOn->shouldReceive('rollDices')
-            ->andReturn($diceRolls);
+            ->with(\Mockery::type('int'))
+            ->andReturnUsing(function ($rollSequenceStart) use ($numberOfDiceRolls, $dice) {
+                $this->assertGreaterThan(0, $rollSequenceStart);
+                $diceRolls = [];
+                for ($diceRollNumber = 1; $diceRollNumber <= $numberOfDiceRolls; $diceRollNumber++) {
+                    $diceRoll = $this->mockery(DiceRoll::class);
+                    $diceRoll->shouldReceive('getDice')
+                        ->andReturn($dice);
+                    $diceRoll->shouldReceive('getRollSequence')
+                        ->andReturn($rolledNumber = $this->createNumber($rollSequenceStart + ($diceRollNumber - 1)));
+                    $diceRoll->shouldReceive('getValue')
+                        ->andReturn($diceRollNumber /* just some int for sum */);
+                    $diceRolls[] = $diceRoll;
+                }
+
+                return $diceRolls;
+            });
+        $rollOn->shouldReceive('rollDices')
+            ->andReturn($numberOfDiceRolls);
 
         return $rollOn;
     }
 
     /**
      * @param array $shouldHappenOn
-     * @param array|DiceRoll[] $diceRolls
+     * @param int $numberOfDiceRolls
+     * @param Dice $dice = null
      * @return RollOn|\Mockery\MockInterface
      */
-    private function createMalusRollOn(array $shouldHappenOn = [], array $diceRolls = [])
+    private function createMalusRollOn(array $shouldHappenOn = [], $numberOfDiceRolls = 1, Dice $dice = null)
     {
-        return $this->createRollOn($shouldHappenOn, $diceRolls);
+        return $this->createRollOn($shouldHappenOn, $numberOfDiceRolls, $dice);
     }
 
     /**
@@ -125,7 +147,7 @@ class RollerTest extends TestWithMockery
     {
         new Roller(
             $this->createDice(2, 1),
-            $this->createNumberOfStandardRolls(),
+            $this->createNumber(),
             $this->createDiceRollEvaluator(),
             $this->createBonusRollOn(),
             $this->createMalusRollOn()
@@ -140,7 +162,7 @@ class RollerTest extends TestWithMockery
     {
         new Roller(
             $this->createDice(),
-            $this->createNumberOfStandardRolls(0),
+            $this->createNumber(0),
             $this->createDiceRollEvaluator(),
             $this->createBonusRollOn(),
             $this->createMalusRollOn()
@@ -155,7 +177,7 @@ class RollerTest extends TestWithMockery
     {
         new Roller(
             $this->createDice(),
-            $this->createNumberOfStandardRolls(-1),
+            $this->createNumber(-1),
             $this->createDiceRollEvaluator(),
             $this->createBonusRollOn(),
             $this->createMalusRollOn()
@@ -170,7 +192,7 @@ class RollerTest extends TestWithMockery
     {
         new Roller(
             $this->createDice(1, 5),
-            $this->createNumberOfStandardRolls(),
+            $this->createNumber(),
             $this->createDiceRollEvaluator(),
             $this->createBonusRollOn([2, 3]),
             $this->createMalusRollOn([3, 4])
@@ -184,32 +206,39 @@ class RollerTest extends TestWithMockery
     {
         $roller = new Roller(
             $dice = $this->createDice($minimumValue = 111, $maximumValue = 222),
-            $this->createNumberOfStandardRolls($numberOfRollsValue = 5),
+            $this->createNumber($numberOfRollsValue = 5),
             $this->createDiceRollEvaluator(),
             $bonusRollOn = $this->createBonusRollOn(),
             $malusRollOn = $this->createMalusRollOn()
         );
         $roll = $roller->roll();
+
+        $this->checkSummaryAndRollSequence($roll, $dice, $numberOfRollsValue);
         $this->assertGreaterThanOrEqual($minimumValue * $numberOfRollsValue, $roll->getValue());
         $this->assertLessThanOrEqual($maximumValue * $numberOfRollsValue, $roll->getValue());
-
-        $summary = 0;
-        $currentRollSequence = 0;
-        foreach ($roll->getDiceRolls() as $diceRoll) {
-            $currentRollSequence++;
-            $this->assertSame($dice, $diceRoll->getDice());
-            $summary += $diceRoll->getRolledNumber()->getValue();
-            $this->assertSame(
-                $currentRollSequence,
-                $diceRoll->getRollSequence()->getValue() /* integer from the mock */,
-                'Roll sequence is not successive'
-            );
-        }
-        $this->assertSame($currentRollSequence, $numberOfRollsValue);
-        $this->assertSame($roll->getValue(), $summary);
         $this->assertSame($roll->getDiceRolls(), $roll->getStandardDiceRolls());
         $this->assertEquals([], $roll->getBonusDiceRolls());
         $this->assertEquals([], $roll->getMalusDiceRolls());
+    }
+
+    private function checkSummaryAndRollSequence(Roll $roll, Dice $expectedDice, $numberOfRolls, $rollSequenceOffset = 0)
+    {
+        $summary = 0;
+        $rollNumber = 0;
+        $currentRollSequence = 0 + $rollSequenceOffset;
+        foreach ($roll->getDiceRolls() as $diceRoll) {
+            $currentRollSequence++;
+            $rollNumber++;
+            $this->assertSame($expectedDice, $diceRoll->getDice());
+            $summary += $diceRoll->getValue();
+            $this->assertSame(
+                $currentRollSequence,
+                $diceRoll->getRollSequence()->getValue() /* integer from the mock */,
+                "Roll sequence is not successive. Expected $currentRollSequence (including offset $rollSequenceOffset)."
+            );
+        }
+        $this->assertSame($roll->getValue(), $summary);
+        $this->assertSame($rollNumber, $numberOfRolls);
     }
 
     /**
@@ -219,34 +248,28 @@ class RollerTest extends TestWithMockery
     {
         $roller = new Roller(
             $dice = $this->createDice($minimumValue = 5, $maximumValue = 13),
-            $numberOfRolls = $this->createNumberOfStandardRolls(),
+            $numberOfRolls = $this->createNumber($numberOfRollsValue = 1),
             $diceRollEvaluator = $this->createDiceRollEvaluator(),
-            $bonusRollOn = $this->createBonusRollOn([7], [$bonusDiceRoll = $this->createDiceRoll()]),
+            $bonusRollOn = $this->createBonusRollOn(
+                [7, 10],
+                $numberOfBonusRollsValue = 3,
+                $dice
+            ),
             $malusRollOn = $this->createMalusRollOn()
         );
-        $bonusCount = 0;
         for ($attempt = 1; $attempt < 1000; $attempt++) {
-            $roll = $roller->roll();
-            foreach ($roll->getDiceRolls() as $diceRoll) {
-                if ($diceRoll === $bonusDiceRoll) {
-                    $bonusCount++;
-                }
-            }
-            if ($bonusCount > 1) { // at least twice
+            $roll = $roller->roll($attempt /* used as roll sequence start */);
+            $this->checkSummaryAndRollSequence(
+                $roll,
+                $dice,
+                $numberOfRollsValue + count($roll->getBonusDiceRolls()),
+                $attempt - 1 /* used as sequence start offset */
+            );
+            if (count($roll->getBonusDiceRolls()) > 1) { // at least 1 positive bonus roll (+ last negative bonus roll)
                 break;
             }
         }
-        $this->assertGreaterThan(0, $bonusCount);
-    }
-
-    /**
-     * @return \Mockery\MockInterface|DiceRoll
-     */
-    private function createDiceRoll()
-    {
-        $diceRoll = $this->mockery(DiceRoll::class);
-
-        return $diceRoll;
+        $this->assertLessThan(1000, $attempt);
     }
 
     /**
@@ -256,27 +279,28 @@ class RollerTest extends TestWithMockery
     {
         $roller = new Roller(
             $dice = $this->createDice($minimumValue = 5, $maximumValue = 13),
-            $numberOfRolls = $this->createNumberOfStandardRolls(),
+            $numberOfRolls = $this->createNumber($numberOfRollsValue = 1),
             $diceRollEvaluator = $this->createDiceRollEvaluator(),
             $bonusRollOn = $this->createBonusRollOn(),
             $malusRollOn = $this->createMalusRollOn(
                 [6, 7, 11],
-                [$malusDiceRoll1 = $this->createDiceRoll(), $malusDiceRoll2 = $this->createDiceRoll()]
+                $numberOfMalusRollsValue = 4,
+                $dice
             )
         );
-        $malusCount = 0;
         for ($attempt = 1; $attempt < 1000; $attempt++) {
-            $roll = $roller->roll();
-            foreach ($roll->getDiceRolls() as $diceRoll) {
-                if (in_array($diceRoll, [$malusDiceRoll1, $malusDiceRoll2])) {
-                    $malusCount++;
-                }
-            }
-            if ($malusCount > 1) { // at least twice
+            $roll = $roller->roll($attempt /* used as a roll sequence start */);
+            $this->checkSummaryAndRollSequence(
+                $roll,
+                $dice,
+                $numberOfRollsValue + count($roll->getMalusDiceRolls()),
+                $attempt - 1 /* used as sequence start offset */
+            );
+            if (count($roll->getMalusDiceRolls()) > 1) { // at least one positive malus roll (+1 negative malus roll)
                 break;
             }
         }
-        $this->assertGreaterThan(0, $malusCount);
+        $this->assertLessThan(1000, $attempt);
     }
 
 }
