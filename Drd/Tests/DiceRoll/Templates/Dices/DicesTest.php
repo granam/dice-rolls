@@ -4,15 +4,16 @@ namespace Drd\Tests\DiceRoll\Templates\Dices;
 use Drd\DiceRoll\Dice;
 use Drd\DiceRoll\Templates\Dices\Dices;
 use Granam\Integer\IntegerObject;
+use Granam\Tests\Tools\TestWithMockery;
 
-class DicesTest extends \PHPUnit_Framework_TestCase
+class DicesTest extends TestWithMockery
 {
     /**
      * @test
      */
     public function I_can_create_it()
     {
-        $instance = new Dices([\Mockery::mock(Dice::class)]);
+        $instance = new Dices([$this->mockery(Dice::class)]);
         $this->assertNotNull($instance);
     }
 
@@ -31,7 +32,7 @@ class DicesTest extends \PHPUnit_Framework_TestCase
      */
     public function non_dice_parameter_cause_exception()
     {
-        new Dices([\Mockery::mock(Dice::class), new \stdClass()]);
+        new Dices([$this->mockery(Dice::class), new \stdClass()]);
     }
 
     /**
@@ -40,7 +41,7 @@ class DicesTest extends \PHPUnit_Framework_TestCase
      */
     public function null_as_dice_parameter_cause_exception()
     {
-        new Dices([\Mockery::mock(Dice::class), null]);
+        new Dices([$this->mockery(Dice::class), null]);
     }
 
     /**
@@ -48,16 +49,16 @@ class DicesTest extends \PHPUnit_Framework_TestCase
      */
     public function minimum_is_sum_of_dices_minimum()
     {
-        $dices = new Dices([$firstDice = \Mockery::mock(Dice::class), $secondDice = \Mockery::mock(Dice::class)]);
+        $dices = new Dices([$firstDice = $this->mockery(Dice::class), $secondDice = $this->mockery(Dice::class)]);
         $firstDice->shouldReceive('getMinimum')
             ->once()
-            ->andReturn($firstMinimum = \Mockery::mock(IntegerObject::class));
+            ->andReturn($firstMinimum = $this->mockery(IntegerObject::class));
         $firstMinimum->shouldReceive('getValue')
             ->once()
             ->andReturn($firstMinimumValue = 123);
         $secondDice->shouldReceive('getMinimum')
             ->once()
-            ->andReturn($secondMinimum = \Mockery::mock(IntegerObject::class));
+            ->andReturn($secondMinimum = $this->mockery(IntegerObject::class));
         $secondMinimum->shouldReceive('getValue')
             ->once()
             ->andReturn($secondMinimumValue = 456);
@@ -69,16 +70,16 @@ class DicesTest extends \PHPUnit_Framework_TestCase
      */
     public function maximum_is_sum_of_dices_maximum()
     {
-        $dices = new Dices([$firstDice = \Mockery::mock(Dice::class), $secondDice = \Mockery::mock(Dice::class)]);
+        $dices = new Dices([$firstDice = $this->mockery(Dice::class), $secondDice = $this->mockery(Dice::class)]);
         $firstDice->shouldReceive('getMaximum')
             ->once()
-            ->andReturn($firstMaximum = \Mockery::mock(IntegerObject::class));
+            ->andReturn($firstMaximum = $this->mockery(IntegerObject::class));
         $firstMaximum->shouldReceive('getValue')
             ->once()
             ->andReturn($firstMaximumValue = 123);
         $secondDice->shouldReceive('getMaximum')
             ->once()
-            ->andReturn($secondMaximum = \Mockery::mock(IntegerObject::class));
+            ->andReturn($secondMaximum = $this->mockery(IntegerObject::class));
         $secondMaximum->shouldReceive('getValue')
             ->once()
             ->andReturn($secondMaximumValue = 456);

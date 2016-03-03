@@ -34,7 +34,7 @@ class Roller1d6PlusTest extends AbstractRollerTest
         $roller1d6Plus = Roller1d6Plus::getIt();
         $previousRoll = null;
         $roll = null;
-        for ($attempt = 1; $attempt < self::ROLLS_ATTEMPTS_COUNT; $attempt++) {
+        for ($attempt = 1; $attempt < self::MAX_ROLL_ATTEMPTS; $attempt++) {
             $roll = $roller1d6Plus->roll();
             $this->assertNotSame($previousRoll, $roll);
             $diceMinimum = $roller1d6Plus->getDice()->getMinimum()->getValue();
@@ -49,7 +49,7 @@ class Roller1d6PlusTest extends AbstractRollerTest
             }
             $previousRoll = $roll;
         }
-        $this->assertLessThan(self::ROLLS_ATTEMPTS_COUNT, $attempt, 'Expected at least two bonuses in a row');
+        $this->assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt, 'Expected at least two bonuses in a row');
         $this->assertEquals(new Roller1d6Plus(), $roller1d6Plus, 'Roller has to be stateless');
     }
 }

@@ -117,11 +117,10 @@ class Roller extends StrictObject
     public function roll($rollSequenceStart = 1)
     {
         $standardDiceRolls = [];
-        $this->guardSequenceStartGreaterThanZero($rollSequenceStart);
+        $rollSequenceStart = $this->validateSequenceStart($rollSequenceStart);
         $rollSequenceEnd = $this->numberOfStandardRolls->getValue() + $rollSequenceStart - 1;
-        for ($rollSequenceValue = ToInteger::toInteger($rollSequenceStart, true /* paranoid */);
-             $rollSequenceValue <= $rollSequenceEnd;
-             $rollSequenceValue++
+        for ($rollSequenceValue = $rollSequenceStart;
+            $rollSequenceValue <= $rollSequenceEnd; $rollSequenceValue++
         ) {
             $rollSequence = new IntegerObject($rollSequenceValue);
             $standardDiceRolls[] = $this->rollDice($rollSequence);
@@ -134,10 +133,21 @@ class Roller extends StrictObject
         return new Roll($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }
 
-    private function guardSequenceStartGreaterThanZero($start)
+    private function validateSequenceStart($start)
     {
         if (!is_numeric($start) || $start < 1) {
-            throw new \LogicException('Roll sequence start has to be at least 1, got ' . ValueDescriber::describe($start));
+            throw new Exceptions\InvalidSequenceNumber(
+                'Roll sequence start has to be at least 1, got ' . ValueDescriber::describe($start)
+            );
+        }
+        try {
+            return ToInteger::toInteger($start);
+        } catch (\Granam\Integer\Tools\Exceptions\WrongParameterType $exception) {
+            throw new Exceptions\InvalidSequenceNumber(
+                'Roll sequence start has to be an integer. ' . $exception->getMessage(),
+                $exception->getCode(),
+                $exception
+            );
         }
     }
 

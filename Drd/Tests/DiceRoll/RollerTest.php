@@ -4,13 +4,14 @@ namespace Drd\Tests\DiceRoll;
 use Drd\DiceRoll\Dice;
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\DiceRollEvaluator;
+use Drd\DiceRoll\Exceptions\InvalidSequenceNumber;
 use Drd\DiceRoll\Roll;
 use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\RollOn;
+use Drd\Tests\DiceRoll\Templates\Rollers\AbstractRollerTest;
 use Granam\Integer\IntegerInterface;
-use Granam\Tests\Tools\TestWithMockery;
 
-class RollerTest extends TestWithMockery
+class RollerTest extends AbstractRollerTest
 {
 
     /**
@@ -202,7 +203,7 @@ class RollerTest extends TestWithMockery
     /**
      * @test
      */
-    public function I_can_roll()
+    public function I_can_roll_by_it()
     {
         $roller = new Roller(
             $dice = $this->createDice($minimumValue = 111, $maximumValue = 222),
@@ -257,7 +258,7 @@ class RollerTest extends TestWithMockery
             ),
             $malusRollOn = $this->createMalusRollOn()
         );
-        for ($attempt = 1; $attempt < 1000; $attempt++) {
+        for ($attempt = 1; $attempt < self::MAX_ROLL_ATTEMPTS; $attempt++) {
             $roll = $roller->roll($attempt /* used as roll sequence start */);
             $this->checkSummaryAndRollSequence(
                 $roll,
@@ -269,7 +270,7 @@ class RollerTest extends TestWithMockery
                 break;
             }
         }
-        $this->assertLessThan(1000, $attempt);
+        $this->assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt);
     }
 
     /**
@@ -288,7 +289,7 @@ class RollerTest extends TestWithMockery
                 $dice
             )
         );
-        for ($attempt = 1; $attempt < 1000; $attempt++) {
+        for ($attempt = 1; $attempt < self::MAX_ROLL_ATTEMPTS; $attempt++) {
             $roll = $roller->roll($attempt /* used as a roll sequence start */);
             $this->checkSummaryAndRollSequence(
                 $roll,
@@ -300,7 +301,49 @@ class RollerTest extends TestWithMockery
                 break;
             }
         }
-        $this->assertLessThan(1000, $attempt);
+        $this->assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt);
     }
 
+    /**
+     * @test
+     */
+    public function I_can_not_use_non_positive_sequence()
+    {
+        $roller = new Roller(
+            $this->createDice(),
+            $this->createNumber(),
+            $this->createDiceRollEvaluator(),
+            $this->createBonusRollOn(),
+            $this->createMalusRollOn()
+        );
+        foreach ([0, -1, -1.1] as $prohibitedSequenceStart) {
+            $exception = false;
+            try {
+                $roller->roll($prohibitedSequenceStart);
+            } catch (InvalidSequenceNumber $exception) {
+            }
+            $this->assertNotFalse($exception);
+        }
+    }
+
+    /**
+     * @test
+     * @expectedException \Drd\DiceRoll\Exceptions\InvalidSequenceNumber
+     */
+    public function I_can_not_use_float_as_sequence()
+    {
+        $roller = new Roller(
+            $this->createDice(),
+            $this->createNumber(),
+            $this->createDiceRollEvaluator(),
+            $this->createBonusRollOn(),
+            $this->createMalusRollOn()
+        );
+        try {
+            $this->assertInstanceOf(Roll::class, $roller->roll(1.0));
+        } catch (\Exception $exception) {
+            $this->fail('1.0 should pass, failed on ' . $exception->getMessage());
+        }
+        $roller->roll(1.1);
+    }
 }

@@ -118,4 +118,21 @@ class RollTest extends TestWithMockery
         $this->assertEquals($bonusDiceRolls, $roll->getBonusDiceRolls());
         $this->assertEquals($malusDiceRolls, $roll->getMalusDiceRolls());
     }
+
+    /**
+     * @test
+     */
+    public function I_can_create_empty_roll()
+    {
+        foreach ([new Roll([]), new Roll([], []), new Roll([], [], [])] as $roll) {
+            /** @var Roll $roll */
+            $this->assertEquals([], $roll->getStandardDiceRolls());
+            $this->assertEquals([], $roll->getMalusDiceRolls());
+            $this->assertEquals([], $roll->getBonusDiceRolls());
+            $this->assertEquals([], $roll->getDiceRolls());
+            $this->assertEquals([], $roll->getRolledNumbers());
+            $this->assertSame(0, $roll->getValue());
+            $this->assertSame('0', (string)$roll->getValue());
+        }
+    }
 }

@@ -35,7 +35,7 @@ class Roller2d6DrdPlusTest extends AbstractRollerTest
         $previousRoll = null;
         $atLeastTwoBonusesHappened = false;
         $atLeastTwoMalusesHappened = false;
-        for ($attempt = 1; $attempt < self::ROLLS_ATTEMPTS_COUNT; $attempt++) {
+        for ($attempt = 1; $attempt < self::MAX_ROLL_ATTEMPTS; $attempt++) {
             $roll = $roller2d6DrdPlus->roll();
             $this->assertNotSame($previousRoll, $roll);
             if (count($roll->getBonusDiceRolls()) > 2) { // at least 2 positive bonus rolls (+ last negative bonus roll)
@@ -53,7 +53,7 @@ class Roller2d6DrdPlusTest extends AbstractRollerTest
             $previousRoll = $roll;
         }
 
-        $this->assertLessThan(self::ROLLS_ATTEMPTS_COUNT, $attempt, 'Expected at least two bonuses in a row and two maluses in a row');
+        $this->assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt, 'Expected at least two bonuses in a row and two maluses in a row');
         $this->assertEquals(new Roller2d6DrdPlus(), $roller2d6DrdPlus, 'Roller has to be stateless');
     }
 }
