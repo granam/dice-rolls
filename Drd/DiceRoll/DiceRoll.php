@@ -17,7 +17,7 @@ class DiceRoll extends StrictObject implements IntegerInterface
     /**
      * @var IntegerInterface
      */
-    private $rollSequence;
+    private $sequenceNumber;
     /**
      * @var DiceRollEvaluator
      */
@@ -26,19 +26,19 @@ class DiceRoll extends StrictObject implements IntegerInterface
     /**
      * @param Dice $dice
      * @param IntegerInterface $rolledNumber
-     * @param IntegerInterface $rollSequence
+     * @param IntegerInterface $sequenceNumber
      * @param DiceRollEvaluator $diceRollEvaluator
      */
     public function __construct(
         Dice $dice,
         IntegerInterface $rolledNumber,
-        IntegerInterface $rollSequence,
+        IntegerInterface $sequenceNumber,
         DiceRollEvaluator $diceRollEvaluator
     )
     {
         $this->dice = $dice;
         $this->rolledNumber = $rolledNumber;
-        $this->rollSequence = $rollSequence;
+        $this->sequenceNumber = $sequenceNumber;
         $this->diceRollEvaluator = $diceRollEvaluator;
     }
 
@@ -61,9 +61,9 @@ class DiceRoll extends StrictObject implements IntegerInterface
     /**
      * @return IntegerInterface
      */
-    public function getRollSequence()
+    public function getSequenceNumber()
     {
-        return $this->rollSequence;
+        return $this->sequenceNumber;
     }
 
     /**

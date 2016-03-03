@@ -18,12 +18,12 @@ class DiceRollTest extends TestWithMockery
         $diceRoll = new DiceRoll(
             $dice = $this->createDice(),
             $rolledNumber = $this->createRolledNumber($rolledValue = 1234),
-            $rollSequence = $this->createRollSequence(),
+            $sequenceNumber = $this->createRollSequence(),
             $diceRollEvaluator = $this->createDiceRollEvaluator()
         );
         $this->assertSame($dice, $diceRoll->getDice());
         $this->assertSame($rolledNumber, $diceRoll->getRolledNumber());
-        $this->assertSame($rollSequence, $diceRoll->getRollSequence());
+        $this->assertSame($sequenceNumber, $diceRoll->getSequenceNumber());
         $this->assertSame($diceRollEvaluator, $diceRoll->getDiceRollEvaluator());
         $this->assertSame($rolledValue, $diceRoll->getValue());
         $this->assertSame((string)$rolledValue, (string)$diceRoll);

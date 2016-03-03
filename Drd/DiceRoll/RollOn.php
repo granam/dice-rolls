@@ -11,9 +11,9 @@ interface RollOn
     public function shouldHappen($rolledValue);
 
     /**
-     * @param int $rollSequenceStart
+     * @param int $sequenceNumberStart
      * @return array|DiceRoll[]
      */
-    public function rollDices($rollSequenceStart);
+    public function rollDices($sequenceNumberStart);
 
 }

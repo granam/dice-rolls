@@ -31,10 +31,10 @@ class NoRollOn implements RollOn
     }
 
     /**
-     * @param int $rollSequenceStart
+     * @param int $sequenceNumberStart
      * @return array|DiceRoll[]
      */
-    public function rollDices($rollSequenceStart)
+    public function rollDices($sequenceNumberStart)
     {
         return [];
     }

@@ -111,19 +111,19 @@ class Roller extends StrictObject
     }
 
     /**
-     * @param int $rollSequenceStart = 1
+     * @param int $sequenceNumberStart = 1
      * @return Roll
      */
-    public function roll($rollSequenceStart = 1)
+    public function roll($sequenceNumberStart = 1)
     {
         $standardDiceRolls = [];
-        $rollSequenceStart = $this->validateSequenceStart($rollSequenceStart);
-        $rollSequenceEnd = $this->numberOfStandardRolls->getValue() + $rollSequenceStart - 1;
-        for ($rollSequenceValue = $rollSequenceStart;
-            $rollSequenceValue <= $rollSequenceEnd; $rollSequenceValue++
+        $sequenceNumberStart = $this->validateSequenceStart($sequenceNumberStart);
+        $rollSequenceEnd = $this->numberOfStandardRolls->getValue() + $sequenceNumberStart - 1;
+        for ($sequenceNumberValue = $sequenceNumberStart;
+            $sequenceNumberValue <= $rollSequenceEnd; $sequenceNumberValue++
         ) {
-            $rollSequence = new IntegerObject($rollSequenceValue);
-            $standardDiceRolls[] = $this->rollDice($rollSequence);
+            $sequenceNumber = new IntegerObject($sequenceNumberValue);
+            $standardDiceRolls[] = $this->rollDice($sequenceNumber);
         }
         $standardRollsSum = $this->summarizeValues($this->extractRolledNumbers($standardDiceRolls));
         $nextSequenceStep = $rollSequenceEnd + 1;
@@ -180,16 +180,16 @@ class Roller extends StrictObject
     }
 
     /**
-     * @param IntegerInterface $rollSequence
+     * @param IntegerInterface $sequenceNumber
      *
      * @return DiceRoll
      */
-    private function rollDice(IntegerInterface $rollSequence)
+    private function rollDice(IntegerInterface $sequenceNumber)
     {
         return new DiceRoll(
             $this->dice,
             new IntegerObject($this->rollNumber($this->dice)),
-            $rollSequence,
+            $sequenceNumber,
             $this->diceRollEvaluator
         );
     }

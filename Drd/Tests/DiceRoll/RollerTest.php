@@ -114,7 +114,7 @@ class RollerTest extends AbstractRollerTest
                     $diceRoll = $this->mockery(DiceRoll::class);
                     $diceRoll->shouldReceive('getDice')
                         ->andReturn($dice);
-                    $diceRoll->shouldReceive('getRollSequence')
+                    $diceRoll->shouldReceive('getSequenceNumber')
                         ->andReturn($rolledNumber = $this->createNumber($rollSequenceStart + ($diceRollNumber - 1)));
                     $diceRoll->shouldReceive('getValue')
                         ->andReturn($diceRollNumber /* just some int for sum */);
@@ -234,7 +234,7 @@ class RollerTest extends AbstractRollerTest
             $summary += $diceRoll->getValue();
             $this->assertSame(
                 $currentRollSequence,
-                $diceRoll->getRollSequence()->getValue() /* integer from the mock */,
+                $diceRoll->getSequenceNumber()->getValue() /* integer from the mock */,
                 "Roll sequence is not successive. Expected $currentRollSequence (including offset $rollSequenceOffset)."
             );
         }

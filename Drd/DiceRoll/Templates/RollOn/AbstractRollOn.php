@@ -19,12 +19,12 @@ abstract class AbstractRollOn extends StrictObject implements RollOn
     }
 
     /**
-     * @param int $rollSequenceStart
+     * @param int $sequenceNumberStart
      * @return DiceRoll[]
      */
-    public function rollDices($rollSequenceStart)
+    public function rollDices($sequenceNumberStart)
     {
-        return $this->roller->roll($rollSequenceStart)->getDiceRolls();
+        return $this->roller->roll($sequenceNumberStart)->getDiceRolls();
     }
 
 }
