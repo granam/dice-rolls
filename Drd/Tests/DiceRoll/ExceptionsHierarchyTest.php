@@ -2,9 +2,9 @@
 namespace Drd\Tests\DiceRoll;
 
 use Drd\DiceRoll\DiceRoll;
-use Granam\Exceptions\Tests\Tools\AbstractTestOfExceptionsHierarchy;
+use Granam\Tests\Exceptions\Tools\AbstractExceptionsHierarchyTest;
 
-class ExceptionsHierarchyTest extends AbstractTestOfExceptionsHierarchy
+class ExceptionsHierarchyTest extends AbstractExceptionsHierarchyTest
 {
 
     protected function getRootNamespace()
