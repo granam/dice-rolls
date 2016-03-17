@@ -17,13 +17,13 @@ class Roller1d6DrdPlusBonusTest extends AbstractRollerTest
     public function I_can_create_it()
     {
         $roller1d6DrdPlusMalus = Roller1d6DrdPlusBonus::getIt();
-        $this->assertSame($roller1d6DrdPlusMalus, Roller1d6DrdPlusBonus::getIt());
-        $this->assertInstanceOf(Dice1d6::class, $roller1d6DrdPlusMalus->getDice());
-        $this->assertInstanceOf(IntegerInterface::class, $roller1d6DrdPlusMalus->getNumberOfStandardRolls());
-        $this->assertSame(1, $roller1d6DrdPlusMalus->getNumberOfStandardRolls()->getValue());
-        $this->assertInstanceOf(FourOrMoreAsOneZeroOtherwise::class, $roller1d6DrdPlusMalus->getDiceRollEvaluator());
-        $this->assertInstanceOf(RollOn4Plus::class, $roller1d6DrdPlusMalus->getBonusRollOn());
-        $this->assertInstanceOf(NoRollOn::class, $roller1d6DrdPlusMalus->getMalusRollOn());
+        self::assertSame($roller1d6DrdPlusMalus, Roller1d6DrdPlusBonus::getIt());
+        self::assertInstanceOf(Dice1d6::class, $roller1d6DrdPlusMalus->getDice());
+        self::assertInstanceOf(IntegerInterface::class, $roller1d6DrdPlusMalus->getNumberOfStandardRolls());
+        self::assertSame(1, $roller1d6DrdPlusMalus->getNumberOfStandardRolls()->getValue());
+        self::assertInstanceOf(FourOrMoreAsOneZeroOtherwise::class, $roller1d6DrdPlusMalus->getDiceRollEvaluator());
+        self::assertInstanceOf(RollOn4Plus::class, $roller1d6DrdPlusMalus->getBonusRollOn());
+        self::assertInstanceOf(NoRollOn::class, $roller1d6DrdPlusMalus->getMalusRollOn());
     }
 
     /**
@@ -35,12 +35,12 @@ class Roller1d6DrdPlusBonusTest extends AbstractRollerTest
         $previousRoll = null;
         for ($attempt = 1; $attempt < self::MAX_ROLL_ATTEMPTS; $attempt++) {
             $roll = $roller1d6DrdPlusBonus->roll();
-            $this->assertNotSame($previousRoll, $roll);
-            $this->assertGreaterThanOrEqual(0, $roll->getValue());
-            $this->assertEquals(1, count($roll->getStandardDiceRolls()));
-            $this->assertEquals(0, count($roll->getMalusDiceRolls()));
+            self::assertNotSame($previousRoll, $roll);
+            self::assertGreaterThanOrEqual(0, $roll->getValue());
+            self::assertEquals(1, count($roll->getStandardDiceRolls()));
+            self::assertEquals(0, count($roll->getMalusDiceRolls()));
             if (count($roll->getBonusDiceRolls()) > 2) { // at least 2 positive bonus rolls (+ last negative bonus roll)
-                $this->assertEquals(
+                self::assertEquals(
                     count($roll->getDiceRolls()) - 1, // last bonus roll does not trigger bonus value (< 4)
                     $roll->getValue()
                 );
@@ -48,7 +48,7 @@ class Roller1d6DrdPlusBonusTest extends AbstractRollerTest
             }
             $previousRoll = $roll;
         }
-        $this->assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt, 'Expected at least two bonuses in a row');
-        $this->assertEquals(new Roller1d6DrdPlusBonus(), $roller1d6DrdPlusBonus, 'Roller has to be stateless');
+        self::assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt, 'Expected at least two bonuses in a row');
+        self::assertEquals(new Roller1d6DrdPlusBonus(), $roller1d6DrdPlusBonus, 'Roller has to be stateless');
     }
 }

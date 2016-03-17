@@ -13,9 +13,9 @@ class RollOn6Test extends AbstractRollOnTest
     {
         $rollOn6 = new RollOn6($this->createRoller());
         for ($value = -1; $value < 10; $value++) {
-            $this->assertSame($value === 6, $rollOn6->shouldHappen($value));
+            self::assertSame($value === 6, $rollOn6->shouldHappen($value));
         }
-        $this->assertFalse($rollOn6->shouldHappen(PHP_INT_MIN));
-        $this->assertFalse($rollOn6->shouldHappen(PHP_INT_MAX));
+        self::assertFalse($rollOn6->shouldHappen(PHP_INT_MIN));
+        self::assertFalse($rollOn6->shouldHappen(PHP_INT_MAX));
     }
 }

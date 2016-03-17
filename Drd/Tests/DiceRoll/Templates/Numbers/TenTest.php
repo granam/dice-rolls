@@ -12,8 +12,8 @@ class TenTest extends \PHPUnit_Framework_TestCase
     public function I_can_use_it()
     {
         $ten = Ten::getIt();
-        $this->assertSame(10, $ten->getValue());
-        $this->assertSame('10', "$ten");
-        $this->assertInstanceOf(IntegerInterface::class, $ten);
+        self::assertSame(10, $ten->getValue());
+        self::assertSame('10', "$ten");
+        self::assertInstanceOf(IntegerInterface::class, $ten);
     }
 }

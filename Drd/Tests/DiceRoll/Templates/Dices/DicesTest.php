@@ -14,7 +14,7 @@ class DicesTest extends TestWithMockery
     public function I_can_create_it()
     {
         $instance = new Dices([$this->mockery(Dice::class)]);
-        $this->assertNotNull($instance);
+        self::assertNotNull($instance);
     }
 
     /**
@@ -62,7 +62,7 @@ class DicesTest extends TestWithMockery
         $secondMinimum->shouldReceive('getValue')
             ->once()
             ->andReturn($secondMinimumValue = 456);
-        $this->assertSame($firstMinimumValue + $secondMinimumValue, $dices->getMinimum()->getValue());
+        self::assertSame($firstMinimumValue + $secondMinimumValue, $dices->getMinimum()->getValue());
     }
 
     /**
@@ -83,6 +83,6 @@ class DicesTest extends TestWithMockery
         $secondMaximum->shouldReceive('getValue')
             ->once()
             ->andReturn($secondMaximumValue = 456);
-        $this->assertSame($firstMaximumValue + $secondMaximumValue, $dices->getMaximum()->getValue());
+        self::assertSame($firstMaximumValue + $secondMaximumValue, $dices->getMaximum()->getValue());
     }
 }

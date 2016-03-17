@@ -17,8 +17,8 @@ abstract class AbstractEvaluatorTest extends TestWithMockery
     {
         $evaluatorClass = $this->getEvaluatorClass();
         $evaluator = $evaluatorClass::getIt();
-        $this->assertSame($evaluator, $evaluatorClass::getIt());
-        $this->assertEquals($evaluator, new $evaluatorClass());
+        self::assertSame($evaluator, $evaluatorClass::getIt());
+        self::assertEquals($evaluator, new $evaluatorClass());
     }
 
     /**

@@ -12,10 +12,10 @@ class RollOn3MinusTest extends AbstractRollOnTest
     {
         $rollOn3Minus = new RollOn3Minus($this->createRoller());
         for ($value = -1; $value < 6; $value++) {
-            $this->assertSame($value <= 3, $rollOn3Minus->shouldHappen($value));
+            self::assertSame($value <= 3, $rollOn3Minus->shouldHappen($value));
         }
-        $this->assertTrue($rollOn3Minus->shouldHappen(PHP_INT_MIN));
-        $this->assertFalse($rollOn3Minus->shouldHappen(PHP_INT_MAX));
+        self::assertTrue($rollOn3Minus->shouldHappen(PHP_INT_MIN));
+        self::assertFalse($rollOn3Minus->shouldHappen(PHP_INT_MAX));
     }
 
 }

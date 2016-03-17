@@ -12,14 +12,14 @@ class NoRollOnTest extends \PHPUnit_Framework_TestCase
     public function I_do_not_get_any_repeat_roll()
     {
         $noRollOn = NoRollOn::getIt();
-        $this->assertSame($noRollOn, NoRollOn::getIt());
-        $this->assertEquals($noRollOn, new NoRollOn());
+        self::assertSame($noRollOn, NoRollOn::getIt());
+        self::assertEquals($noRollOn, new NoRollOn());
 
-        $this->assertEquals([], $noRollOn->rollDices(123));
+        self::assertEquals([], $noRollOn->rollDices(123));
         foreach ([-123, 0, 456, 7891011] as $rollValue) {
-            $this->assertFalse($noRollOn->shouldHappen($rollValue), "No value should trigger repeat roll");
+            self::assertFalse($noRollOn->shouldHappen($rollValue), "No value should trigger repeat roll");
         }
-        $this->assertEquals([], $noRollOn->rollDices(456));
+        self::assertEquals([], $noRollOn->rollDices(456));
     }
 
 }

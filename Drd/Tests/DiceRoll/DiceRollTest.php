@@ -21,12 +21,12 @@ class DiceRollTest extends TestWithMockery
             $sequenceNumber = $this->createRollSequence(),
             $diceRollEvaluator = $this->createDiceRollEvaluator()
         );
-        $this->assertSame($dice, $diceRoll->getDice());
-        $this->assertSame($rolledNumber, $diceRoll->getRolledNumber());
-        $this->assertSame($sequenceNumber, $diceRoll->getSequenceNumber());
-        $this->assertSame($diceRollEvaluator, $diceRoll->getDiceRollEvaluator());
-        $this->assertSame($rolledValue, $diceRoll->getValue());
-        $this->assertSame((string)$rolledValue, (string)$diceRoll);
+        self::assertSame($dice, $diceRoll->getDice());
+        self::assertSame($rolledNumber, $diceRoll->getRolledNumber());
+        self::assertSame($sequenceNumber, $diceRoll->getSequenceNumber());
+        self::assertSame($diceRollEvaluator, $diceRoll->getDiceRollEvaluator());
+        self::assertSame($rolledValue, $diceRoll->getValue());
+        self::assertSame((string)$rolledValue, (string)$diceRoll);
     }
 
     /**
@@ -55,9 +55,7 @@ class DiceRollTest extends TestWithMockery
      */
     private function createRollSequence()
     {
-        $rollSequence = $this->mockery(IntegerInterface::class);
-
-        return $rollSequence;
+        return $this->mockery(IntegerInterface::class);
     }
 
     /**

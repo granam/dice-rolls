@@ -15,16 +15,16 @@ class ThreeOrLessAsMinusOneZeroOtherwiseTest extends AbstractEvaluatorTest
         foreach (range(-4, 10, 1) as $value) {
             $evaluated = $evaluator->evaluateDiceRoll($this->createDiceRoll($value));
             if ($value < 4) {
-                $this->assertSame(
+                self::assertSame(
                     -1,
                     $evaluated->getValue(),
                     "Value of $value should be -1, but was evaluated as {$evaluated->getValue()}"
                 );
             } else {
-                $this->assertSame(0, $evaluated->getValue());
+                self::assertSame(0, $evaluated->getValue());
             }
         }
-        $this->assertEquals(
+        self::assertEquals(
             $evaluator,
             new ThreeOrLessAsMinusOneZeroOtherwise(),
             'ThreeOrLessAsMinusOneZeroOtherwise should be immutable'

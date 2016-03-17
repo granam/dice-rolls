@@ -12,8 +12,8 @@ class SixTest extends \PHPUnit_Framework_TestCase
     public function I_can_use_it()
     {
         $six = Six::getIt();
-        $this->assertSame(6, $six->getValue());
-        $this->assertSame('6', "$six");
-        $this->assertInstanceOf(IntegerInterface::class, $six);
+        self::assertSame(6, $six->getValue());
+        self::assertSame('6', "$six");
+        self::assertInstanceOf(IntegerInterface::class, $six);
     }
 }

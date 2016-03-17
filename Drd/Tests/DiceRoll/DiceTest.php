@@ -11,15 +11,15 @@ class DiceTest extends \PHPUnit_Framework_TestCase
      */
     public function I_can_use_dice_interface()
     {
-        $this->assertTrue(interface_exists(Dice::class));
+        self::assertTrue(interface_exists(Dice::class));
         $reflection = new \ReflectionClass(Dice::class);
         $methods = $reflection->getMethods();
-        $this->assertCount(2, $methods);
-        $this->assertTrue($reflection->hasMethod('getMinimum'));
+        self::assertCount(2, $methods);
+        self::assertTrue($reflection->hasMethod('getMinimum'));
         $getMinimum = new \ReflectionMethod(Dice::class, 'getMinimum');
-        $this->assertSame(0, $getMinimum->getNumberOfParameters());
-        $this->assertTrue($reflection->hasMethod('getMaximum'));
+        self::assertSame(0, $getMinimum->getNumberOfParameters());
+        self::assertTrue($reflection->hasMethod('getMaximum'));
         $getMaximum = new \ReflectionMethod(Dice::class, 'getMaximum');
-        $this->assertSame(0, $getMaximum->getNumberOfParameters());
+        self::assertSame(0, $getMaximum->getNumberOfParameters());
     }
 }

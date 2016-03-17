@@ -14,8 +14,8 @@ class OneToOneTest extends AbstractEvaluatorTest
         $evaluator = OneToOne::getIt();
         foreach (range(-10, 10, 1) as $value) {
             $evaluated = $evaluator->evaluateDiceRoll($this->createDiceRoll($value));
-            $this->assertSame($value, $evaluated->getValue());
+            self::assertSame($value, $evaluated->getValue());
         }
-        $this->assertEquals($evaluator, new OneToOne(), 'OneToOne evaluator should be immutable');
+        self::assertEquals($evaluator, new OneToOne(), 'OneToOne evaluator should be immutable');
     }
 }

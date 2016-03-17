@@ -15,17 +15,17 @@ class RollTest extends TestWithMockery
     {
         $roll = new Roll($diceRolls = $this->createDiceRolls($values = [1, 2, 3]));
         $rolledNumbers = $roll->getRolledNumbers();
-        $this->assertCount(count($values), $rolledNumbers);
+        self::assertCount(count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {
-            $this->assertInstanceOf(IntegerInterface::class, $rolledNumber);
-            $this->assertSame($values[$index], $rolledNumber->getValue());
+            self::assertInstanceOf(IntegerInterface::class, $rolledNumber);
+            self::assertSame($values[$index], $rolledNumber->getValue());
         }
-        $this->assertSame(array_sum($values), $roll->getValue());
-        $this->assertSame((string)array_sum($values), (string)$roll);
-        $this->assertSame($diceRolls, $roll->getDiceRolls());
-        $this->assertEquals($diceRolls, $roll->getStandardDiceRolls());
-        $this->assertEquals([], $roll->getBonusDiceRolls());
-        $this->assertEquals([], $roll->getMalusDiceRolls());
+        self::assertSame(array_sum($values), $roll->getValue());
+        self::assertSame((string)array_sum($values), (string)$roll);
+        self::assertSame($diceRolls, $roll->getDiceRolls());
+        self::assertEquals($diceRolls, $roll->getStandardDiceRolls());
+        self::assertEquals([], $roll->getBonusDiceRolls());
+        self::assertEquals([], $roll->getMalusDiceRolls());
     }
 
     private function createDiceRolls(array $values)
@@ -56,17 +56,17 @@ class RollTest extends TestWithMockery
         );
         $rolledNumbers = $roll->getRolledNumbers();
         $values = array_merge($standardValues, $bonusValues);
-        $this->assertCount(count($values), $rolledNumbers);
+        self::assertCount(count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {
-            $this->assertInstanceOf(IntegerInterface::class, $rolledNumber);
-            $this->assertSame($values[$index], $rolledNumber->getValue());
+            self::assertInstanceOf(IntegerInterface::class, $rolledNumber);
+            self::assertSame($values[$index], $rolledNumber->getValue());
         }
-        $this->assertSame(array_sum($values), $roll->getValue());
-        $this->assertSame((string)array_sum($values), (string)$roll);
-        $this->assertEquals(array_merge($standardDiceRolls, $bonusDiceRolls), $roll->getDiceRolls());
-        $this->assertEquals($standardDiceRolls, $roll->getStandardDiceRolls());
-        $this->assertEquals($bonusDiceRolls, $roll->getBonusDiceRolls());
-        $this->assertEquals([], $roll->getMalusDiceRolls());
+        self::assertSame(array_sum($values), $roll->getValue());
+        self::assertSame((string)array_sum($values), (string)$roll);
+        self::assertEquals(array_merge($standardDiceRolls, $bonusDiceRolls), $roll->getDiceRolls());
+        self::assertEquals($standardDiceRolls, $roll->getStandardDiceRolls());
+        self::assertEquals($bonusDiceRolls, $roll->getBonusDiceRolls());
+        self::assertEquals([], $roll->getMalusDiceRolls());
     }
 
     /**
@@ -81,17 +81,17 @@ class RollTest extends TestWithMockery
         );
         $rolledNumbers = $roll->getRolledNumbers();
         $values = array_merge($standardValues, $malusValues);
-        $this->assertCount(count($values), $rolledNumbers);
+        self::assertCount(count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {
-            $this->assertInstanceOf(IntegerInterface::class, $rolledNumber);
-            $this->assertSame($values[$index], $rolledNumber->getValue());
+            self::assertInstanceOf(IntegerInterface::class, $rolledNumber);
+            self::assertSame($values[$index], $rolledNumber->getValue());
         }
-        $this->assertSame(array_sum($values), $roll->getValue());
-        $this->assertSame((string)array_sum($values), (string)$roll);
-        $this->assertEquals(array_merge($standardDiceRolls, $malusDiceRolls), $roll->getDiceRolls());
-        $this->assertEquals($standardDiceRolls, $roll->getStandardDiceRolls());
-        $this->assertEquals([], $roll->getBonusDiceRolls());
-        $this->assertEquals($malusDiceRolls, $roll->getMalusDiceRolls());
+        self::assertSame(array_sum($values), $roll->getValue());
+        self::assertSame((string)array_sum($values), (string)$roll);
+        self::assertEquals(array_merge($standardDiceRolls, $malusDiceRolls), $roll->getDiceRolls());
+        self::assertEquals($standardDiceRolls, $roll->getStandardDiceRolls());
+        self::assertEquals([], $roll->getBonusDiceRolls());
+        self::assertEquals($malusDiceRolls, $roll->getMalusDiceRolls());
     }
 
     /**
@@ -106,17 +106,17 @@ class RollTest extends TestWithMockery
         );
         $rolledNumbers = $roll->getRolledNumbers();
         $values = array_merge($standardValues, $bonusValues, $malusValues);
-        $this->assertCount(count($values), $rolledNumbers);
+        self::assertCount(count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {
-            $this->assertInstanceOf(IntegerInterface::class, $rolledNumber);
-            $this->assertSame($values[$index], $rolledNumber->getValue());
+            self::assertInstanceOf(IntegerInterface::class, $rolledNumber);
+            self::assertSame($values[$index], $rolledNumber->getValue());
         }
-        $this->assertSame(array_sum($values), $roll->getValue());
-        $this->assertSame((string)array_sum($values), (string)$roll);
-        $this->assertEquals(array_merge($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls), $roll->getDiceRolls());
-        $this->assertEquals($standardDiceRolls, $roll->getStandardDiceRolls());
-        $this->assertEquals($bonusDiceRolls, $roll->getBonusDiceRolls());
-        $this->assertEquals($malusDiceRolls, $roll->getMalusDiceRolls());
+        self::assertSame(array_sum($values), $roll->getValue());
+        self::assertSame((string)array_sum($values), (string)$roll);
+        self::assertEquals(array_merge($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls), $roll->getDiceRolls());
+        self::assertEquals($standardDiceRolls, $roll->getStandardDiceRolls());
+        self::assertEquals($bonusDiceRolls, $roll->getBonusDiceRolls());
+        self::assertEquals($malusDiceRolls, $roll->getMalusDiceRolls());
     }
 
     /**
@@ -126,13 +126,13 @@ class RollTest extends TestWithMockery
     {
         foreach ([new Roll([]), new Roll([], []), new Roll([], [], [])] as $roll) {
             /** @var Roll $roll */
-            $this->assertEquals([], $roll->getStandardDiceRolls());
-            $this->assertEquals([], $roll->getMalusDiceRolls());
-            $this->assertEquals([], $roll->getBonusDiceRolls());
-            $this->assertEquals([], $roll->getDiceRolls());
-            $this->assertEquals([], $roll->getRolledNumbers());
-            $this->assertSame(0, $roll->getValue());
-            $this->assertSame('0', (string)$roll->getValue());
+            self::assertEquals([], $roll->getStandardDiceRolls());
+            self::assertEquals([], $roll->getMalusDiceRolls());
+            self::assertEquals([], $roll->getBonusDiceRolls());
+            self::assertEquals([], $roll->getDiceRolls());
+            self::assertEquals([], $roll->getRolledNumbers());
+            self::assertSame(0, $roll->getValue());
+            self::assertSame('0', (string)$roll->getValue());
         }
     }
 }

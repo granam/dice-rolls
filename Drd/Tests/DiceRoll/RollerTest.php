@@ -26,11 +26,11 @@ class RollerTest extends AbstractRollerTest
             $bonusRollOn = $this->createBonusRollOn(),
             $malusRollOn = $this->createMalusRollOn()
         );
-        $this->assertSame($dice, $rollerWithMalus->getDice());
-        $this->assertSame($numberOfStandardRolls, $rollerWithMalus->getNumberOfStandardRolls());
-        $this->assertSame($diceRollEvaluator, $rollerWithMalus->getDiceRollEvaluator());
-        $this->assertSame($bonusRollOn, $rollerWithMalus->getBonusRollOn());
-        $this->assertSame($malusRollOn, $rollerWithMalus->getMalusRollOn());
+        self::assertSame($dice, $rollerWithMalus->getDice());
+        self::assertSame($numberOfStandardRolls, $rollerWithMalus->getNumberOfStandardRolls());
+        self::assertSame($diceRollEvaluator, $rollerWithMalus->getDiceRollEvaluator());
+        self::assertSame($bonusRollOn, $rollerWithMalus->getBonusRollOn());
+        self::assertSame($malusRollOn, $rollerWithMalus->getMalusRollOn());
     }
 
     /**
@@ -103,12 +103,12 @@ class RollerTest extends AbstractRollerTest
         $rollOn = $this->mockery(RollOn::class);
         $rollOn->shouldReceive('shouldHappen')
             ->andReturnUsing(function ($value) use ($shouldHappenOn) {
-                return in_array($value, $shouldHappenOn);
+                return in_array($value, $shouldHappenOn, true);
             });
         $rollOn->shouldReceive('rollDices')
             ->with(\Mockery::type('int'))
             ->andReturnUsing(function ($rollSequenceStart) use ($numberOfDiceRolls, $dice) {
-                $this->assertGreaterThan(0, $rollSequenceStart);
+                self::assertGreaterThan(0, $rollSequenceStart);
                 $diceRolls = [];
                 for ($diceRollNumber = 1; $diceRollNumber <= $numberOfDiceRolls; $diceRollNumber++) {
                     $diceRoll = $this->mockery(DiceRoll::class);
@@ -215,11 +215,11 @@ class RollerTest extends AbstractRollerTest
         $roll = $roller->roll();
 
         $this->checkSummaryAndRollSequence($roll, $dice, $numberOfRollsValue);
-        $this->assertGreaterThanOrEqual($minimumValue * $numberOfRollsValue, $roll->getValue());
-        $this->assertLessThanOrEqual($maximumValue * $numberOfRollsValue, $roll->getValue());
-        $this->assertSame($roll->getDiceRolls(), $roll->getStandardDiceRolls());
-        $this->assertEquals([], $roll->getBonusDiceRolls());
-        $this->assertEquals([], $roll->getMalusDiceRolls());
+        self::assertGreaterThanOrEqual($minimumValue * $numberOfRollsValue, $roll->getValue());
+        self::assertLessThanOrEqual($maximumValue * $numberOfRollsValue, $roll->getValue());
+        self::assertSame($roll->getDiceRolls(), $roll->getStandardDiceRolls());
+        self::assertEquals([], $roll->getBonusDiceRolls());
+        self::assertEquals([], $roll->getMalusDiceRolls());
     }
 
     private function checkSummaryAndRollSequence(Roll $roll, Dice $expectedDice, $numberOfRolls, $rollSequenceOffset = 0)
@@ -230,16 +230,16 @@ class RollerTest extends AbstractRollerTest
         foreach ($roll->getDiceRolls() as $diceRoll) {
             $currentRollSequence++;
             $rollNumber++;
-            $this->assertSame($expectedDice, $diceRoll->getDice());
+            self::assertSame($expectedDice, $diceRoll->getDice());
             $summary += $diceRoll->getValue();
-            $this->assertSame(
+            self::assertSame(
                 $currentRollSequence,
                 $diceRoll->getSequenceNumber()->getValue() /* integer from the mock */,
                 "Roll sequence is not successive. Expected $currentRollSequence (including offset $rollSequenceOffset)."
             );
         }
-        $this->assertSame($roll->getValue(), $summary);
-        $this->assertSame($rollNumber, $numberOfRolls);
+        self::assertSame($roll->getValue(), $summary);
+        self::assertSame($rollNumber, $numberOfRolls);
     }
 
     /**
@@ -270,7 +270,7 @@ class RollerTest extends AbstractRollerTest
                 break;
             }
         }
-        $this->assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt);
+        self::assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt);
     }
 
     /**
@@ -301,7 +301,7 @@ class RollerTest extends AbstractRollerTest
                 break;
             }
         }
-        $this->assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt);
+        self::assertLessThan(self::MAX_ROLL_ATTEMPTS, $attempt);
     }
 
     /**
@@ -322,7 +322,7 @@ class RollerTest extends AbstractRollerTest
                 $roller->roll($prohibitedSequenceStart);
             } catch (InvalidSequenceNumber $exception) {
             }
-            $this->assertNotFalse($exception);
+            self::assertNotFalse($exception);
         }
     }
 
@@ -340,9 +340,9 @@ class RollerTest extends AbstractRollerTest
             $this->createMalusRollOn()
         );
         try {
-            $this->assertInstanceOf(Roll::class, $roller->roll(1.0));
+            self::assertInstanceOf(Roll::class, $roller->roll(1.0));
         } catch (\Exception $exception) {
-            $this->fail('1.0 should pass, failed on ' . $exception->getMessage());
+            self::fail('1.0 should pass, failed on ' . $exception->getMessage());
         }
         $roller->roll(1.1);
     }

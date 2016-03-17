@@ -12,8 +12,8 @@ class TwoTest extends \PHPUnit_Framework_TestCase
     public function I_can_use_it()
     {
         $two = Two::getIt();
-        $this->assertSame(2, $two->getValue());
-        $this->assertSame('2', "$two");
-        $this->assertInstanceOf(IntegerInterface::class, $two);
+        self::assertSame(2, $two->getValue());
+        self::assertSame('2', "$two");
+        self::assertInstanceOf(IntegerInterface::class, $two);
     }
 }

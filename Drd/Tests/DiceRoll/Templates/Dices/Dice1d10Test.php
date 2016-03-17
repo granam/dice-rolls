@@ -11,7 +11,7 @@ class Dice1d10Test extends \PHPUnit_Framework_TestCase
     public function can_create_instance()
     {
         $instance = new Dice1d10();
-        $this->assertNotNull($instance);
+        self::assertNotNull($instance);
     }
 
     /**
@@ -21,7 +21,7 @@ class Dice1d10Test extends \PHPUnit_Framework_TestCase
     public function minimum_is_one()
     {
         $dice = new Dice1d10();
-        $this->assertSame(1, $dice->getMinimum()->getValue());
+        self::assertSame(1, $dice->getMinimum()->getValue());
     }
 
     /**
@@ -31,6 +31,6 @@ class Dice1d10Test extends \PHPUnit_Framework_TestCase
     public function maximum_is_six()
     {
         $dice = new Dice1d10();
-        $this->assertSame(10, $dice->getMaximum()->getValue());
+        self::assertSame(10, $dice->getMaximum()->getValue());
     }
 }

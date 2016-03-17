@@ -12,8 +12,8 @@ class MinusOneTest extends \PHPUnit_Framework_TestCase
     public function I_can_use_it()
     {
         $minusOne = MinusOne::getIt();
-        $this->assertSame(-1, $minusOne->getValue());
-        $this->assertSame('-1', "$minusOne");
-        $this->assertInstanceOf(IntegerInterface::class, $minusOne);
+        self::assertSame(-1, $minusOne->getValue());
+        self::assertSame('-1', "$minusOne");
+        self::assertInstanceOf(IntegerInterface::class, $minusOne);
     }
 }

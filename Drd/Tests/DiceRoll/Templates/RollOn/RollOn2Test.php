@@ -13,10 +13,10 @@ class RollOn2Test extends AbstractRollOnTest
     {
         $rollOn2 = new RollOn2($this->createRoller());
         for ($value = -1; $value < 6; $value++) {
-            $this->assertSame($value === 2, $rollOn2->shouldHappen($value));
+            self::assertSame($value === 2, $rollOn2->shouldHappen($value));
         }
-        $this->assertFalse($rollOn2->shouldHappen(PHP_INT_MIN));
-        $this->assertFalse($rollOn2->shouldHappen(PHP_INT_MAX));
+        self::assertFalse($rollOn2->shouldHappen(PHP_INT_MIN));
+        self::assertFalse($rollOn2->shouldHappen(PHP_INT_MAX));
     }
 
 }

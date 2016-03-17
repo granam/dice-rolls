@@ -11,7 +11,7 @@ class Dice1d4Test extends AbstractPredefinedDiceTest
     public function I_got_one_as_minimum()
     {
         $dice = new Dice1d4();
-        $this->assertSame(1, $dice->getMinimum()->getValue());
+        self::assertSame(1, $dice->getMinimum()->getValue());
     }
 
     /**
@@ -20,6 +20,6 @@ class Dice1d4Test extends AbstractPredefinedDiceTest
     public function I_got_four_as_maximum()
     {
         $dice = new Dice1d4();
-        $this->assertSame(4, $dice->getMaximum()->getValue());
+        self::assertSame(4, $dice->getMaximum()->getValue());
     }
 }

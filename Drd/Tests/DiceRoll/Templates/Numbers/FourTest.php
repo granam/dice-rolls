@@ -12,8 +12,8 @@ class FourTest extends \PHPUnit_Framework_TestCase
     public function I_can_use_it()
     {
         $four = Four::getIt();
-        $this->assertSame(4, $four->getValue());
-        $this->assertSame('4', "$four");
-        $this->assertInstanceOf(IntegerInterface::class, $four);
+        self::assertSame(4, $four->getValue());
+        self::assertSame('4', "$four");
+        self::assertInstanceOf(IntegerInterface::class, $four);
     }
 }

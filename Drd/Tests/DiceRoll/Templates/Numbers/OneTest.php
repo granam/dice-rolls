@@ -12,8 +12,8 @@ class OneTest extends \PHPUnit_Framework_TestCase
     public function I_can_use_it()
     {
         $one = One::getIt();
-        $this->assertSame(1, $one->getValue());
-        $this->assertSame('1', "$one");
-        $this->assertInstanceOf(IntegerInterface::class, $one);
+        self::assertSame(1, $one->getValue());
+        self::assertSame('1', "$one");
+        self::assertInstanceOf(IntegerInterface::class, $one);
     }
 }

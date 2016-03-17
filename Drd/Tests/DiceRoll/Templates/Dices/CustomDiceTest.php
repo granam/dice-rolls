@@ -22,8 +22,8 @@ class CustomDiceTest extends TestWithMockery
             ->andReturn($maximumValue = 2);
 
         $customDice = new CustomDice($minimum, $maximum);
-        $this->assertSame($minimum, $customDice->getMinimum());
-        $this->assertSame($maximum, $customDice->getMaximum());
+        self::assertSame($minimum, $customDice->getMinimum());
+        self::assertSame($maximum, $customDice->getMaximum());
     }
 
     /**
@@ -41,8 +41,8 @@ class CustomDiceTest extends TestWithMockery
             ->andReturn($minimumValue);
 
         $customDice = new CustomDice($minimum, $maximum);
-        $this->assertNotSame($customDice->getMinimum(), $customDice->getMaximum());
-        $this->assertSame($customDice->getMinimum()->getValue(), $customDice->getMaximum()->getValue());
+        self::assertNotSame($customDice->getMinimum(), $customDice->getMaximum());
+        self::assertSame($customDice->getMinimum()->getValue(), $customDice->getMaximum()->getValue());
     }
 
     /**
@@ -59,7 +59,7 @@ class CustomDiceTest extends TestWithMockery
         $maximum = $this->mockery(IntegerInterface::class);
         $maximum->shouldReceive('getValue')
             ->andReturn($maximumValue = $minimumValue - 1);
-        $this->assertLessThan($minimumValue, $maximumValue);
+        self::assertLessThan($minimumValue, $maximumValue);
 
         new CustomDice($minimum, $maximum);
     }

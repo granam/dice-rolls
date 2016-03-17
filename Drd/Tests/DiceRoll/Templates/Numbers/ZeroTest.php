@@ -12,8 +12,8 @@ class ZeroTest extends \PHPUnit_Framework_TestCase
     public function I_can_use_it()
     {
         $zero = Zero::getIt();
-        $this->assertSame(0, $zero->getValue());
-        $this->assertSame('0', "$zero");
-        $this->assertInstanceOf(IntegerInterface::class, $zero);
+        self::assertSame(0, $zero->getValue());
+        self::assertSame('0', "$zero");
+        self::assertInstanceOf(IntegerInterface::class, $zero);
     }
 }

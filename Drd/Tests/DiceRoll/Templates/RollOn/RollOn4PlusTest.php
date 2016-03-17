@@ -13,9 +13,9 @@ class RollOn4PlusTest extends AbstractRollOnTest
     {
         $rollOn4Plus = new RollOn4Plus($this->createRoller());
         for ($value = -1; $value < 6; $value++) {
-            $this->assertSame($value >= 4, $rollOn4Plus->shouldHappen($value));
+            self::assertSame($value >= 4, $rollOn4Plus->shouldHappen($value));
         }
-        $this->assertFalse($rollOn4Plus->shouldHappen(PHP_INT_MIN));
-        $this->assertTrue($rollOn4Plus->shouldHappen(PHP_INT_MAX));
+        self::assertFalse($rollOn4Plus->shouldHappen(PHP_INT_MIN));
+        self::assertTrue($rollOn4Plus->shouldHappen(PHP_INT_MAX));
     }
 }

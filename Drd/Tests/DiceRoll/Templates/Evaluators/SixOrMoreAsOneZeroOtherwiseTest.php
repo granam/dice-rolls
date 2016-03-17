@@ -15,9 +15,9 @@ class SixOrMoreAsOneZeroOtherwiseTest extends AbstractEvaluatorTest
         foreach (range(-4, 10, 1) as $value) {
             $evaluated = $evaluator->evaluateDiceRoll($this->createDiceRoll($value));
             if ($value < 6) {
-                $this->assertSame(0, $evaluated->getValue());
+                self::assertSame(0, $evaluated->getValue());
             } else {
-                $this->assertSame(1, $evaluated->getValue());
+                self::assertSame(1, $evaluated->getValue());
             }
         }
     }

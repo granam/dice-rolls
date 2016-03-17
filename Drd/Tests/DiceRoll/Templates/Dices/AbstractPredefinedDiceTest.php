@@ -13,8 +13,8 @@ abstract class AbstractPredefinedDiceTest extends \PHPUnit_Framework_TestCase
     {
         $diceClass = $this->getDiceClass();
         $dice = $diceClass::getIt();
-        $this->assertSame($dice, $diceClass::getIt());
-        $this->assertEquals($dice, new $diceClass);
+        self::assertSame($dice, $diceClass::getIt());
+        self::assertEquals($dice, new $diceClass);
     }
 
     /**

@@ -16,13 +16,13 @@ class Roller1d6Test extends AbstractRollerTest
     public function I_can_create_it()
     {
         $roller1d6 = Roller1d6::getIt();
-        $this->assertSame($roller1d6, Roller1d6::getIt());
-        $this->assertInstanceOf(Dice1d6::class, $roller1d6->getDice());
-        $this->assertInstanceOf(IntegerInterface::class, $roller1d6->getNumberOfStandardRolls());
-        $this->assertSame(1, $roller1d6->getNumberOfStandardRolls()->getValue());
-        $this->assertInstanceOf(OneToOne::class, $roller1d6->getDiceRollEvaluator());
-        $this->assertInstanceOf(NoRollOn::class, $roller1d6->getBonusRollOn());
-        $this->assertInstanceOf(NoRollOn::class, $roller1d6->getMalusRollOn());
+        self::assertSame($roller1d6, Roller1d6::getIt());
+        self::assertInstanceOf(Dice1d6::class, $roller1d6->getDice());
+        self::assertInstanceOf(IntegerInterface::class, $roller1d6->getNumberOfStandardRolls());
+        self::assertSame(1, $roller1d6->getNumberOfStandardRolls()->getValue());
+        self::assertInstanceOf(OneToOne::class, $roller1d6->getDiceRollEvaluator());
+        self::assertInstanceOf(NoRollOn::class, $roller1d6->getBonusRollOn());
+        self::assertInstanceOf(NoRollOn::class, $roller1d6->getMalusRollOn());
     }
 
     /**
@@ -34,11 +34,11 @@ class Roller1d6Test extends AbstractRollerTest
         $previousRoll = null;
         for ($round = 1; $round < self::ROLLS_ROUNDS; $round++) {
             $roll = $roller1d6->roll();
-            $this->assertNotSame($previousRoll, $roll);
-            $this->assertGreaterThanOrEqual($roller1d6->getDice()->getMinimum()->getValue(), $roll->getValue());
-            $this->assertLessThanOrEqual($roller1d6->getDice()->getMaximum()->getValue(), $roll->getValue());
+            self::assertNotSame($previousRoll, $roll);
+            self::assertGreaterThanOrEqual($roller1d6->getDice()->getMinimum()->getValue(), $roll->getValue());
+            self::assertLessThanOrEqual($roller1d6->getDice()->getMaximum()->getValue(), $roll->getValue());
             $previousRoll = $roll;
         }
-        $this->assertEquals(new Roller1d6(), $roller1d6, 'Roller has to be stateless');
+        self::assertEquals(new Roller1d6(), $roller1d6, 'Roller has to be stateless');
     }
 }

@@ -23,7 +23,7 @@ abstract class AbstractRollOnTest extends TestWithMockery
     public function I_get_expected_dice_rolls()
     {
         $rollOn = $this->createRollOn($this->createRoller($rollSequenceStart = 123, $diceRolls = 'foo'));
-        $this->assertSame($diceRolls, $rollOn->rollDices($rollSequenceStart));
+        self::assertSame($diceRolls, $rollOn->rollDices($rollSequenceStart));
     }
 
     /**
