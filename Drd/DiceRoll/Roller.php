@@ -130,7 +130,7 @@ class Roller extends StrictObject
         $bonusDiceRolls = $this->rollBonusDices($standardRollsSum, $nextSequenceStep);
         $malusDiceRolls = $this->rollMalusDices($standardRollsSum, $nextSequenceStep);
 
-        return new Roll($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
+        return $this->createRoll($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }
 
     private function validateSequenceStart($start)
@@ -177,6 +177,17 @@ class Roller extends StrictObject
         }
 
         return $this->malusRollOn->rollDices($rollSequenceStart);
+    }
+
+    /**
+     * @param array|DiceRoll[] $standardDiceRolls
+     * @param array|DiceRoll[] $bonusDiceRolls
+     * @param array|DiceRoll[] $malusDiceRolls
+     * @return Roll
+     */
+    protected function createRoll(array $standardDiceRolls, array $bonusDiceRolls, array $malusDiceRolls)
+    {
+        return new Roll($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }
 
     /**

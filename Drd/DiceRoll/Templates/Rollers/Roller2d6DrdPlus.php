@@ -5,6 +5,7 @@ use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\Templates\Numbers\Two;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Evaluators\OneToOne;
+use Drd\DiceRoll\Templates\Rollers\SpecificRolls\Roll2d6DrdPlus;
 use Drd\DiceRoll\Templates\RollOn\RollOn12;
 use Drd\DiceRoll\Templates\RollOn\RollOn2;
 
@@ -42,4 +43,10 @@ class Roller2d6DrdPlus extends Roller
             )
         );
     }
+
+    protected function createRoll(array $standardDiceRolls, array $bonusDiceRolls, array $malusDiceRolls)
+    {
+        return new Roll2d6DrdPlus($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
+    }
+
 }

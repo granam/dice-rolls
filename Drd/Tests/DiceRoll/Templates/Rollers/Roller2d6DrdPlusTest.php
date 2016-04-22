@@ -4,6 +4,7 @@ namespace Drd\Tests\DiceRoll\Templates\Rollers;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Evaluators\OneToOne;
 use Drd\DiceRoll\Templates\Rollers\Roller2d6DrdPlus;
+use Drd\DiceRoll\Templates\Rollers\SpecificRolls\Roll2d6DrdPlus;
 use Drd\DiceRoll\Templates\RollOn\RollOn12;
 use Drd\DiceRoll\Templates\RollOn\RollOn2;
 use Granam\Integer\IntegerInterface;
@@ -38,6 +39,7 @@ class Roller2d6DrdPlusTest extends AbstractRollerTest
         for ($attempt = 1; $attempt < self::MAX_ROLL_ATTEMPTS; $attempt++) {
             $roll = $roller2d6DrdPlus->roll();
             self::assertNotSame($previousRoll, $roll);
+            self::assertInstanceOf(Roll2d6DrdPlus::class, $roll);
             if (count($roll->getBonusDiceRolls()) > 2) { // at least 2 positive bonus rolls (+ last negative bonus roll)
                 $atLeastTwoBonusesHappened = true;
                 self::assertGreaterThan($this->summarizeDiceRolls($roll->getStandardDiceRolls()), $roll->getValue());
