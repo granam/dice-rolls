@@ -111,22 +111,22 @@ class Roller extends StrictObject
     }
 
     /**
-     * @param int $sequenceNumberStart = 1
+     * @param int $sequenceStartNumber = 1
      * @return Roll
      */
-    public function roll($sequenceNumberStart = 1)
+    public function roll($sequenceStartNumber = 1)
     {
         $standardDiceRolls = [];
-        $sequenceNumberStart = $this->validateSequenceStart($sequenceNumberStart);
-        $rollSequenceEnd = $this->numberOfStandardRolls->getValue() + $sequenceNumberStart - 1;
-        for ($sequenceNumberValue = $sequenceNumberStart;
-            $sequenceNumberValue <= $rollSequenceEnd; $sequenceNumberValue++
+        $sequenceStartNumber = $this->validateSequenceStart($sequenceStartNumber);
+        $sequenceStopNumber = $this->numberOfStandardRolls->getValue() + $sequenceStartNumber - 1;
+        for ($sequenceNumberValue = $sequenceStartNumber;
+            $sequenceNumberValue <= $sequenceStopNumber; $sequenceNumberValue++
         ) {
             $sequenceNumber = new IntegerObject($sequenceNumberValue);
             $standardDiceRolls[] = $this->rollDice($sequenceNumber);
         }
         $standardRollsSum = $this->summarizeValues($this->extractRolledNumbers($standardDiceRolls));
-        $nextSequenceStep = $rollSequenceEnd + 1;
+        $nextSequenceStep = $sequenceStopNumber + 1;
         $bonusDiceRolls = $this->rollBonusDices($standardRollsSum, $nextSequenceStep);
         $malusDiceRolls = $this->rollMalusDices($standardRollsSum, $nextSequenceStep);
 
