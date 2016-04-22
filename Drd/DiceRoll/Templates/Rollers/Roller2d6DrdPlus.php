@@ -11,6 +11,7 @@ use Drd\DiceRoll\Templates\RollOn\RollOn2;
 
 /**
  * 2x1d6; 12 = bonus roll by 1x1d6 => 1-3 = 0, 4-6 = +1 and rolls again; 2 = malus roll by 1x1d6 => 1-3 = -1 and rolls again, 4-6 = 0
+ * @method Roll2d6DrdPlus roll($sequenceStartNumber = 1)
  */
 class Roller2d6DrdPlus extends Roller
 {
