@@ -11,7 +11,7 @@ class RollOn4Plus extends AbstractRollOn
      */
     public function shouldHappen($rolledValue)
     {
-        return intval($rolledValue) >= 4;
+        return (int)$rolledValue >= 4;
     }
 
 }

@@ -15,7 +15,7 @@ class Two implements IntegerInterface
      */
     public static function getIt()
     {
-        if (!isset(self::$two)) {
+        if (self::$two === null) {
             self::$two = new self();
         }
 

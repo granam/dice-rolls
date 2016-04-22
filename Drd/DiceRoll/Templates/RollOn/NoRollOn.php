@@ -13,7 +13,7 @@ class NoRollOn implements RollOn
      */
     public static function getIt()
     {
-        if (!isset(self::$noRollOn)) {
+        if (self::$noRollOn === null) {
             self::$noRollOn = new static();
         }
 

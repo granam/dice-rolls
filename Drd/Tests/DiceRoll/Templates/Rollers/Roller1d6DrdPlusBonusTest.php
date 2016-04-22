@@ -37,8 +37,8 @@ class Roller1d6DrdPlusBonusTest extends AbstractRollerTest
             $roll = $roller1d6DrdPlusBonus->roll();
             self::assertNotSame($previousRoll, $roll);
             self::assertGreaterThanOrEqual(0, $roll->getValue());
-            self::assertEquals(1, count($roll->getStandardDiceRolls()));
-            self::assertEquals(0, count($roll->getMalusDiceRolls()));
+            self::assertCount(1, $roll->getStandardDiceRolls());
+            self::assertCount(0, $roll->getMalusDiceRolls());
             if (count($roll->getBonusDiceRolls()) > 2) { // at least 2 positive bonus rolls (+ last negative bonus roll)
                 self::assertEquals(
                     count($roll->getDiceRolls()) - 1, // last bonus roll does not trigger bonus value (< 4)

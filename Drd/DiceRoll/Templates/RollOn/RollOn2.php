@@ -11,7 +11,7 @@ class RollOn2 extends AbstractRollOn
      */
     public function shouldHappen($rolledValue)
     {
-        return intval($rolledValue) === 2;
+        return (int)$rolledValue === 2;
     }
 
 }

@@ -19,7 +19,7 @@ class OneToOne extends StrictObject implements DiceRollEvaluator
      */
     public static function getIt()
     {
-        if (!isset(self::$oneToOne)) {
+        if (self::$oneToOne === null) {
             self::$oneToOne = new static();
         }
 

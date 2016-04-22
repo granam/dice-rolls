@@ -15,7 +15,7 @@ class Four implements IntegerInterface
      */
     public static function getIt()
     {
-        if (!isset(self::$four)) {
+        if (self::$four === null) {
             self::$four = new self();
         }
 

@@ -15,7 +15,7 @@ class Zero implements IntegerInterface
      */
     public static function getIt()
     {
-        if (!isset(self::$zero)) {
+        if (self::$zero === null) {
             self::$zero = new self();
         }
 

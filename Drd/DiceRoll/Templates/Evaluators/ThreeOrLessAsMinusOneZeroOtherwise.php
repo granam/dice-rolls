@@ -17,7 +17,7 @@ class ThreeOrLessAsMinusOneZeroOtherwise extends StrictObject implements DiceRol
      */
     public static function getIt()
     {
-        if (!isset(self::$threeOrLessAsMinusOneZeroOtherwise)) {
+        if (self::$threeOrLessAsMinusOneZeroOtherwise === null) {
             self::$threeOrLessAsMinusOneZeroOtherwise = new static();
         }
 

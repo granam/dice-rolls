@@ -11,7 +11,7 @@ class RollOn3Minus extends AbstractRollOn
      */
     public function shouldHappen($rolledValue)
     {
-        return intval($rolledValue) <= 3;
+        return (int)$rolledValue <= 3;
     }
 
 }

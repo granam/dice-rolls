@@ -16,7 +16,7 @@ class Roller1d6 extends Roller
      */
     public static function getIt()
     {
-        if (!isset(self::$roller1d6)) {
+        if (self::$roller1d6 === null) {
             self::$roller1d6 = new static();
         }
 

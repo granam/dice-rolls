@@ -40,8 +40,8 @@ class Roller1d6DrdPlusMalusTest extends AbstractRollerTest
                 $roller1d6PlusMalus->getDice()->getMaximum()->getValue(),
                 $roll->getValue()
             );
-            self::assertEquals(1, count($roll->getStandardDiceRolls()));
-            self::assertEquals(0, count($roll->getBonusDiceRolls()));
+            self::assertCount(1, $roll->getStandardDiceRolls());
+            self::assertCount(0, $roll->getBonusDiceRolls());
             self::assertLessThanOrEqual(3, $roll->getValue());
             if (count($roll->getMalusDiceRolls()) > 2) { // at least 2 positive malus rolls (+ last negative malus)
                 self::assertSame(-1 * (count($roll->getDiceRolls()) - 1), $roll->getValue());

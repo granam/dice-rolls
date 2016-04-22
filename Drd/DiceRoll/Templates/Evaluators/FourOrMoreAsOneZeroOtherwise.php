@@ -21,7 +21,7 @@ class FourOrMoreAsOneZeroOtherwise extends StrictObject implements DiceRollEvalu
      */
     public static function getIt()
     {
-        if (!isset(self::$fourOrMoreAsOneZeroOtherwise)) {
+        if (self::$fourOrMoreAsOneZeroOtherwise === null) {
             self::$fourOrMoreAsOneZeroOtherwise = new static();
         }
 

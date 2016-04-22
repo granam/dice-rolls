@@ -15,7 +15,7 @@ class MinusOne implements IntegerInterface
      */
     public static function getIt()
     {
-        if (!isset(self::$minusOne)) {
+        if (self::$minusOne === null) {
             self::$minusOne = new self();
         }
 

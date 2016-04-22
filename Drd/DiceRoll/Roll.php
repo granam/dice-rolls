@@ -66,7 +66,7 @@ class Roll extends StrictObject
      */
     public function getValue()
     {
-        if (!isset($this->value)) {
+        if ($this->value === null) {
             $this->value = array_sum($this->getRolledValues());
         }
 

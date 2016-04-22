@@ -17,7 +17,7 @@ class NoRollOnTest extends \PHPUnit_Framework_TestCase
 
         self::assertEquals([], $noRollOn->rollDices(123));
         foreach ([-123, 0, 456, 7891011] as $rollValue) {
-            self::assertFalse($noRollOn->shouldHappen($rollValue), "No value should trigger repeat roll");
+            self::assertFalse($noRollOn->shouldHappen($rollValue), 'No value should trigger repeat roll');
         }
         self::assertEquals([], $noRollOn->rollDices(456));
     }

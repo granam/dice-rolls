@@ -5,6 +5,7 @@ use Drd\DiceRoll\Dice;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
 use Granam\Strict\Object\StrictObject;
+use Granam\Tools\ValueDescriber;
 
 class Dices extends StrictObject implements Dice
 {
@@ -23,6 +24,7 @@ class Dices extends StrictObject implements Dice
 
     /**
      * @param array|Dice[] $dices
+     * @throws \LogicException
      */
     public function __construct(array $dices)
     {
@@ -32,6 +34,7 @@ class Dices extends StrictObject implements Dice
 
     /**
      * @param array|Dice[] $dices
+     * @throws \LogicException
      */
     private function checkDices(array $dices)
     {
@@ -41,7 +44,9 @@ class Dices extends StrictObject implements Dice
 
         foreach ($dices as $dice) {
             if (!is_a($dice, Dice::class)) {
-                throw new \LogicException('Given dices have to DiceInterface, got ' . is_object($dice) ? get_class($dice) : gettype($dice));
+                throw new \LogicException(
+                    'Given dices have to be DiceInterface, got ' . ValueDescriber::describe($dice)
+                );
             }
         }
     }
@@ -51,7 +56,7 @@ class Dices extends StrictObject implements Dice
      */
     public function getMinimum()
     {
-        if (!isset($this->minimum)) {
+        if ($this->minimum === null) {
             $this->minimum = $this->createMinimum();
         }
 
@@ -80,7 +85,7 @@ class Dices extends StrictObject implements Dice
      */
     public function getMaximum()
     {
-        if (!isset($this->maximum)) {
+        if ($this->maximum === null) {
             $this->maximum = $this->createMaximum();
         }
 

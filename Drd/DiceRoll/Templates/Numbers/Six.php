@@ -15,7 +15,7 @@ class Six implements IntegerInterface
      */
     public static function getIt()
     {
-        if (!isset(self::$six)) {
+        if (self::$six === null) {
             self::$six = new self();
         }
 

@@ -13,7 +13,7 @@ class Dice1d4 extends CustomDice
      */
     public static function getIt()
     {
-        if (!isset(self::$dice1d4)) {
+        if (self::$dice1d4 === null) {
             self::$dice1d4 = new static();
         }
 
