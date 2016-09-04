@@ -80,6 +80,7 @@ class Roller extends StrictObject
      * @param Dice $dice
      * @param RollOn $bonusRollOn
      * @param RollOn $malusRollOn
+     * @throws \Drd\DiceRoll\Exceptions\BonusAndMalusChanceConflict
      */
     private function checkBonusAndMalusConflicts(Dice $dice, RollOn $bonusRollOn, RollOn $malusRollOn)
     {
