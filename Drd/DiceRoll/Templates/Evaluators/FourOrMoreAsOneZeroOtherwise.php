@@ -5,7 +5,7 @@ use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\DiceRollEvaluator;
 use Drd\DiceRoll\Templates\Numbers\One;
 use Drd\DiceRoll\Templates\Numbers\Zero;
-use Granam\Integer\IntegerObject;
+use Granam\Integer\IntegerInterface;
 use Granam\Strict\Object\StrictObject;
 
 class FourOrMoreAsOneZeroOtherwise extends StrictObject implements DiceRollEvaluator
@@ -30,12 +30,14 @@ class FourOrMoreAsOneZeroOtherwise extends StrictObject implements DiceRollEvalu
 
     /**
      * @param DiceRoll $diceRoll
-     * @return IntegerObject
+     * @return IntegerInterface
      */
     public function evaluateDiceRoll(DiceRoll $diceRoll)
     {
-        return $diceRoll->getRolledNumber()->getValue() >= 4
-            ? One::getIt()
-            : Zero::getIt();
+        if ($diceRoll->getRolledNumber()->getValue() >= 4) {
+            return One::getIt();
+        }
+
+        return Zero::getIt();
     }
 }
