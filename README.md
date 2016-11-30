@@ -32,7 +32,7 @@ foreach ($roller2d6DrdPlus->getDiceRolls() as $diceRoll) {
 }
 ```
 There are plenty of predefined templates of dices and rolls as 1d4, 1d6, 1d10.
-You can mix them and any other you create in Dices class.
+You can mix those and any else you create by `CustomDice` class.
 
 Just think about your needs and check templates. Your requirements may be already satisfied by them.
 
@@ -64,20 +64,7 @@ $roller->roll();
 ```
 
 ## Install
-Order composer to add new requirement
+- order [composer](https://getcomposer.org/download/) to add new requirement
 ```
-composer.phar require drd/dice-roll
-```
-
-- or add it manually by editing your project composer.json
-```json
-"require": {
-    "drd/dice-roll": "~3.0"
-}
-```
-
-And run update of that package
-
-```
-composer.phar update drd/dice-roll
+composer require drd/dice-roll
 ```
