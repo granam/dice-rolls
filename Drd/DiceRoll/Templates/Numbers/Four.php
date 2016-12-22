@@ -1,39 +1,14 @@
 <?php
 namespace Drd\DiceRoll\Templates\Numbers;
 
-use Granam\Integer\IntegerInterface;
-
-class Four implements IntegerInterface
+class Four extends Number
 {
     /**
-     * @var Four
-     */
-    private static $four;
-
-    /**
-     * @return One
+     * @return Number|Four
      */
     public static function getIt()
     {
-        if (self::$four === null) {
-            self::$four = new self();
-        }
-
-        return self::$four;
+        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
+        return self::getInstance(4);
     }
-
-    private function __construct()
-    {
-    }
-
-    public function getValue()
-    {
-        return 4;
-    }
-
-    public function __toString()
-    {
-        return (string)$this->getValue();
-    }
-
 }

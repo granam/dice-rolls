@@ -6,6 +6,13 @@ use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 class NoRollOnTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected function setUp()
+    {
+        $instanceProperty = new \ReflectionProperty(NoRollOn::class, 'noRollOn');
+        $instanceProperty->setAccessible(true);
+        $instanceProperty->setValue(null, null); // workaround for PhpUnit coverage
+    }
+
     /**
      * @test
      */

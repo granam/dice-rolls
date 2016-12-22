@@ -1,6 +1,7 @@
 <?php
 namespace Drd\DiceRoll\Templates\Rollers;
 
+use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\Templates\Numbers\Two;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
@@ -45,8 +46,15 @@ class Roller2d6DrdPlus extends Roller
         );
     }
 
+    /**
+     * @param array|DiceRoll[] $standardDiceRolls
+     * @param array|DiceRoll[] $bonusDiceRolls
+     * @param array|DiceRoll[] $malusDiceRolls
+     * @return Roll2d6DrdPlus
+     */
     protected function createRoll(array $standardDiceRolls, array $bonusDiceRolls, array $malusDiceRolls)
     {
+        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         return new Roll2d6DrdPlus($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }
 

@@ -1,35 +1,14 @@
 <?php
 namespace Drd\DiceRoll\Templates\Numbers;
 
-use Granam\Integer\IntegerInterface;
-
-class Zero implements IntegerInterface
+class Zero extends Number
 {
     /**
-     * @var Zero
-     */
-    private static $zero;
-
-    /**
-     * @return Zero
+     * @return Number|Zero
      */
     public static function getIt()
     {
-        if (self::$zero === null) {
-            self::$zero = new self();
-        }
-
-        return self::$zero;
+        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
+        return self::getInstance(0);
     }
-
-    public function getValue()
-    {
-        return 0;
-    }
-
-    public function __toString()
-    {
-        return (string)$this->getValue();
-    }
-
 }
