@@ -37,6 +37,7 @@ class Roller extends StrictObject
      * @param DiceRollEvaluator $diceRollEvaluator
      * @param RollOn $bonusRollOn
      * @param RollOn $malusRollOn malus roll itself is responsible for negative or positive numbers
+     * @throws \Drd\DiceRoll\Exceptions\BonusAndMalusChanceConflict
      */
     public function __construct(
         Dice $dice,
