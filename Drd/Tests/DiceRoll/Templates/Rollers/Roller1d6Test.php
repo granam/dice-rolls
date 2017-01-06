@@ -5,6 +5,7 @@ use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Evaluators\OneToOne;
 use Drd\DiceRoll\Templates\Rollers\Roller1d6;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
+use Drd\DiceRoll\Templates\Rolls\Roll1d6;
 use Granam\Integer\IntegerInterface;
 
 class Roller1d6Test extends AbstractRollerTest
@@ -34,6 +35,7 @@ class Roller1d6Test extends AbstractRollerTest
         $previousRoll = null;
         for ($round = 1; $round < self::ROLLS_ROUNDS; $round++) {
             $roll = $roller1d6->roll();
+            self::assertInstanceOf(Roll1d6::class, $roll);
             self::assertNotSame($previousRoll, $roll);
             self::assertGreaterThanOrEqual($roller1d6->getDice()->getMinimum()->getValue(), $roll->getValue());
             self::assertLessThanOrEqual($roller1d6->getDice()->getMaximum()->getValue(), $roll->getValue());
