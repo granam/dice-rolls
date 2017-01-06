@@ -6,7 +6,7 @@ use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\Templates\Numbers\Two;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Evaluators\OneToOne;
-use Drd\DiceRoll\Templates\Rollers\SpecificRolls\Roll2d6DrdPlus;
+use Drd\DiceRoll\Templates\Rolls\Roll2d6DrdPlus;
 use Drd\DiceRoll\Templates\RollOn\RollOn12;
 use Drd\DiceRoll\Templates\RollOn\RollOn2;
 

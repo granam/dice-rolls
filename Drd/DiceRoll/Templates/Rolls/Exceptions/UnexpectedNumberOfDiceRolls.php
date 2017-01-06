@@ -1,5 +1,5 @@
 <?php
-namespace Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions;
+namespace Drd\DiceRoll\Templates\Rolls\Exceptions;
 
 class UnexpectedNumberOfDiceRolls extends \InvalidArgumentException implements Logic
 {

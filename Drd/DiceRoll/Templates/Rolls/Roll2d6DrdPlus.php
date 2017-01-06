@@ -1,5 +1,5 @@
 <?php
-namespace Drd\DiceRoll\Templates\Rollers\SpecificRolls;
+namespace Drd\DiceRoll\Templates\Rolls;
 
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\Roll;
@@ -12,12 +12,12 @@ class Roll2d6DrdPlus extends Roll
      * @param array|DiceRoll[] $standardDiceRolls
      * @param array $bonusDiceRolls
      * @param array $malusDiceRolls
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedDice
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedNumberOfDiceRolls
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedBonus
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedMalus
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\MissingBonusDiceRoll
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\MissingMalusDiceRoll
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedDice
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedNumberOfDiceRolls
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedBonus
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedMalus
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\MissingBonusDiceRoll
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\MissingMalusDiceRoll
      */
     public function __construct(array $standardDiceRolls, array $bonusDiceRolls = [], array $malusDiceRolls = [])
     {
@@ -29,12 +29,12 @@ class Roll2d6DrdPlus extends Roll
      * @param array $standardDiceRolls
      * @param array $bonusDiceRolls
      * @param array $malusDiceRolls
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedDice
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedNumberOfDiceRolls
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedBonus
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedMalus
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\MissingBonusDiceRoll
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\MissingMalusDiceRoll
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedDice
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedNumberOfDiceRolls
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedBonus
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedMalus
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\MissingBonusDiceRoll
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\MissingMalusDiceRoll
      */
     private function guardDiceRollsValid(array $standardDiceRolls, array $bonusDiceRolls, array $malusDiceRolls)
     {
@@ -45,8 +45,8 @@ class Roll2d6DrdPlus extends Roll
 
     /**
      * @param array $standardDiceRolls
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedDice
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedNumberOfDiceRolls
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedDice
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedNumberOfDiceRolls
      */
     private function guardTwo1d6RollsForStandardRoll(array $standardDiceRolls)
     {
@@ -61,7 +61,7 @@ class Roll2d6DrdPlus extends Roll
     /**
      * @param array|DiceRoll[] $diceRolls
      * @param string $rollType
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedDice
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedDice
      */
     private function guard1d6DicesOnly(array $diceRolls, $rollType)
     {
@@ -78,9 +78,9 @@ class Roll2d6DrdPlus extends Roll
     /**
      * @param array|DiceRoll[] $bonusDiceRolls
      * @param array|DiceRoll[] $standardDiceRolls
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedDice
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedBonus
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\MissingBonusDiceRoll
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedDice
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedBonus
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\MissingBonusDiceRoll
      */
     private function guardBonusRollsValid(array $bonusDiceRolls, array $standardDiceRolls)
     {
@@ -109,9 +109,9 @@ class Roll2d6DrdPlus extends Roll
     /**
      * @param array|DiceRoll[] $malusDiceRolls
      * @param array|DiceRoll[] $standardDiceRolls
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedDice
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedMalus
-     * @throws \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\MissingMalusDiceRoll
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedDice
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedMalus
+     * @throws \Drd\DiceRoll\Templates\Rolls\Exceptions\MissingMalusDiceRoll
      */
     private function guardMalusRollsValid(array $malusDiceRolls, array $standardDiceRolls)
     {

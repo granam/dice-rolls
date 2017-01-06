@@ -1,5 +1,5 @@
 <?php
-namespace Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions;
+namespace Drd\DiceRoll\Templates\Rolls\Exceptions;
 
 interface Runtime extends \Drd\DiceRoll\Exceptions\Runtime, Exception
 {

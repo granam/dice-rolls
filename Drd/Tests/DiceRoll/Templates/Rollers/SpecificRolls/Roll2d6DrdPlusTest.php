@@ -1,5 +1,5 @@
 <?php
-namespace Drd\Tests\DiceRoll\Templates\Rollers\SpecificRolls;
+namespace Drd\Tests\DiceRoll\Templates\Rolls;
 
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\Roll;
@@ -7,7 +7,7 @@ use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Rollers\Roller1d10;
 use Drd\DiceRoll\Templates\Rollers\Roller1d4;
 use Drd\DiceRoll\Templates\Rollers\Roller2d6DrdPlus;
-use Drd\DiceRoll\Templates\Rollers\SpecificRolls\Roll2d6DrdPlus;
+use Drd\DiceRoll\Templates\Rolls\Roll2d6DrdPlus;
 use Granam\Tests\Tools\TestWithMockery;
 
 class Roll2d6DrdPlusTest extends TestWithMockery
@@ -27,7 +27,7 @@ class Roll2d6DrdPlusTest extends TestWithMockery
     /**
      * @test
      * @dataProvider provideRollsWithInvalidDices
-     * @expectedException \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedDice
+     * @expectedException \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedDice
      * @param array $standardDiceRolls
      * @param array $bonusDiceRolls
      * @param array $malusDiceRolls
@@ -72,7 +72,7 @@ class Roll2d6DrdPlusTest extends TestWithMockery
 
     /**
      * @test
-     * @expectedException \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedNumberOfDiceRolls
+     * @expectedException \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedNumberOfDiceRolls
      */
     public function I_have_to_create_it_with_two_six_side_dices()
     {
@@ -81,7 +81,7 @@ class Roll2d6DrdPlusTest extends TestWithMockery
 
     /**
      * @test
-     * @expectedException \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedBonus
+     * @expectedException \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedBonus
      */
     public function I_can_not_create_it_with_bonus_roll_if_should_not_happen()
     {
@@ -90,7 +90,7 @@ class Roll2d6DrdPlusTest extends TestWithMockery
 
     /**
      * @test
-     * @expectedException \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\MissingBonusDiceRoll
+     * @expectedException \Drd\DiceRoll\Templates\Rolls\Exceptions\MissingBonusDiceRoll
      */
     public function I_can_not_create_it_without_bonus_roll_if_should_happen()
     {
@@ -99,7 +99,7 @@ class Roll2d6DrdPlusTest extends TestWithMockery
 
     /**
      * @test
-     * @expectedException \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\UnexpectedMalus
+     * @expectedException \Drd\DiceRoll\Templates\Rolls\Exceptions\UnexpectedMalus
      */
     public function I_can_not_create_it_with_malus_roll_if_should_not_happen()
     {
@@ -108,7 +108,7 @@ class Roll2d6DrdPlusTest extends TestWithMockery
 
     /**
      * @test
-     * @expectedException \Drd\DiceRoll\Templates\Rollers\SpecificRolls\Exceptions\MissingMalusDiceRoll
+     * @expectedException \Drd\DiceRoll\Templates\Rolls\Exceptions\MissingMalusDiceRoll
      */
     public function I_can_not_create_it_without_malus_roll_if_should_happen()
     {

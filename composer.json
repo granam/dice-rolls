@@ -27,13 +27,15 @@
   },
   "require": {
     "php": ">=5.5",
+    "roave/security-advisories": "dev-master",
     "granam/strict-object": "dev-master",
     "granam/integer": "dev-master",
     "granam/tools": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": ">=4.4",
-    "mockery/mockery": "dev-master"
+    "mockery/mockery": "dev-master",
+    "granam/exception-hierarchy": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

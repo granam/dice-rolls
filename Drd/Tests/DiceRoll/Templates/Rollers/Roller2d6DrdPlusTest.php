@@ -4,7 +4,7 @@ namespace Drd\Tests\DiceRoll\Templates\Rollers;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Evaluators\OneToOne;
 use Drd\DiceRoll\Templates\Rollers\Roller2d6DrdPlus;
-use Drd\DiceRoll\Templates\Rollers\SpecificRolls\Roll2d6DrdPlus;
+use Drd\DiceRoll\Templates\Rolls\Roll2d6DrdPlus;
 use Drd\DiceRoll\Templates\RollOn\RollOn12;
 use Drd\DiceRoll\Templates\RollOn\RollOn2;
 use Granam\Integer\IntegerInterface;
