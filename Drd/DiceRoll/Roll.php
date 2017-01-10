@@ -4,7 +4,7 @@ namespace Drd\DiceRoll;
 use Granam\Integer\IntegerInterface;
 use Granam\Strict\Object\StrictObject;
 
-class Roll extends StrictObject
+class Roll extends StrictObject implements IntegerInterface
 {
 
     /**

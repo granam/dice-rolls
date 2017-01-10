@@ -14,6 +14,7 @@ class RollTest extends TestWithMockery
     public function I_can_create_it_without_bonus_and_malus_rolls()
     {
         $roll = new Roll($diceRolls = $this->createDiceRolls($values = [1, 2, 3]));
+        self::assertInstanceOf(IntegerInterface::class, $roll);
         $rolledNumbers = $roll->getRolledNumbers();
         self::assertCount(count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {

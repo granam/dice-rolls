@@ -4,9 +4,10 @@ namespace Drd\DiceRoll\Templates\Rolls;
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\Roll;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
+use Granam\Integer\PositiveInteger;
 use Granam\Tools\ValueDescriber;
 
-class Roll1d6 extends Roll
+class Roll1d6 extends Roll implements PositiveInteger
 {
     /**
      * @param DiceRoll $diceRoll

@@ -5,6 +5,7 @@ use Drd\DiceRoll\Dice;
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Rolls\Roll1d6;
+use Granam\Integer\PositiveInteger;
 use Granam\Tests\Tools\TestWithMockery;
 
 class Roll1d6Test extends TestWithMockery
@@ -15,6 +16,7 @@ class Roll1d6Test extends TestWithMockery
     public function I_can_use_it()
     {
         $roll1d6 = new Roll1d6($diceRoll = $this->createDiceRoll($this->mockery(Dice1d6::class)));
+        self::assertInstanceOf(PositiveInteger::class, $roll1d6);
         self::assertSame($diceRoll, $roll1d6->getDiceRoll());
         self::assertSame([$diceRoll], $roll1d6->getDiceRolls());
         self::assertSame([$diceRoll], $roll1d6->getStandardDiceRolls());
