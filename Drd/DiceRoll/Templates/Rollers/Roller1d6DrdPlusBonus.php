@@ -4,7 +4,7 @@ namespace Drd\DiceRoll\Templates\Rollers;
 use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
 use Drd\DiceRoll\Templates\Numbers\One;
-use Drd\DiceRoll\Templates\Evaluators\FourOrMoreAsOneZeroOtherwise;
+use Drd\DiceRoll\Templates\Evaluators\FourOrMoreAsOneZeroOtherwiseEvaluator;
 use Drd\DiceRoll\Templates\RollOn\RollOn4Plus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 
@@ -29,7 +29,7 @@ class Roller1d6DrdPlusBonus extends Roller
         parent::__construct(
             Dice1d6::getIt(),
             One::getIt(), // just a single roll of the dice
-            FourOrMoreAsOneZeroOtherwise::getIt(), // rolled value 4+ = +1, 3- = 0
+            FourOrMoreAsOneZeroOtherwiseEvaluator::getIt(), // rolled value 4+ = +1, 3- = 0
             new RollOn4Plus( // recursion -> 4 => roll again
                 $this // in case of bonus the same type of roll happens
             ),

@@ -2,16 +2,16 @@
 namespace Drd\Tests\DiceRoll\Templates\Evaluators;
 
 use Drd\DiceRoll\DiceRoll;
-use Drd\DiceRoll\Templates\Evaluators\FourOrMoreAsOneZeroOtherwise;
+use Drd\DiceRoll\Templates\Evaluators\FourOrMoreAsOneZeroOtherwiseEvaluator;
 
-class FourOrMoreAsOneZeroOtherwiseTest extends AbstractEvaluatorTest
+class FourOrMoreAsOneZeroOtherwiseEvaluatorTest extends AbstractEvaluatorTest
 {
     /**
      * @test
      */
     public function Greater_than_three_is_considered_as_one_otherwise_zero()
     {
-        $evaluator = new FourOrMoreAsOneZeroOtherwise();
+        $evaluator = new FourOrMoreAsOneZeroOtherwiseEvaluator();
         /** @var DiceRoll|\Mockery\MockInterface $diceRoll */
         foreach (range(-4, 10, 1) as $value) {
             $evaluated = $evaluator->evaluateDiceRoll($this->createDiceRoll($value));

@@ -1,9 +1,9 @@
 <?php
 namespace Drd\Tests\DiceRoll\Templates\Evaluators;
 
-use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneZeroOtherwise;
+use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneZeroOtherwiseEvaluator;
 
-class ThreeOrLessAsMinusOneZeroOtherwiseTest extends AbstractEvaluatorTest
+class ThreeOrLessAsMinusOneZeroOtherwiseEvaluatorTest extends AbstractEvaluatorTest
 {
 
     /**
@@ -11,7 +11,7 @@ class ThreeOrLessAsMinusOneZeroOtherwiseTest extends AbstractEvaluatorTest
      */
     public function Lesser_than_four_value_is_considered_as_minus_one_zero_otherwise()
     {
-        $evaluator = ThreeOrLessAsMinusOneZeroOtherwise::getIt();
+        $evaluator = ThreeOrLessAsMinusOneZeroOtherwiseEvaluator::getIt();
         foreach (range(-4, 10, 1) as $value) {
             $evaluated = $evaluator->evaluateDiceRoll($this->createDiceRoll($value));
             if ($value < 4) {
@@ -26,7 +26,7 @@ class ThreeOrLessAsMinusOneZeroOtherwiseTest extends AbstractEvaluatorTest
         }
         self::assertEquals(
             $evaluator,
-            new ThreeOrLessAsMinusOneZeroOtherwise(),
+            new ThreeOrLessAsMinusOneZeroOtherwiseEvaluator(),
             'ThreeOrLessAsMinusOneZeroOtherwise should be immutable'
         );
     }

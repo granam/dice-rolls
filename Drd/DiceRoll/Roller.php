@@ -37,6 +37,8 @@ class Roller extends StrictObject
      * @param DiceRollEvaluator $diceRollEvaluator
      * @param RollOn $bonusRollOn
      * @param RollOn $malusRollOn malus roll itself is responsible for negative or positive numbers
+     * @throws \Drd\DiceRoll\Exceptions\InvalidDiceRange
+     * @throws \Drd\DiceRoll\Exceptions\InvalidNumberOfRolls
      * @throws \Drd\DiceRoll\Exceptions\BonusAndMalusChanceConflict
      */
     public function __construct(
@@ -57,6 +59,10 @@ class Roller extends StrictObject
         $this->malusRollOn = $malusRollOn;
     }
 
+    /**
+     * @param Dice $dice
+     * @throws \Drd\DiceRoll\Exceptions\InvalidDiceRange
+     */
     private function checkDice(Dice $dice)
     {
         if ($dice->getMinimum()->getValue() > $dice->getMaximum()->getValue()) {
@@ -67,6 +73,10 @@ class Roller extends StrictObject
         }
     }
 
+    /**
+     * @param IntegerInterface $numberOfStandardRolls
+     * @throws \Drd\DiceRoll\Exceptions\InvalidNumberOfRolls
+     */
     private function checkNumberOfStandardRolls(IntegerInterface $numberOfStandardRolls)
     {
         if ($numberOfStandardRolls->getValue() <= 0) {
@@ -97,7 +107,6 @@ class Roller extends StrictObject
      * @param int $minimumRollValue
      * @param int $maximumRollValue
      * @param RollOn $rollOn
-     *
      * @return array|int[]
      */
     private function findRollOnValues($minimumRollValue, $maximumRollValue, RollOn $rollOn)
@@ -115,6 +124,7 @@ class Roller extends StrictObject
     /**
      * @param int $sequenceStartNumber = 1
      * @return Roll
+     * @throws \Drd\DiceRoll\Exceptions\InvalidSequenceNumber
      */
     public function roll($sequenceStartNumber = 1)
     {
@@ -122,7 +132,7 @@ class Roller extends StrictObject
         $sequenceStartNumber = $this->validateSequenceStart($sequenceStartNumber);
         $sequenceStopNumber = $this->numberOfStandardRolls->getValue() + $sequenceStartNumber - 1;
         for ($sequenceNumberValue = $sequenceStartNumber;
-            $sequenceNumberValue <= $sequenceStopNumber; $sequenceNumberValue++
+             $sequenceNumberValue <= $sequenceStopNumber; $sequenceNumberValue++
         ) {
             $sequenceNumber = new IntegerObject($sequenceNumberValue);
             $standardDiceRolls[] = $this->rollDice($sequenceNumber);
@@ -135,6 +145,11 @@ class Roller extends StrictObject
         return $this->createRoll($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }
 
+    /**
+     * @param $start
+     * @return int
+     * @throws \Drd\DiceRoll\Exceptions\InvalidSequenceNumber
+     */
     private function validateSequenceStart($start)
     {
         if (!is_numeric($start) || $start < 1) {
@@ -143,6 +158,7 @@ class Roller extends StrictObject
             );
         }
         try {
+            /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
             return ToInteger::toInteger($start);
         } catch (\Granam\Integer\Tools\Exceptions\WrongParameterType $exception) {
             throw new Exceptions\InvalidSequenceNumber(
@@ -194,7 +210,6 @@ class Roller extends StrictObject
 
     /**
      * @param IntegerInterface $sequenceNumber
-     *
      * @return DiceRoll
      */
     private function rollDice(IntegerInterface $sequenceNumber)
@@ -209,7 +224,6 @@ class Roller extends StrictObject
 
     /**
      * @param Dice $dice
-     *
      * @return int
      */
     private function rollNumber(Dice $dice)
@@ -219,7 +233,6 @@ class Roller extends StrictObject
 
     /**
      * @param array|DiceRoll[] $diceRolls
-     *
      * @return array|IntegerInterface[]
      */
     private function extractRolledNumbers(array $diceRolls)
@@ -236,7 +249,6 @@ class Roller extends StrictObject
 
     /**
      * @param array|IntegerInterface[] $values
-     *
      * @return int
      */
     private function summarizeValues(array $values)

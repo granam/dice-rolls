@@ -2,7 +2,7 @@
 namespace Drd\Tests\DiceRoll\Templates\Rollers;
 
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
-use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneZeroOtherwise;
+use Drd\DiceRoll\Templates\Evaluators\ThreeOrLessAsMinusOneZeroOtherwiseEvaluator;
 use Drd\DiceRoll\Templates\Rollers\Roller1d6DrdPlusMalus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Drd\DiceRoll\Templates\RollOn\RollOn3Minus;
@@ -21,7 +21,7 @@ class Roller1d6DrdPlusMalusTest extends AbstractRollerTest
         self::assertInstanceOf(Dice1d6::class, $roller1d6DrdPlusMalus->getDice());
         self::assertInstanceOf(IntegerInterface::class, $roller1d6DrdPlusMalus->getNumberOfStandardRolls());
         self::assertSame(1, $roller1d6DrdPlusMalus->getNumberOfStandardRolls()->getValue());
-        self::assertInstanceOf(ThreeOrLessAsMinusOneZeroOtherwise::class, $roller1d6DrdPlusMalus->getDiceRollEvaluator());
+        self::assertInstanceOf(ThreeOrLessAsMinusOneZeroOtherwiseEvaluator::class, $roller1d6DrdPlusMalus->getDiceRollEvaluator());
         self::assertInstanceOf(NoRollOn::class, $roller1d6DrdPlusMalus->getBonusRollOn());
         self::assertInstanceOf(RollOn3Minus::class, $roller1d6DrdPlusMalus->getMalusRollOn());
     }

@@ -6,16 +6,16 @@ use Drd\DiceRoll\DiceRollEvaluator;
 use Granam\Integer\IntegerInterface;
 use Granam\Strict\Object\StrictObject;
 
-class OneToOne extends StrictObject implements DiceRollEvaluator
+class OneToOneEvaluator extends StrictObject implements DiceRollEvaluator
 {
 
     /**
-     * @var OneToOne|null
+     * @var OneToOneEvaluator|null
      */
     private static $oneToOne;
 
     /**
-     * @return OneToOne
+     * @return OneToOneEvaluator
      */
     public static function getIt()
     {

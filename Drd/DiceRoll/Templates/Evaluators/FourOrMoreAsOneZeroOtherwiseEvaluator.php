@@ -8,16 +8,16 @@ use Drd\DiceRoll\Templates\Numbers\Zero;
 use Granam\Integer\IntegerInterface;
 use Granam\Strict\Object\StrictObject;
 
-class FourOrMoreAsOneZeroOtherwise extends StrictObject implements DiceRollEvaluator
+class FourOrMoreAsOneZeroOtherwiseEvaluator extends StrictObject implements DiceRollEvaluator
 {
 
     /**
-     * @var FourOrMoreAsOneZeroOtherwise|null
+     * @var FourOrMoreAsOneZeroOtherwiseEvaluator|null
      */
     private static $fourOrMoreAsOneZeroOtherwise;
 
     /**
-     * @return FourOrMoreAsOneZeroOtherwise
+     * @return FourOrMoreAsOneZeroOtherwiseEvaluator
      */
     public static function getIt()
     {

@@ -5,15 +5,14 @@ use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\DiceRollEvaluator;
 use Drd\DiceRoll\Templates\Numbers\MinusOne;
 use Drd\DiceRoll\Templates\Numbers\Zero;
-use Granam\Integer\IntegerObject;
 use Granam\Strict\Object\StrictObject;
 
-class ThreeOrLessAsMinusOneZeroOtherwise extends StrictObject implements DiceRollEvaluator
+class ThreeOrLessAsMinusOneZeroOtherwiseEvaluator extends StrictObject implements DiceRollEvaluator
 {
     private static $threeOrLessAsMinusOneZeroOtherwise;
 
     /**
-     * @return ThreeOrLessAsMinusOneZeroOtherwise
+     * @return ThreeOrLessAsMinusOneZeroOtherwiseEvaluator
      */
     public static function getIt()
     {
@@ -26,7 +25,7 @@ class ThreeOrLessAsMinusOneZeroOtherwise extends StrictObject implements DiceRol
 
     /**
      * @param DiceRoll $diceRoll
-     * @return IntegerObject
+     * @return \Drd\DiceRoll\Templates\Numbers\Number
      */
     public function evaluateDiceRoll(DiceRoll $diceRoll)
     {

@@ -2,7 +2,7 @@
 namespace Drd\Tests\DiceRoll\Templates\Rollers;
 
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
-use Drd\DiceRoll\Templates\Evaluators\OneToOne;
+use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Drd\DiceRoll\Templates\Rollers\Roller1d6Plus;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Drd\DiceRoll\Templates\RollOn\RollOn6;
@@ -21,7 +21,7 @@ class Roller1d6PlusTest extends AbstractRollerTest
         self::assertInstanceOf(Dice1d6::class, $roller1d6Plus->getDice());
         self::assertInstanceOf(IntegerInterface::class, $roller1d6Plus->getNumberOfStandardRolls());
         self::assertSame(1, $roller1d6Plus->getNumberOfStandardRolls()->getValue());
-        self::assertInstanceOf(OneToOne::class, $roller1d6Plus->getDiceRollEvaluator());
+        self::assertInstanceOf(OneToOneEvaluator::class, $roller1d6Plus->getDiceRollEvaluator());
         self::assertInstanceOf(RollOn6::class, $roller1d6Plus->getBonusRollOn());
         self::assertInstanceOf(NoRollOn::class, $roller1d6Plus->getMalusRollOn());
     }

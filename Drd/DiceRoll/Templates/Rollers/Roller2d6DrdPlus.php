@@ -5,7 +5,7 @@ use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\Templates\Numbers\Two;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
-use Drd\DiceRoll\Templates\Evaluators\OneToOne;
+use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Drd\DiceRoll\Templates\Rolls\Roll2d6DrdPlus;
 use Drd\DiceRoll\Templates\RollOn\RollOn12;
 use Drd\DiceRoll\Templates\RollOn\RollOn2;
@@ -36,7 +36,7 @@ class Roller2d6DrdPlus extends Roller
         parent::__construct(
             Dice1d6::getIt(),
             Two::getIt(), // number of rolls = 2
-            OneToOne::getIt(), // rolled value remains untouched
+            OneToOneEvaluator::getIt(), // rolled value remains untouched
             new RollOn12( // bonus happens on sum roll value of 12 (both standard rolls summarized)
                 Roller1d6DrdPlusBonus::getIt() // bonus roll by 1d6; 1-3 = +0; 4-6 = +1; repeatedly in case of bonus
             ),

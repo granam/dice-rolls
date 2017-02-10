@@ -3,7 +3,7 @@ namespace Drd\Tests\DiceRoll\Templates\Evaluators;
 
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\DiceRollEvaluator;
-use Drd\DiceRoll\Templates\Evaluators\OneToOne;
+use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Granam\Integer\IntegerInterface;
 use Granam\Tests\Tools\TestWithMockery;
 
@@ -22,7 +22,7 @@ abstract class AbstractEvaluatorTest extends TestWithMockery
     }
 
     /**
-     * @return string|DiceRollEvaluator|OneToOne ...
+     * @return string|DiceRollEvaluator|OneToOneEvaluator ...
      */
     protected function getEvaluatorClass()
     {

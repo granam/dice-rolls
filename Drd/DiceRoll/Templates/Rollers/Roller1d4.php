@@ -4,7 +4,7 @@ namespace Drd\DiceRoll\Templates\Rollers;
 use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\Templates\Numbers\One;
 use Drd\DiceRoll\Templates\Dices\Dice1d4;
-use Drd\DiceRoll\Templates\Evaluators\OneToOne;
+use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 
 /**
@@ -32,7 +32,7 @@ class Roller1d4 extends Roller
         parent::__construct(
             new Dice1d4(),
             One::getIt(),
-            OneToOne::getIt(),
+            OneToOneEvaluator::getIt(),
             $noRollOn,
             $noRollOn
         );

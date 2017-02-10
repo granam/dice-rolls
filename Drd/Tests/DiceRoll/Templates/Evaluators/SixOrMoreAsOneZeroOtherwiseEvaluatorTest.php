@@ -1,9 +1,9 @@
 <?php
 namespace Drd\Tests\DiceRoll\Templates\Evaluators;
 
-use Drd\DiceRoll\Templates\Evaluators\SixOrMoreAsOneZeroOtherwise;
+use Drd\DiceRoll\Templates\Evaluators\SixOrMoreAsOneZeroOtherwiseEvaluator;
 
-class SixOrMoreAsOneZeroOtherwiseTest extends AbstractEvaluatorTest
+class SixOrMoreAsOneZeroOtherwiseEvaluatorTest extends AbstractEvaluatorTest
 {
 
     /**
@@ -11,7 +11,7 @@ class SixOrMoreAsOneZeroOtherwiseTest extends AbstractEvaluatorTest
      */
     public function Six_or_higher_value_is_considered_as_one()
     {
-        $evaluator = new SixOrMoreAsOneZeroOtherwise();
+        $evaluator = new SixOrMoreAsOneZeroOtherwiseEvaluator();
         foreach (range(-4, 10, 1) as $value) {
             $evaluated = $evaluator->evaluateDiceRoll($this->createDiceRoll($value));
             if ($value < 6) {

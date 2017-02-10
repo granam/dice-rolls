@@ -4,7 +4,7 @@ namespace Drd\Tests\DiceRoll;
 use Drd\DiceRoll\Dice;
 use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\DiceRollEvaluator;
-use Drd\DiceRoll\Templates\Evaluators\OneToOne;
+use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Granam\Integer\IntegerInterface;
 use Granam\Tests\Tools\TestWithMockery;
 
@@ -63,7 +63,7 @@ class DiceRollTest extends TestWithMockery
      */
     private function createDiceRollEvaluator()
     {
-        $evaluator = $this->mockery(OneToOne::class);
+        $evaluator = $this->mockery(OneToOneEvaluator::class);
         $evaluator->makePartial();
 
         return $evaluator;

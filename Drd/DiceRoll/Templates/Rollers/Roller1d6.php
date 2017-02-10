@@ -5,7 +5,7 @@ use Drd\DiceRoll\DiceRoll;
 use Drd\DiceRoll\Roller;
 use Drd\DiceRoll\Templates\Numbers\One;
 use Drd\DiceRoll\Templates\Dices\Dice1d6;
-use Drd\DiceRoll\Templates\Evaluators\OneToOne;
+use Drd\DiceRoll\Templates\Evaluators\OneToOneEvaluator;
 use Drd\DiceRoll\Templates\RollOn\NoRollOn;
 use Drd\DiceRoll\Templates\Rolls\Roll1d6;
 
@@ -34,7 +34,7 @@ class Roller1d6 extends Roller
         parent::__construct(
             Dice1d6::getIt(),
             One::getIt(),
-            OneToOne::getIt(),
+            OneToOneEvaluator::getIt(),
             NoRollOn::getIt(),
             NoRollOn::getIt()
         );
