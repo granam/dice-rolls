@@ -11,11 +11,10 @@ class Dice1d6Roll extends DiceRoll
 {
 
     /**
-     * @param Dice1d6 $dice1D6
      * @param IntegerInterface $rolledNumber
      */
-    public function __construct(Dice1d6 $dice1D6, IntegerInterface $rolledNumber)
+    public function __construct(IntegerInterface $rolledNumber)
     {
-        parent::__construct($dice1D6, $rolledNumber, new IntegerObject(1), OneToOneEvaluator::getIt());
+        parent::__construct(Dice1d6::getIt(), $rolledNumber, new IntegerObject(1), OneToOneEvaluator::getIt());
     }
 }

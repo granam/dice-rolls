@@ -15,24 +15,13 @@ class Dice1d6RollTest extends TestWithMockery
      */
     public function I_can_use_it()
     {
-        $diceRoll = new Dice1d6Roll(
-            $dice1D6 = $this->create1d6Dice(),
-            $rolledNumber = $this->createRolledNumber($rolledValue = 1234)
-        );
-        self::assertSame($dice1D6, $diceRoll->getDice());
+        $diceRoll = new Dice1d6Roll($rolledNumber = $this->createRolledNumber($rolledValue = 1234));
+        self::assertSame(Dice1d6::getIt(), $diceRoll->getDice());
         self::assertSame($rolledNumber, $diceRoll->getRolledNumber());
         self::assertEquals(new IntegerObject(1), $diceRoll->getSequenceNumber());
         self::assertSame(OneToOneEvaluator::getIt(), $diceRoll->getDiceRollEvaluator());
         self::assertSame($rolledValue, $diceRoll->getValue());
         self::assertSame((string)$rolledValue, (string)$diceRoll);
-    }
-
-    /**
-     * @return \Mockery\MockInterface|Dice1d6
-     */
-    private function create1d6Dice()
-    {
-        return $this->mockery(Dice1d6::class);
     }
 
     /**
