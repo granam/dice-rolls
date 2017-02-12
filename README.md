@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/jaroslavtyc/drd-dice-roll.svg?branch=master)](https://travis-ci.org/jaroslavtyc/drd-dice-roll)
-[![Test Coverage](https://codeclimate.com/github/jaroslavtyc/drd-dice-roll/badges/coverage.svg)](https://codeclimate.com/github/jaroslavtyc/drd-dice-roll/coverage)
-[![License](https://poser.pugx.org/drd/dice-roll/license)](https://packagist.org/packages/drd/dice-roll)
+[![Build Status](https://travis-ci.org/jaroslavtyc/drd-dice-roll.svg?branch=master)](https://travis-ci.org/jaroslavtyc/drd-dice-rolls)
+[![Test Coverage](https://codeclimate.com/github/jaroslavtyc/drd-dice-roll/badges/coverage.svg)](https://codeclimate.com/github/jaroslavtyc/drd-dice-rolls/coverage)
+[![License](https://poser.pugx.org/drd/dice-rolls/license)](https://packagist.org/packages/drd/dice-rolls)
 
 [Let's roll!](#lets-roll)
 
