@@ -1,5 +1,5 @@
 {
-  "name": "drd/dice-roll",
+  "name": "drd/dice-rolls",
   "license": "MIT",
   "authors": [
     {
@@ -21,7 +21,7 @@
     "D and D",
     "Dungeon and dragons"
   ],
-  "homepage": "https://github.com/jaroslavtyc/drd-dice-roll",
+  "homepage": "https://github.com/jaroslavtyc/drd-dice-rolls",
   "autoload": {
     "psr-4": {"Drd\\": "Drd/"}
   },

@@ -12,8 +12,8 @@
 
 ```php
 <?php
-use Drd\DiceRoll\Templates\Rollers\Roller1d6;
-use Drd\DiceRoll\Templates\Rollers\Roller2d6DrdPlus;
+use Drd\DiceRolls\Templates\Rollers\Roller1d6;
+use Drd\DiceRolls\Templates\Rollers\Roller2d6DrdPlus;
 
 $roller1d6 = new Roller1d6();
 $rolledValue = $roller1d6->roll();
@@ -46,12 +46,12 @@ There can be situations, where you need crazy combinations. Let's say one roll w
 It is easy. The hard part is only to find the way:
 ```php
 <?php
-use Drd\DiceRoll\Templates\Dices\CustomDice;
+use Drd\DiceRolls\Templates\Dices\CustomDice;
 use Granam\Integer\IntegerObject;
-use Drd\DiceRoll\Templates\Dices\Dices;
-use Drd\DiceRoll\Roller;
-use Drd\DiceRoll\Templates\Evaluators\OneToOne;
-use Drd\DiceRoll\Templates\RollOn\NoRollOn;
+use Drd\DiceRolls\Templates\Dices\Dices;
+use Drd\DiceRolls\Roller;
+use Drd\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
+use Drd\DiceRolls\Templates\RollOn\NoRollOn;
 
 $dice1d5 = new CustomDice(new IntegerObject(1) /* minimum of the dice */, new IntegerObject(5) /* maximum of the dice */);
 $dice1d74 = new CustomDice(new IntegerObject(1) /* minimum of the dice */, new IntegerObject(74) /* maximum of the dice */);
@@ -60,7 +60,7 @@ $diceCombo = new Dices([$dice1d5, $dice1d74, $dice1d74, $dice1d74]);
 $roller = new Roller(
     $diceCombo,
     new IntegerObject(1) /* roll with them all just once */,
-    new OneToOne() /* "what you roll is what you get" */,
+    new OneToOneEvaluator() /* "what you roll is what you get" */,
     new NoRollOn() /* no bonus roll at all */,
     new NoRollOn() /* no malus roll at all */
 );
