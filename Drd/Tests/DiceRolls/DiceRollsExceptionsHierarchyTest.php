@@ -2,11 +2,13 @@
 namespace Drd\Tests\DiceRolls;
 
 use Drd\DiceRolls\DiceRoll;
-use Granam\Tests\Exceptions\Tools\AbstractExceptionsHierarchyTest;
+use Granam\Tests\ExceptionsHierarchy\Exceptions\AbstractExceptionsHierarchyTest;
 
-class ExceptionsHierarchyTest extends AbstractExceptionsHierarchyTest
+class DiceRollsExceptionsHierarchyTest extends AbstractExceptionsHierarchyTest
 {
-
+    /**
+     * @return string
+     */
     protected function getRootNamespace()
     {
         $reflection = new \ReflectionClass(DiceRoll::class);
@@ -14,6 +16,9 @@ class ExceptionsHierarchyTest extends AbstractExceptionsHierarchyTest
         return $reflection->getNamespaceName();
     }
 
+    /**
+     * @return string
+     */
     protected function getTestedNamespace()
     {
         return $this->getRootNamespace();

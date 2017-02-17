@@ -3,7 +3,7 @@ namespace Drd\Tests\DiceRolls\Templates\Dices;
 
 use Drd\DiceRolls\Templates\Dices\CustomDice;
 
-class ExceptionsHierarchyTest extends \Drd\Tests\DiceRolls\ExceptionsHierarchyTest
+class DiceRollsExceptionsHierarchyTest extends \Drd\Tests\DiceRolls\DiceRollsExceptionsHierarchyTest
 {
     protected function getTestedNamespace()
     {
