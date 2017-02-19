@@ -3,8 +3,9 @@ namespace Drd\Tests\DiceRolls\Templates\Numbers;
 
 use Drd\DiceRolls\Templates\Numbers\Two;
 use Granam\Integer\IntegerInterface;
+use PHPUnit\Framework\TestCase;
 
-class TwoTest extends \PHPUnit_Framework_TestCase
+class TwoTest extends TestCase
 {
     /**
      * @test

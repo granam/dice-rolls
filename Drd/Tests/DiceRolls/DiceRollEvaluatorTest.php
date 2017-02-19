@@ -2,8 +2,9 @@
 namespace Drd\Tests\DiceRolls;
 
 use Drd\DiceRolls\DiceRollEvaluator;
+use PHPUnit\Framework\TestCase;
 
-class DiceRollEvaluatorTest extends \PHPUnit_Framework_TestCase
+class DiceRollEvaluatorTest extends TestCase
 {
 
     /**

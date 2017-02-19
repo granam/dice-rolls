@@ -2,8 +2,9 @@
 namespace Drd\Tests\DiceRolls;
 
 use Drd\DiceRolls\RollOn;
+use PHPUnit\Framework\TestCase;
 
-class RollOnTest extends \PHPUnit_Framework_TestCase
+class RollOnTest extends TestCase
 {
 
     /**

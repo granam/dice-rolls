@@ -3,8 +3,9 @@ namespace Drd\Tests\DiceRolls\Templates\Numbers;
 
 use Drd\DiceRolls\Templates\Numbers\Four;
 use Granam\Integer\IntegerInterface;
+use PHPUnit\Framework\TestCase;
 
-class FourTest extends \PHPUnit_Framework_TestCase
+class FourTest extends TestCase
 {
     /**
      * @test

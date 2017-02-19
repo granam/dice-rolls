@@ -3,8 +3,9 @@ namespace Drd\Tests\DiceRolls\Templates\Numbers;
 
 use Drd\DiceRolls\Templates\Numbers\Six;
 use Granam\Integer\IntegerInterface;
+use PHPUnit\Framework\TestCase;
 
-class SixTest extends \PHPUnit_Framework_TestCase
+class SixTest extends TestCase
 {
     /**
      * @test

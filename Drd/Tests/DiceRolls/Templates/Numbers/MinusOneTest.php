@@ -3,8 +3,9 @@ namespace Drd\Tests\DiceRolls\Templates\Numbers;
 
 use Drd\DiceRolls\Templates\Numbers\MinusOne;
 use Granam\Integer\IntegerInterface;
+use PHPUnit\Framework\TestCase;
 
-class MinusOneTest extends \PHPUnit_Framework_TestCase
+class MinusOneTest extends TestCase
 {
     /**
      * @test

@@ -2,8 +2,9 @@
 namespace Drd\Tests\DiceRolls\Templates\RollOn;
 
 use Drd\DiceRolls\Templates\RollOn\NoRollOn;
+use PHPUnit\Framework\TestCase;
 
-class NoRollOnTest extends \PHPUnit_Framework_TestCase
+class NoRollOnTest extends TestCase
 {
 
     protected function setUp()

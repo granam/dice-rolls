@@ -3,8 +3,9 @@ namespace Drd\Tests\DiceRolls\Templates\Dices;
 
 use Drd\DiceRolls\Templates\Dices\CustomDice;
 use Drd\DiceRolls\Templates\Dices\Dice1d6;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractPredefinedDiceTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractPredefinedDiceTest extends TestCase
 {
     /**
      * @test
