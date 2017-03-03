@@ -10,10 +10,16 @@ use Drd\DiceRolls\Templates\RollOn\NoRollOn;
 
 class Roller1d6Plus extends Roller
 {
+    /**
+     * @var Roller1d6Plus
+     */
     private static $roller1d6Plus;
 
     /**
      * @return Roller1d6Plus|static
+     * @throws \Drd\DiceRolls\Exceptions\InvalidDiceRange
+     * @throws \Drd\DiceRolls\Exceptions\InvalidNumberOfRolls
+     * @throws \Drd\DiceRolls\Exceptions\BonusAndMalusChanceConflict
      */
     public static function getIt()
     {
@@ -24,6 +30,11 @@ class Roller1d6Plus extends Roller
         return self::$roller1d6Plus;
     }
 
+    /**
+     * @throws \Drd\DiceRolls\Exceptions\InvalidDiceRange
+     * @throws \Drd\DiceRolls\Exceptions\InvalidNumberOfRolls
+     * @throws \Drd\DiceRolls\Exceptions\BonusAndMalusChanceConflict
+     */
     public function __construct()
     {
         parent::__construct(
