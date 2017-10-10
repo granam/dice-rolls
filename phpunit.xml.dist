@@ -2,7 +2,7 @@
 <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.0/phpunit.xsd"
-        bootstrap="./Drd/Tests/tests_bootstrap.php"
+        bootstrap="./DrdPlus/Tests/tests_bootstrap.php"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
         convertWarningsToExceptions="true"
@@ -13,14 +13,14 @@
 >
     <testsuites>
         <testsuite name="all">
-            <directory>./Drd/Tests</directory>
+            <directory>./DrdPlus/Tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="false">
-            <directory>./Drd</directory>
+            <directory>./DrdPlus</directory>
             <exclude>
-                <directory>./Drd/Tests</directory>
+                <directory>./DrdPlus/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
