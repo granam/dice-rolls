@@ -4,7 +4,7 @@
   "authors": [
     {
       "name": "Jaroslav Týc",
-      "homepage": "http://jaroslav.com",
+      "homepage": "https://www.jaroslav.com",
       "role": "Original author"
     }
   ],
@@ -21,7 +21,7 @@
     "D and D",
     "Dungeon and dragons"
   ],
-  "homepage": "https://github.com/jaroslavtyc/drd-dice-rolls",
+  "homepage": "https://github.com/jaroslavtyc/drd-plus-dice-rolls",
   "autoload": {
     "psr-4": {
       "DrdPlus\\": "DrdPlus/"
