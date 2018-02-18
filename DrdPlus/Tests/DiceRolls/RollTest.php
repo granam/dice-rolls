@@ -6,6 +6,7 @@ namespace DrdPlus\Tests\DiceRolls;
 use DrdPlus\DiceRolls\DiceRoll;
 use DrdPlus\DiceRolls\Roll;
 use Granam\Integer\IntegerInterface;
+use Granam\Integer\PositiveInteger;
 use Granam\Tests\Tools\TestWithMockery;
 
 class RollTest extends TestWithMockery
@@ -18,7 +19,7 @@ class RollTest extends TestWithMockery
         $roll = new Roll($diceRolls = $this->createDiceRolls($values = [1, 2, 3]));
         self::assertInstanceOf(IntegerInterface::class, $roll);
         $rolledNumbers = $roll->getRolledNumbers();
-        self::assertCount(count($values), $rolledNumbers);
+        self::assertCount(\count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {
             self::assertInstanceOf(IntegerInterface::class, $rolledNumber);
             self::assertSame($values[$index], $rolledNumber->getValue());
@@ -37,7 +38,7 @@ class RollTest extends TestWithMockery
         foreach ($values as $value) {
             $diceRoll = $this->mockery(DiceRoll::class);
             $diceRoll->shouldReceive('getRolledNumber')
-                ->andReturn($rolledNumber = $this->mockery(IntegerInterface::class));
+                ->andReturn($rolledNumber = $this->mockery(PositiveInteger::class));
             $rolledNumber->shouldReceive('getValue')
                 ->andReturn($value);
             $diceRoll->shouldReceive('getValue')
@@ -59,7 +60,7 @@ class RollTest extends TestWithMockery
         );
         $rolledNumbers = $roll->getRolledNumbers();
         $values = array_merge($standardValues, $bonusValues);
-        self::assertCount(count($values), $rolledNumbers);
+        self::assertCount(\count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {
             self::assertInstanceOf(IntegerInterface::class, $rolledNumber);
             self::assertSame($values[$index], $rolledNumber->getValue());
@@ -84,7 +85,7 @@ class RollTest extends TestWithMockery
         );
         $rolledNumbers = $roll->getRolledNumbers();
         $values = array_merge($standardValues, $malusValues);
-        self::assertCount(count($values), $rolledNumbers);
+        self::assertCount(\count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {
             self::assertInstanceOf(IntegerInterface::class, $rolledNumber);
             self::assertSame($values[$index], $rolledNumber->getValue());
@@ -109,7 +110,7 @@ class RollTest extends TestWithMockery
         );
         $rolledNumbers = $roll->getRolledNumbers();
         $values = array_merge($standardValues, $bonusValues, $malusValues);
-        self::assertCount(count($values), $rolledNumbers);
+        self::assertCount(\count($values), $rolledNumbers);
         foreach ($rolledNumbers as $index => $rolledNumber) {
             self::assertInstanceOf(IntegerInterface::class, $rolledNumber);
             self::assertSame($values[$index], $rolledNumber->getValue());

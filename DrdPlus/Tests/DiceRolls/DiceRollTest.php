@@ -42,11 +42,11 @@ class DiceRollTest extends TestWithMockery
 
     /**
      * @param int $rolledValue
-     * @return \Mockery\MockInterface|IntegerInterface
+     * @return \Mockery\MockInterface|PositiveInteger
      */
     private function createRolledNumber($rolledValue)
     {
-        $rolledNumber = $this->mockery(IntegerInterface::class);
+        $rolledNumber = $this->mockery(PositiveInteger::class);
         $rolledNumber->shouldReceive('getValue')
             ->andReturn($rolledValue);
 

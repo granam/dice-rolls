@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace DrdPlus\DiceRolls;
 
 use Granam\Integer\IntegerInterface;
-use Granam\Integer\IntegerObject;
 use Granam\Integer\PositiveInteger;
 use Granam\Integer\PositiveIntegerObject;
 use Granam\Strict\Object\StrictObject;
@@ -205,7 +204,7 @@ class Roller extends StrictObject
     {
         return new DiceRoll(
             $this->dice,
-            new IntegerObject($this->rollNumber($this->dice)),
+            new PositiveIntegerObject($this->rollNumber($this->dice)),
             $sequenceNumber,
             $this->diceRollEvaluator
         );

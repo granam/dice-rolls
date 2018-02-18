@@ -7,6 +7,7 @@ use DrdPlus\DiceRolls\DiceRoll;
 use DrdPlus\DiceRolls\DiceRollEvaluator;
 use DrdPlus\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
 use Granam\Integer\IntegerInterface;
+use Granam\Integer\PositiveInteger;
 use Granam\Tests\Tools\TestWithMockery;
 
 abstract class AbstractEvaluatorTest extends TestWithMockery
@@ -39,7 +40,7 @@ abstract class AbstractEvaluatorTest extends TestWithMockery
     {
         $diceRoll = $this->mockery(DiceRoll::class);
         $diceRoll->shouldReceive('getRolledNumber')
-            ->andReturn($rolledNumber = $this->mockery(IntegerInterface::class));
+            ->andReturn($rolledNumber = $this->mockery(PositiveInteger::class));
         $rolledNumber->shouldReceive('getValue')
             ->andReturn($value);
 

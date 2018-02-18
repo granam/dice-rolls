@@ -25,7 +25,7 @@ abstract class AbstractDice1d6Roll extends DiceRoll
      */
     public function __construct($rolledNumber, DiceRollEvaluator $diceRollEvaluator, $sequenceNumber = 1)
     {
-        $rolledNumber = ToInteger::toInteger($rolledNumber);
+        $rolledNumber = ToInteger::toPositiveInteger($rolledNumber);
         if ($rolledNumber < 1 || $rolledNumber > 6) {
             throw new Exceptions\Invalid1d6DiceRollValue("Expected value in range 1..6, got {$rolledNumber}");
         }
@@ -36,7 +36,7 @@ abstract class AbstractDice1d6Roll extends DiceRoll
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         parent::__construct(
             Dice1d6::getIt(),
-            new IntegerObject($rolledNumber),
+            new PositiveIntegerObject($rolledNumber),
             new PositiveIntegerObject($sequenceNumber),
             OneToOneEvaluator::getIt()
         );
