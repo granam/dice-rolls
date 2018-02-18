@@ -7,7 +7,7 @@ use DrdPlus\DiceRolls\Templates\DiceRolls\Dice1d6Roll;
 use DrdPlus\DiceRolls\Templates\Dices\Dice1d6;
 use DrdPlus\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
 use Granam\Integer\IntegerInterface;
-use Granam\Integer\IntegerObject;
+use Granam\Integer\PositiveIntegerObject;
 use Granam\Tests\Tools\TestWithMockery;
 
 class Dice1d6RollTest extends TestWithMockery
@@ -17,10 +17,10 @@ class Dice1d6RollTest extends TestWithMockery
      */
     public function I_can_use_it()
     {
-        $diceRoll = new Dice1d6Roll($rolledNumber = $this->createRolledNumber($rolledValue = 1234));
+        $diceRoll = new Dice1d6Roll($rolledNumber = $this->createRolledNumber($rolledValue = \random_int(1, 6)), 1);
         self::assertSame(Dice1d6::getIt(), $diceRoll->getDice());
-        self::assertSame($rolledNumber, $diceRoll->getRolledNumber());
-        self::assertEquals(new IntegerObject(1), $diceRoll->getSequenceNumber());
+        self::assertSame($rolledNumber->getValue(), $diceRoll->getRolledNumber()->getValue());
+        self::assertEquals(new PositiveIntegerObject(1), $diceRoll->getSequenceNumber());
         self::assertSame(OneToOneEvaluator::getIt(), $diceRoll->getDiceRollEvaluator());
         self::assertSame($rolledValue, $diceRoll->getValue());
         self::assertSame((string)$rolledValue, (string)$diceRoll);

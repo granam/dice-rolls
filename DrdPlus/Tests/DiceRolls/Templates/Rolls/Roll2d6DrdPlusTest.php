@@ -34,12 +34,12 @@ class Roll2d6DrdPlusTest extends TestWithMockery
      * @param array $bonusDiceRolls
      * @param array $malusDiceRolls
      */
-    public function I_have_to_create_it_with_six_side_dices(array $standardDiceRolls, array $bonusDiceRolls, array $malusDiceRolls)
+    public function I_have_to_create_it_with_six_sided_dices(array $standardDiceRolls, array $bonusDiceRolls, array $malusDiceRolls)
     {
         new Roll2d6DrdPlus($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }
 
-    public function provideRollsWithInvalidDices()
+    public function provideRollsWithInvalidDices(): array
     {
         $diceRolls = [];
         $diceRolls[] = [Roller1d4::getIt()->roll()->getStandardDiceRolls(), [], []];

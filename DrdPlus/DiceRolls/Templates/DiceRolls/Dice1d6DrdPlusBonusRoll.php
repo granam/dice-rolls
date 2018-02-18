@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace DrdPlus\DiceRolls\Templates\DiceRolls;
 
-use DrdPlus\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
+use DrdPlus\DiceRolls\Templates\Evaluators\FourOrMoreAsOneZeroOtherwiseEvaluator;
 use Granam\Integer\IntegerInterface;
 
-class Dice1d6Roll extends AbstractDice1d6Roll
+class Dice1d6DrdPlusBonusRoll extends AbstractDice1d6Roll
 {
 
     /**
@@ -17,6 +17,10 @@ class Dice1d6Roll extends AbstractDice1d6Roll
      */
     public function __construct($rolledNumber, $sequenceNumber)
     {
-        parent::__construct($rolledNumber, OneToOneEvaluator::getIt(), $sequenceNumber);
+        parent::__construct(
+            $rolledNumber,
+            FourOrMoreAsOneZeroOtherwiseEvaluator::getIt(),
+            $sequenceNumber
+        );
     }
 }

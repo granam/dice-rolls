@@ -6,12 +6,17 @@ namespace DrdPlus\DiceRolls\Templates\Rollers;
 use DrdPlus\DiceRolls\DiceRoll;
 use DrdPlus\DiceRolls\Roll;
 use DrdPlus\DiceRolls\Roller;
+use DrdPlus\DiceRolls\Templates\DiceRolls\Dice1d6DrdPlusBonusRoll;
+use DrdPlus\DiceRolls\Templates\DiceRolls\Dice1d6DrdPlusMalusRoll;
+use DrdPlus\DiceRolls\Templates\DiceRolls\Dice1d6Roll;
 use DrdPlus\DiceRolls\Templates\Numbers\Two;
 use DrdPlus\DiceRolls\Templates\Dices\Dice1d6;
 use DrdPlus\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
 use DrdPlus\DiceRolls\Templates\Rolls\Roll2d6DrdPlus;
 use DrdPlus\DiceRolls\Templates\RollOn\RollOn12;
 use DrdPlus\DiceRolls\Templates\RollOn\RollOn2;
+use Granam\Integer\IntegerInterface;
+use Granam\Integer\Tools\ToInteger;
 
 /**
  * 2x1d6; 12 = bonus roll by 1x1d6 => 1-3 = 0, 4-6 = +1 and rolls again; 2 = malus roll by 1x1d6 => 1-3 = -1 and rolls again, 4-6 = 0
@@ -59,6 +64,54 @@ class Roller2d6DrdPlus extends Roller
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         return new Roll2d6DrdPlus($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
+    }
+
+    /**
+     * Warning! This will generate roll history randomly
+     *
+     * @param int|IntegerInterface $rollSummary
+     * @return Roll2d6DrdPlus
+     * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
+     * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
+     */
+    public function generateRoll($rollSummary): Roll2d6DrdPlus
+    {
+        $rollSummary = ToInteger::toInteger($rollSummary);
+        $bonusDiceRolls = [];
+        $malusDiceRolls = [];
+        if ($rollSummary <= 2) { // two ones = malus rolls and one "not valid" malus roll
+            $standardDiceRolls = [new Dice1d6Roll(1, 1), new Dice1d6Roll(1, 2)]; // two ones = malus rolls
+            $sequenceNumber = 3;
+            for ($malusRollsCount = 2 - $rollSummary, $malusRollNumber = 1; $malusRollNumber <= $malusRollsCount; $malusRollNumber++) {
+                /** @noinspection PhpUnhandledExceptionInspection */
+                $malusDiceRolls[] = new Dice1d6DrdPlusMalusRoll(\random_int(1, 3), $sequenceNumber); // malus roll is valid only in range 1..3
+                $sequenceNumber++;
+            }
+            /** @noinspection PhpUnhandledExceptionInspection */
+            $malusDiceRolls[] = new Dice1d6DrdPlusMalusRoll(\random_int(4, 6), $sequenceNumber); // last malus roll was not "valid" - broke the chain
+        } elseif ($rollSummary < 12) {
+            $randomRange = 12 - $rollSummary; // 1..11
+            $firstRandomRange = 6 - $randomRange;
+            if ($firstRandomRange < 0) {
+                $firstRandomRange = 1;
+            }
+            /** @noinspection PhpUnhandledExceptionInspection */
+            $firstRoll = \random_int($firstRandomRange, 6);
+            $secondRoll = $rollSummary - $firstRoll;
+            $standardDiceRolls = [new Dice1d6Roll($firstRoll, 1), new Dice1d6Roll($secondRoll, 2)];
+        } else { // two sixes = bonus rolls and one "not valid" bonus roll
+            $standardDiceRolls = [new Dice1d6Roll(6, 1), new Dice1d6Roll(6, 2)];
+            $sequenceNumber = 3;
+            for ($bonusRollsCount = $rollSummary - 12, $bonusRollNumber = 1; $bonusRollNumber <= $bonusRollsCount; $bonusRollNumber++) {
+                /** @noinspection PhpUnhandledExceptionInspection */
+                $bonusDiceRolls[] = new Dice1d6DrdPlusBonusRoll(\random_int(4, 6), $sequenceNumber); // bonus roll is valid only in range 4..6
+                $sequenceNumber++;
+            }
+            /** @noinspection PhpUnhandledExceptionInspection */
+            $bonusDiceRolls[] = new Dice1d6DrdPlusBonusRoll(\random_int(1, 3), $sequenceNumber); // last bonus roll was not "valid" - broke the chain
+        }
+
+        return $this->createRoll($standardDiceRolls, $bonusDiceRolls, $malusDiceRolls);
     }
 
 }

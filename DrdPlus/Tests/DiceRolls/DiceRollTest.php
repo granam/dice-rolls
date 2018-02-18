@@ -8,6 +8,7 @@ use DrdPlus\DiceRolls\DiceRoll;
 use DrdPlus\DiceRolls\DiceRollEvaluator;
 use DrdPlus\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
 use Granam\Integer\IntegerInterface;
+use Granam\Integer\PositiveInteger;
 use Granam\Tests\Tools\TestWithMockery;
 
 class DiceRollTest extends TestWithMockery
@@ -53,11 +54,11 @@ class DiceRollTest extends TestWithMockery
     }
 
     /**
-     * @return \Mockery\MockInterface|IntegerInterface
+     * @return \Mockery\MockInterface|PositiveInteger
      */
     private function createRollSequence()
     {
-        return $this->mockery(IntegerInterface::class);
+        return $this->mockery(PositiveInteger::class);
     }
 
     /**

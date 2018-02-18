@@ -5,6 +5,8 @@ namespace DrdPlus\DiceRolls;
 
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\IntegerObject;
+use Granam\Integer\PositiveInteger;
+use Granam\Integer\PositiveIntegerObject;
 use Granam\Strict\Object\StrictObject;
 use Granam\Tools\ValueDescriber;
 
@@ -54,7 +56,7 @@ class Roller extends StrictObject
      * @param Dice $dice
      * @throws \DrdPlus\DiceRolls\Exceptions\InvalidDiceRange
      */
-    private function checkDice(Dice $dice)
+    private function checkDice(Dice $dice): void
     {
         if ($dice->getMinimum()->getValue() > $dice->getMaximum()->getValue()) {
             throw new Exceptions\InvalidDiceRange(
@@ -68,7 +70,7 @@ class Roller extends StrictObject
      * @param IntegerInterface $numberOfStandardRolls
      * @throws \DrdPlus\DiceRolls\Exceptions\InvalidNumberOfRolls
      */
-    private function checkNumberOfStandardRolls(IntegerInterface $numberOfStandardRolls)
+    private function checkNumberOfStandardRolls(IntegerInterface $numberOfStandardRolls): void
     {
         if ($numberOfStandardRolls->getValue() <= 0) {
             throw new Exceptions\InvalidNumberOfRolls(
@@ -84,12 +86,12 @@ class Roller extends StrictObject
      * @param RollOn $malusRollOn
      * @throws \DrdPlus\DiceRolls\Exceptions\BonusAndMalusChanceConflict
      */
-    private function checkBonusAndMalusConflicts(Dice $dice, RollOn $bonusRollOn, RollOn $malusRollOn)
+    private function checkBonusAndMalusConflicts(Dice $dice, RollOn $bonusRollOn, RollOn $malusRollOn): void
     {
         $bonusRollOnValues = $this->findRollOnValues($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue(), $bonusRollOn);
         $malusRollOnValues = $this->findRollOnValues($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue(), $malusRollOn);
-        $conflicts = array_intersect($bonusRollOnValues, $malusRollOnValues);
-        if (count($conflicts) > 0) {
+        $conflicts = \array_intersect($bonusRollOnValues, $malusRollOnValues);
+        if (\count($conflicts) > 0) {
             throw new Exceptions\BonusAndMalusChanceConflict('Bonus and malus rolls would happen on same values: ' . implode(',', $conflicts));
         }
     }
@@ -126,7 +128,7 @@ class Roller extends StrictObject
              $sequenceNumberValue <= $sequenceStopNumber; $sequenceNumberValue++
         ) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
-            $sequenceNumber = new IntegerObject($sequenceNumberValue);
+            $sequenceNumber = new PositiveIntegerObject($sequenceNumberValue);
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
             $standardDiceRolls[] = $this->rollDice($sequenceNumber);
         }
@@ -194,12 +196,12 @@ class Roller extends StrictObject
     }
 
     /**
-     * @param IntegerInterface $sequenceNumber
+     * @param PositiveInteger $sequenceNumber
      * @return DiceRoll
      * @throws \Granam\Integer\Tools\Exceptions\WrongParameterType
      * @throws \Granam\Integer\Tools\Exceptions\ValueLostOnCast
      */
-    private function rollDice(IntegerInterface $sequenceNumber): DiceRoll
+    private function rollDice(PositiveInteger $sequenceNumber): DiceRoll
     {
         return new DiceRoll(
             $this->dice,
@@ -215,7 +217,11 @@ class Roller extends StrictObject
      */
     private function rollNumber(Dice $dice): int
     {
-        return random_int($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue());
+        try {
+            return \random_int($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue());
+        } catch (\Exception $exception) {
+            return \rand($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue());
+        }
     }
 
     /**
@@ -277,7 +283,7 @@ class Roller extends StrictObject
     /**
      * @return RollOn|null
      */
-    public function getBonusRollOn():? RollOn
+    public function getBonusRollOn(): ? RollOn
     {
         return $this->bonusRollOn;
     }
@@ -285,7 +291,7 @@ class Roller extends StrictObject
     /**
      * @return RollOn|null
      */
-    public function getMalusRollOn():? RollOn
+    public function getMalusRollOn(): ? RollOn
     {
         return $this->malusRollOn;
     }

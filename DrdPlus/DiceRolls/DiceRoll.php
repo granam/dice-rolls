@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DrdPlus\DiceRolls;
 
 use Granam\Integer\IntegerInterface;
+use Granam\Integer\PositiveInteger;
 use Granam\Strict\Object\StrictObject;
 
 class DiceRoll extends StrictObject implements IntegerInterface
@@ -12,7 +13,7 @@ class DiceRoll extends StrictObject implements IntegerInterface
     private $dice;
     /** @var IntegerInterface */
     private $rolledNumber;
-    /** @var IntegerInterface */
+    /** @var PositiveInteger */
     private $sequenceNumber;
     /** @var DiceRollEvaluator */
     private $diceRollEvaluator;
@@ -20,13 +21,13 @@ class DiceRoll extends StrictObject implements IntegerInterface
     /**
      * @param Dice $dice
      * @param IntegerInterface $rolledNumber
-     * @param IntegerInterface $sequenceNumber
+     * @param PositiveInteger $sequenceNumber
      * @param DiceRollEvaluator $diceRollEvaluator
      */
     public function __construct(
         Dice $dice,
         IntegerInterface $rolledNumber,
-        IntegerInterface $sequenceNumber,
+        PositiveInteger $sequenceNumber,
         DiceRollEvaluator $diceRollEvaluator
     )
     {
@@ -53,9 +54,9 @@ class DiceRoll extends StrictObject implements IntegerInterface
     }
 
     /**
-     * @return IntegerInterface
+     * @return PositiveInteger
      */
-    public function getSequenceNumber(): IntegerInterface
+    public function getSequenceNumber(): PositiveInteger
     {
         return $this->sequenceNumber;
     }

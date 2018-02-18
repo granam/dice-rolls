@@ -38,11 +38,11 @@ class Roll2d6DrdPlus extends Roll
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\MissingBonusDiceRoll
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\MissingMalusDiceRoll
      */
-    private function guardDiceRollsValid(array $standardDiceRolls, array $bonusDiceRolls, array $malusDiceRolls)
+    private function guardDiceRollsValid(array $standardDiceRolls, array $bonusDiceRolls, array $malusDiceRolls): void
     {
         $this->guardTwo1d6RollsForStandardRoll($standardDiceRolls);
-        $this->guardBonusRollsValid($bonusDiceRolls, $standardDiceRolls);
-        $this->guardMalusRollsValid($malusDiceRolls, $standardDiceRolls);
+        $this->guardBonusRollsValidity($bonusDiceRolls, $standardDiceRolls);
+        $this->guardMalusRollsValidity($malusDiceRolls, $standardDiceRolls);
     }
 
     /**
@@ -50,12 +50,12 @@ class Roll2d6DrdPlus extends Roll
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\UnexpectedDice
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\UnexpectedNumberOfDiceRolls
      */
-    private function guardTwo1d6RollsForStandardRoll(array $standardDiceRolls)
+    private function guardTwo1d6RollsForStandardRoll(array $standardDiceRolls): void
     {
         $this->guard1d6DicesOnly($standardDiceRolls, 'standard');
-        if (count($standardDiceRolls) !== 2) {
+        if (\count($standardDiceRolls) !== 2) {
             throw new Exceptions\UnexpectedNumberOfDiceRolls(
-                'Expected exactly two standard dice rolls, got ' . count($standardDiceRolls) . ' of them'
+                'Expected exactly two standard dice rolls, got ' . \count($standardDiceRolls) . ' of them'
             );
         }
     }
@@ -65,7 +65,7 @@ class Roll2d6DrdPlus extends Roll
      * @param string $rollType
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\UnexpectedDice
      */
-    private function guard1d6DicesOnly(array $diceRolls, $rollType)
+    private function guard1d6DicesOnly(array $diceRolls, string $rollType): void
     {
         foreach ($diceRolls as $diceRoll) {
             if (!($diceRoll->getDice() instanceof Dice1d6)) {
@@ -84,10 +84,10 @@ class Roll2d6DrdPlus extends Roll
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\UnexpectedBonus
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\MissingBonusDiceRoll
      */
-    private function guardBonusRollsValid(array $bonusDiceRolls, array $standardDiceRolls)
+    private function guardBonusRollsValidity(array $bonusDiceRolls, array $standardDiceRolls): void
     {
-        if (count($bonusDiceRolls) === 0) {
-            $shouldHasBonus = true;
+        if (\count($bonusDiceRolls) === 0) {
+            $shouldHasBonus = true; // this is questionable in fact, see bellow
             foreach ($standardDiceRolls as $standardDiceRoll) {
                 $shouldHasBonus = $shouldHasBonus && $standardDiceRoll->getValue() === 6;
             }
@@ -102,7 +102,7 @@ class Roll2d6DrdPlus extends Roll
             if ($standardDiceRoll->getValue() !== 6) {
                 throw new Exceptions\UnexpectedBonus(
                     'Can not get a bonus roll without sixes only from standard rolls. Got standard dice rolls '
-                    . reset($standardDiceRolls)->getValue() . ' and ' . end($standardDiceRolls)->getValue()
+                    . \reset($standardDiceRolls)->getValue() . ' and ' . \end($standardDiceRolls)->getValue()
                 );
             }
         }
@@ -115,9 +115,9 @@ class Roll2d6DrdPlus extends Roll
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\UnexpectedMalus
      * @throws \DrdPlus\DiceRolls\Templates\Rolls\Exceptions\MissingMalusDiceRoll
      */
-    private function guardMalusRollsValid(array $malusDiceRolls, array $standardDiceRolls)
+    private function guardMalusRollsValidity(array $malusDiceRolls, array $standardDiceRolls): void
     {
-        if (count($malusDiceRolls) === 0) {
+        if (\count($malusDiceRolls) === 0) {
             $shouldHasMalus = true;
             foreach ($standardDiceRolls as $standardDiceRoll) {
                 $shouldHasMalus = $shouldHasMalus && $standardDiceRoll->getValue() === 1;
@@ -133,7 +133,7 @@ class Roll2d6DrdPlus extends Roll
             if ($standardDiceRoll->getValue() !== 1) {
                 throw new Exceptions\UnexpectedMalus(
                     'Can not get a malus roll without ones only from standard rolls. Got standard dice rolls '
-                    . reset($standardDiceRolls)->getValue() . ' and ' . end($standardDiceRolls)->getValue()
+                    . \reset($standardDiceRolls)->getValue() . ' and ' . \end($standardDiceRolls)->getValue()
                 );
             }
         }

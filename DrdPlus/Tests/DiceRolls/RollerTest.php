@@ -12,6 +12,7 @@ use DrdPlus\DiceRolls\Roller;
 use DrdPlus\DiceRolls\RollOn;
 use DrdPlus\Tests\DiceRolls\Templates\Rollers\AbstractRollerTest;
 use Granam\Integer\IntegerInterface;
+use Granam\Integer\PositiveInteger;
 
 class RollerTest extends AbstractRollerTest
 {
@@ -59,9 +60,23 @@ class RollerTest extends AbstractRollerTest
      * @param int $number
      * @return \Mockery\MockInterface|IntegerInterface
      */
-    private function createNumber($number = 1)
+    private function createNumber(int $number = 1)
     {
         $numberOfStandardRolls = $this->mockery(IntegerInterface::class);
+        $numberOfStandardRolls->shouldReceive('getValue')
+            ->andReturn($number);
+
+        return $numberOfStandardRolls;
+    }
+
+    /**
+     * @param int $number
+     * @return \Mockery\MockInterface|IntegerInterface
+     */
+    private function createPositiveNumber(int $number = 1)
+    {
+        self::assertGreaterThanOrEqual(0, $number);
+        $numberOfStandardRolls = $this->mockery(PositiveInteger::class);
         $numberOfStandardRolls->shouldReceive('getValue')
             ->andReturn($number);
 
@@ -107,7 +122,7 @@ class RollerTest extends AbstractRollerTest
         $rollOn->shouldReceive('shouldHappen')
             ->zeroOrMoreTimes()
             ->andReturnUsing(function ($value) use ($shouldHappenOn) {
-                return in_array($value, $shouldHappenOn, true);
+                return \in_array($value, $shouldHappenOn, true);
             });
         $rollOn->shouldReceive('rollDices')
             ->zeroOrMoreTimes()
@@ -120,7 +135,7 @@ class RollerTest extends AbstractRollerTest
                     $diceRoll->shouldReceive('getDice')
                         ->andReturn($dice);
                     $diceRoll->shouldReceive('getSequenceNumber')
-                        ->andReturn($rolledNumber = $this->createNumber($rollSequenceStart + ($diceRollNumber - 1)));
+                        ->andReturn($rolledNumber = $this->createPositiveNumber($rollSequenceStart + ($diceRollNumber - 1)));
                     $diceRoll->shouldReceive('getValue')
                         ->andReturn($diceRollNumber /* just some int for sum */);
                     $diceRolls[] = $diceRoll;
@@ -268,10 +283,10 @@ class RollerTest extends AbstractRollerTest
             $this->checkSummaryAndRollSequence(
                 $roll,
                 $dice,
-                $numberOfRollsValue + count($roll->getBonusDiceRolls()),
+                $numberOfRollsValue + \count($roll->getBonusDiceRolls()),
                 $attempt - 1 /* used as sequence start offset */
             );
-            if (count($roll->getBonusDiceRolls()) > 1) { // at least 1 positive bonus roll (+ last negative bonus roll)
+            if (\count($roll->getBonusDiceRolls()) > 1) { // at least 1 positive bonus roll (+ last negative bonus roll)
                 break;
             }
         }
@@ -299,10 +314,10 @@ class RollerTest extends AbstractRollerTest
             $this->checkSummaryAndRollSequence(
                 $roll,
                 $dice,
-                $numberOfRollsValue + count($roll->getMalusDiceRolls()),
+                $numberOfRollsValue + \count($roll->getMalusDiceRolls()),
                 $attempt - 1 /* used as sequence start offset */
             );
-            if (count($roll->getMalusDiceRolls()) > 1) { // at least one positive malus roll (+1 negative malus roll)
+            if (\count($roll->getMalusDiceRolls()) > 1) { // at least one positive malus roll (+1 negative malus roll)
                 break;
             }
         }
