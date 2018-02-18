@@ -38,7 +38,7 @@ abstract class AbstractDice1d6Roll extends DiceRoll
             Dice1d6::getIt(),
             new PositiveIntegerObject($rolledNumber),
             new PositiveIntegerObject($sequenceNumber),
-            OneToOneEvaluator::getIt()
+            $diceRollEvaluator
         );
     }
 }
