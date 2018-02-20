@@ -6,11 +6,13 @@ namespace DrdPlus\DiceRolls\Templates\Rolls;
 use DrdPlus\DiceRolls\DiceRoll;
 use DrdPlus\DiceRolls\Roll;
 use DrdPlus\DiceRolls\Templates\Dices\Dice1d6;
+use DrdPlus\DiceRolls\Templates\Rollers\Roller2d6DrdPlus;
 use Granam\Tools\ValueDescriber;
 
 class Roll2d6DrdPlus extends Roll
 {
     /**
+     * If you need to create this from FINAL value, use @see Roller2d6DrdPlus::generateRoll()
      * @param array|DiceRoll[] $standardDiceRolls
      * @param array $bonusDiceRolls
      * @param array $malusDiceRolls
