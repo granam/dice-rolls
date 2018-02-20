@@ -91,14 +91,20 @@ class Roller2d6DrdPlus extends Roller
             $malusDiceRolls[] = new Dice1d6DrdPlusMalusRoll(\random_int(4, 6), $sequenceNumber); // last malus roll was not "valid" - broke the chain
         } elseif ($rollSummary < 12) {
             $randomRange = 12 - $rollSummary; // 1..11
-            $firstRandomRange = 6 - $randomRange;
-            if ($firstRandomRange < 1) {
-                $firstRandomRange = 1;
+            $firstRandomMinimum = 6 - $randomRange;
+            if ($firstRandomMinimum < 1) {
+                $firstRandomMinimum = 1;
+            }
+            $firstRandomMaximum = $rollSummary - $firstRandomMinimum;
+            if ($firstRandomMaximum > 6) {
+                $firstRandomMaximum = 6;
             }
             /** @noinspection PhpUnhandledExceptionInspection */
-            $firstRoll = \random_int($firstRandomRange, 6);
+            $firstRoll = \random_int($firstRandomMinimum, $firstRandomMaximum);
             $secondRoll = $rollSummary - $firstRoll;
-            $standardDiceRolls = [new Dice1d6Roll($firstRoll, 1), new Dice1d6Roll($secondRoll, 2)];
+            $firstDiceRoll = new Dice1d6Roll($firstRoll, 1);
+            $secondDiceRoll = new Dice1d6Roll($secondRoll, 2);
+            $standardDiceRolls = [$firstDiceRoll, $secondDiceRoll];
         } else { // two sixes = bonus rolls and one "not valid" bonus roll
             $standardDiceRolls = [new Dice1d6Roll(6, 1), new Dice1d6Roll(6, 2)];
             $sequenceNumber = 3;
