@@ -92,7 +92,7 @@ class Roller2d6DrdPlus extends Roller
         } elseif ($rollSummary < 12) {
             $randomRange = 12 - $rollSummary; // 1..11
             $firstRandomRange = 6 - $randomRange;
-            if ($firstRandomRange < 0) {
+            if ($firstRandomRange < 1) {
                 $firstRandomRange = 1;
             }
             /** @noinspection PhpUnhandledExceptionInspection */
