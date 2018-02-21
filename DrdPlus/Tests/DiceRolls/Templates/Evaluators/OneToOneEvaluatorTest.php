@@ -11,7 +11,7 @@ class OneToOneEvaluatorTest extends AbstractEvaluatorTest
     /**
      * @test
      */
-    public function I_can_use_it_on_any_value_without_change()
+    public function I_can_use_it_on_any_value_without_change(): void
     {
         $evaluator = OneToOneEvaluator::getIt();
         foreach (range(-10, 10, 1) as $value) {

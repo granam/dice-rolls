@@ -12,18 +12,21 @@ use Granam\Strict\Object\StrictObject;
 
 class ThreeOrLessAsMinusOneZeroOtherwiseEvaluator extends StrictObject implements DiceRollEvaluator
 {
-    private static $threeOrLessAsMinusOneZeroOtherwise;
+    /**
+     * @var ThreeOrLessAsMinusOneZeroOtherwiseEvaluator|null
+     */
+    private static $threeOrLessAsMinusOneZeroOtherwiseEvaluator;
 
     /**
      * @return ThreeOrLessAsMinusOneZeroOtherwiseEvaluator
      */
     public static function getIt(): ThreeOrLessAsMinusOneZeroOtherwiseEvaluator
     {
-        if (self::$threeOrLessAsMinusOneZeroOtherwise === null) {
-            self::$threeOrLessAsMinusOneZeroOtherwise = new static();
+        if (self::$threeOrLessAsMinusOneZeroOtherwiseEvaluator === null) {
+            self::$threeOrLessAsMinusOneZeroOtherwiseEvaluator = new static();
         }
 
-        return self::$threeOrLessAsMinusOneZeroOtherwise;
+        return self::$threeOrLessAsMinusOneZeroOtherwiseEvaluator;
     }
 
     /**

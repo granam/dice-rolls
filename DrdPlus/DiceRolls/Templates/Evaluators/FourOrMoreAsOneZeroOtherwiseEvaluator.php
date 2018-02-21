@@ -14,18 +14,18 @@ class FourOrMoreAsOneZeroOtherwiseEvaluator extends StrictObject implements Dice
 {
 
     /** @var FourOrMoreAsOneZeroOtherwiseEvaluator|null */
-    private static $fourOrMoreAsOneZeroOtherwise;
+    private static $fourOrMoreAsOneZeroOtherwiseEvaluator;
 
     /**
      * @return FourOrMoreAsOneZeroOtherwiseEvaluator
      */
     public static function getIt(): FourOrMoreAsOneZeroOtherwiseEvaluator
     {
-        if (self::$fourOrMoreAsOneZeroOtherwise === null) {
-            self::$fourOrMoreAsOneZeroOtherwise = new static();
+        if (self::$fourOrMoreAsOneZeroOtherwiseEvaluator === null) {
+            self::$fourOrMoreAsOneZeroOtherwiseEvaluator = new static();
         }
 
-        return self::$fourOrMoreAsOneZeroOtherwise;
+        return self::$fourOrMoreAsOneZeroOtherwiseEvaluator;
     }
 
     /**

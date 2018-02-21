@@ -96,9 +96,6 @@ class Roller2d6DrdPlus extends Roller
                 $firstRandomMinimum = 1;
             }
             $firstRandomMaximum = $rollSummary - $firstRandomMinimum;
-            if ($firstRandomMaximum > 6) {
-                $firstRandomMaximum = 6;
-            }
             /** @noinspection PhpUnhandledExceptionInspection */
             $firstRoll = \random_int($firstRandomMinimum, $firstRandomMaximum);
             $secondRoll = $rollSummary - $firstRoll;

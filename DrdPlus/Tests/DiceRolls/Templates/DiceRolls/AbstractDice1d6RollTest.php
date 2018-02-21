@@ -15,7 +15,7 @@ abstract class AbstractDice1d6RollTest extends TestWithMockery
     /**
      * @test
      */
-    public function I_can_use_it()
+    public function I_can_use_it(): void
     {
         $sutClass = self::getSutClass();
         /** @var DiceRoll $diceRoll */
@@ -41,5 +41,38 @@ abstract class AbstractDice1d6RollTest extends TestWithMockery
             ->andReturn($rolledValue);
 
         return $rolledNumber;
+    }
+
+    /**
+     * @test
+     * @expectedException \DrdPlus\DiceRolls\Templates\DiceRolls\Exceptions\Invalid1d6DiceRollValue
+     * @expectedExceptionMessageRegExp ~got 0~
+     */
+    public function I_can_not_create_it_with_zero_or_less(): void
+    {
+        $sutClass = self::getSutClass();
+        new $sutClass($rolledNumber = $this->createRolledNumber(0), 1);
+    }
+
+    /**
+     * @test
+     * @expectedException \DrdPlus\DiceRolls\Templates\DiceRolls\Exceptions\Invalid1d6DiceRollValue
+     * @expectedExceptionMessageRegExp ~got 7~
+     */
+    public function I_can_not_create_it_with_greater_number_than_six(): void
+    {
+        $sutClass = self::getSutClass();
+        new $sutClass($rolledNumber = $this->createRolledNumber(7), 1);
+    }
+
+    /**
+     * @test
+     * @expectedException \DrdPlus\DiceRolls\Exceptions\InvalidSequenceNumber
+     * @expectedExceptionMessageRegExp ~got 0~
+     */
+    public function I_can_not_create_it_with_zero_or_less_sequence_number(): void
+    {
+        $sutClass = self::getSutClass();
+        new $sutClass($rolledNumber = $this->createRolledNumber(5), 0);
     }
 }

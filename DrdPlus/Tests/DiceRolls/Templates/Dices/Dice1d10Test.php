@@ -10,7 +10,7 @@ class Dice1d10Test extends AbstractPredefinedDiceTest
     /**
      * @test
      */
-    public function Its_minimum_is_one()
+    public function Its_minimum_is_one(): void
     {
         $dice = new Dice1d10();
         self::assertSame(1, $dice->getMinimum()->getValue());
@@ -19,7 +19,7 @@ class Dice1d10Test extends AbstractPredefinedDiceTest
     /**
      * @test
      */
-    public function Its_maximum_is_ten()
+    public function Its_maximum_is_ten(): void
     {
         $dice = new Dice1d10();
         self::assertSame(10, $dice->getMaximum()->getValue());

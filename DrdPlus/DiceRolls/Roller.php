@@ -218,8 +218,10 @@ class Roller extends StrictObject
     {
         try {
             return \random_int($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue());
+            // @codeCoverageIgnoreStart
         } catch (\Exception $exception) {
             return \rand($dice->getMinimum()->getValue(), $dice->getMaximum()->getValue());
+            // @codeCoverageIgnoreEnd
         }
     }
 

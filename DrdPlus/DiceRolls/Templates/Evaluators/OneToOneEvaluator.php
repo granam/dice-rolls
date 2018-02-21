@@ -12,18 +12,18 @@ class OneToOneEvaluator extends StrictObject implements DiceRollEvaluator
 {
 
     /** @var OneToOneEvaluator|null */
-    private static $oneToOne;
+    private static $oneToOneEvaluator;
 
     /**
      * @return OneToOneEvaluator
      */
     public static function getIt(): OneToOneEvaluator
     {
-        if (self::$oneToOne === null) {
-            self::$oneToOne = new static();
+        if (self::$oneToOneEvaluator === null) {
+            self::$oneToOneEvaluator = new static();
         }
 
-        return self::$oneToOne;
+        return self::$oneToOneEvaluator;
     }
 
     /**

@@ -13,20 +13,20 @@ use Granam\Strict\Object\StrictObject;
 class SixOrMoreAsOneZeroOtherwiseEvaluator extends StrictObject implements DiceRollEvaluator
 {
     /**
-     * @var SixOrMoreAsOneZeroOtherwiseEvaluator
+     * @var SixOrMoreAsOneZeroOtherwiseEvaluator|null
      */
-    private static $sixOrMoreAsOneZeroOtherwise;
+    private static $sixOrMoreAsOneZeroOtherwiseEvaluator;
 
     /**
      * @return SixOrMoreAsOneZeroOtherwiseEvaluator
      */
     public static function getIt(): SixOrMoreAsOneZeroOtherwiseEvaluator
     {
-        if (self::$sixOrMoreAsOneZeroOtherwise === null) {
-            self::$sixOrMoreAsOneZeroOtherwise = new static();
+        if (self::$sixOrMoreAsOneZeroOtherwiseEvaluator === null) {
+            self::$sixOrMoreAsOneZeroOtherwiseEvaluator = new static();
         }
 
-        return self::$sixOrMoreAsOneZeroOtherwise;
+        return self::$sixOrMoreAsOneZeroOtherwiseEvaluator;
     }
 
     /**
