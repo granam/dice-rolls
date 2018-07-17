@@ -11,18 +11,18 @@ use Granam\Tests\Tools\TestWithMockery;
 abstract class AbstractRollOnTest extends TestWithMockery
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        if (!defined('PHP_INT_MIN')) {
-            define('PHP_INT_MIN', (int)(PHP_INT_MAX + 1)); // overflow results into lowest negative integer
+        if (!\defined('PHP_INT_MIN')) {
+            \define('PHP_INT_MIN', (int)(PHP_INT_MAX + 1)); // overflow results into lowest negative integer
         }
     }
 
     /**
      * @test
      */
-    public function I_get_expected_dice_rolls()
+    public function I_get_expected_dice_rolls(): void
     {
         $rollOn = $this->createRollOn($this->createRoller($rollSequenceStart = 123, $diceRolls = ['foo']));
         self::assertSame($diceRolls, $rollOn->rollDices($rollSequenceStart));
@@ -34,7 +34,7 @@ abstract class AbstractRollOnTest extends TestWithMockery
      */
     protected function createRollOn(Roller $roller): RollOn
     {
-        $sutClass = preg_replace('~[\\\]Tests([\\\].+[\\\]\w+)Test$~', '$1', static::class);
+        $sutClass = \preg_replace('~[\\\]Tests([\\\].+[\\\]\w+)Test$~', '$1', static::class);
 
         return new $sutClass($roller);
     }

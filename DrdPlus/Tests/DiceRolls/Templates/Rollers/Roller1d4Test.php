@@ -11,7 +11,7 @@ use Granam\Integer\IntegerInterface;
 
 class Roller1d4Test extends AbstractRollerTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $instanceProperty = new \ReflectionProperty(Roller1d4::class, 'roller1d4');
         $instanceProperty->setAccessible(true);

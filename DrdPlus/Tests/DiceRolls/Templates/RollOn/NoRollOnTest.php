@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class NoRollOnTest extends TestCase
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $instanceProperty = new \ReflectionProperty(NoRollOn::class, 'noRollOn');
         $instanceProperty->setAccessible(true);

@@ -12,7 +12,7 @@ class DiceRollEvaluatorTest extends TestCase
     /**
      * @test
      */
-    public function I_can_use_dice_roll_evaluator_interface()
+    public function I_can_use_dice_roll_evaluator_interface(): void
     {
         self::assertTrue(interface_exists(DiceRollEvaluator::class));
         $reflection = new \ReflectionClass(DiceRollEvaluator::class);
