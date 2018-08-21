@@ -12,8 +12,8 @@
 
 ```php
 <?php
-use Drd\DiceRolls\Templates\Rollers\Roller1d6;
-use Drd\DiceRolls\Templates\Rollers\Roller2d6DrdPlus;
+use Granam\DiceRolls\Templates\Rollers\Roller1d6;
+use Granam\DiceRolls\Templates\Rollers\Roller2d6Granam;
 
 $roller1d6 = new Roller1d6();
 $rolledValue = $roller1d6->roll();
@@ -23,8 +23,8 @@ if ($rolledValue === 6) {
     echo 'Try harder';
 }
 
-$roller2d6DrdPlus = new Roller2d6DrdPlus();
-while (($roll = $roller2d6DrdPlus->roll()) && $roll->getValue() <= 12) {
+$roller2d6Granam = new Roller2d6Granam();
+while (($roll = $roller2d6Granam->roll()) && $roll->getValue() <= 12) {
     echo 'Still no bonus :( ...';
 }
 echo 'There it is! Bonus roll comes, with final value of '
@@ -46,12 +46,12 @@ There can be situations, where you need crazy combinations. Let's say one roll w
 It is easy. The hard part is only to find the way:
 ```php
 <?php
-use Drd\DiceRolls\Templates\Dices\CustomDice;
+use Granam\DiceRolls\Templates\Dices\CustomDice;
 use Granam\Integer\IntegerObject;
-use Drd\DiceRolls\Templates\Dices\Dices;
-use Drd\DiceRolls\Roller;
-use Drd\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
-use Drd\DiceRolls\Templates\RollOn\NoRollOn;
+use Granam\DiceRolls\Templates\Dices\Dices;
+use Granam\DiceRolls\Roller;
+use Granam\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
+use Granam\DiceRolls\Templates\RollOn\NoRollOn;
 
 $dice1d5 = new CustomDice(new IntegerObject(1) /* minimum of the dice */, new IntegerObject(5) /* maximum of the dice */);
 $dice1d74 = new CustomDice(new IntegerObject(1) /* minimum of the dice */, new IntegerObject(74) /* maximum of the dice */);

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.0/phpunit.xsd"
-        bootstrap="./DrdPlus/Tests/tests_bootstrap.php"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/7.0/phpunit.xsd"
+        bootstrap="./Granam/Tests/tests_bootstrap.php"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
         convertWarningsToExceptions="true"
@@ -13,14 +13,14 @@
 >
     <testsuites>
         <testsuite name="all">
-            <directory>./DrdPlus/Tests</directory>
+            <directory>./Granam/Tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="false">
-            <directory>./DrdPlus</directory>
+            <directory>./Granam</directory>
             <exclude>
-                <directory>./DrdPlus/Tests</directory>
+                <directory>./Granam/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
