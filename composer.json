@@ -1,14 +1,14 @@
 {
   "name": "drdplus/dice-rolls",
   "license": "MIT",
+  "type": "library",
   "authors": [
     {
       "name": "Jaroslav Týc",
-      "homepage": "https://www.jaroslav.com",
+      "homepage": "https://www.jaroslavtyc.com",
       "role": "Original author"
     }
   ],
-  "type": "project",
   "description": "Configurable roll of a dice",
   "keywords": [
     "php",
@@ -38,7 +38,5 @@
     "phpunit/phpunit": "~7.0",
     "mockery/mockery": "~1.0",
     "granam/exceptions-hierarchy": "~4.0"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  }
 }
