@@ -1,5 +1,5 @@
 {
-  "name": "drdplus/dice-rolls",
+  "name": "granam/dice-rolls",
   "license": "MIT",
   "type": "library",
   "authors": [
@@ -21,7 +21,6 @@
     "D and D",
     "Dungeon and dragons"
   ],
-  "homepage": "https://github.com/jaroslavtyc/drdplus-dice-rolls",
   "autoload": {
     "psr-4": {
       "DrdPlus\\": "DrdPlus/"
