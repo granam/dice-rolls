@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Granam\Tests\DiceRolls\Templates\Rollers;
 
 use Granam\DiceRolls\DiceRoll;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 abstract class AbstractRollerTest extends TestWithMockery
 {

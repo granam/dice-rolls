@@ -20,7 +20,6 @@ class RollOnTest extends TestCase
         $parameters = $shouldHappen->getParameters();
         self::assertCount(1, $parameters);
         $parameter = current($parameters);
-        /** @var \ReflectionParameter $parameter */
         self::assertFalse($parameter->isOptional());
         self::assertSame('rolledValue', $parameter->getName());
         self::assertTrue($reflection->hasMethod('rollDices'));

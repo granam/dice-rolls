@@ -5,7 +5,7 @@ namespace Granam\Tests\DiceRolls\Templates\RollOn;
 use Granam\DiceRolls\Roll;
 use Granam\DiceRolls\Roller;
 use Granam\DiceRolls\RollOn;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 abstract class AbstractRollOnTest extends TestWithMockery
 {

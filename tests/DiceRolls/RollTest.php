@@ -6,7 +6,7 @@ use Granam\DiceRolls\DiceRoll;
 use Granam\DiceRolls\Roll;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\PositiveInteger;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 class RollTest extends TestWithMockery
 {

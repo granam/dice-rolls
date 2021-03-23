@@ -9,7 +9,7 @@ use Granam\DiceRolls\Templates\Rollers\Roller1d10;
 use Granam\DiceRolls\Templates\Rollers\Roller1d4;
 use Granam\DiceRolls\Templates\Rollers\Roller2d6DrdPlus;
 use Granam\DiceRolls\Templates\Rolls\Roll2d6DrdPlus;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 class Roll2d6DrdPlusTest extends TestWithMockery
 {

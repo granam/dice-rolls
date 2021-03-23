@@ -101,7 +101,7 @@ class RollerTest extends AbstractRollerTest
     /**
      * @param array|int[] $shouldHappenOn
      * @param int $numberOfDiceRolls = 1
-     * @param Dice $dice = null
+     * @param Dice|null $dice = null
      * @return RollOn|\Mockery\MockInterface
      */
     private function createBonusRollOn(array $shouldHappenOn = [], int $numberOfDiceRolls = 1, Dice $dice = null): RollOn
@@ -112,7 +112,7 @@ class RollerTest extends AbstractRollerTest
     /**
      * @param array|int[] $shouldHappenOn
      * @param int $numberOfDiceRolls
-     * @param Dice $dice = null
+     * @param Dice|null $dice = null
      * @return \Mockery\MockInterface|RollOn
      */
     private function createRollOn(array $shouldHappenOn, int $numberOfDiceRolls, Dice $dice = null)
@@ -151,7 +151,7 @@ class RollerTest extends AbstractRollerTest
     /**
      * @param array $shouldHappenOn
      * @param int $numberOfDiceRolls
-     * @param Dice $dice = null
+     * @param Dice|null $dice = null
      * @return RollOn|\Mockery\MockInterface
      */
     private function createMalusRollOn(array $shouldHappenOn = [], $numberOfDiceRolls = 1, Dice $dice = null)

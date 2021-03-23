@@ -7,7 +7,7 @@ use Granam\DiceRolls\DiceRoll;
 use Granam\DiceRolls\Templates\Dices\Dice1d6;
 use Granam\DiceRolls\Templates\Rolls\Roll1d6;
 use Granam\Integer\PositiveInteger;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 class Roll1d6Test extends TestWithMockery
 {

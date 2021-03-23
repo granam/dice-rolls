@@ -6,9 +6,8 @@ use Granam\DiceRolls\Dice;
 use Granam\DiceRolls\DiceRoll;
 use Granam\DiceRolls\DiceRollEvaluator;
 use Granam\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
-use Granam\Integer\IntegerInterface;
 use Granam\Integer\PositiveInteger;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 class DiceRollTest extends TestWithMockery
 {

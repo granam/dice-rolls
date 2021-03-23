@@ -5,7 +5,7 @@ namespace Granam\Tests\DiceRolls\Templates\Dices;
 use Granam\DiceRolls\Dice;
 use Granam\DiceRolls\Templates\Dices\Dices;
 use Granam\Integer\IntegerObject;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 class DicesTest extends TestWithMockery
 {

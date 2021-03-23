@@ -4,7 +4,7 @@ namespace Granam\Tests\DiceRolls\Templates\Dices;
 
 use Granam\DiceRolls\Templates\Dices\CustomDice;
 use Granam\Integer\IntegerInterface;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 class CustomDiceTest extends TestWithMockery
 {

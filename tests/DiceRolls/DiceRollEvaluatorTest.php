@@ -22,7 +22,6 @@ class DiceRollEvaluatorTest extends TestCase
         self::assertSame(1, $evaluateDiceRoll->getNumberOfParameters());
         self::assertSame(1, $evaluateDiceRoll->getNumberOfRequiredParameters());
         $parameters = $evaluateDiceRoll->getParameters();
-        /** @var \ReflectionParameter $parameter */
         $parameter = current($parameters);
         self::assertSame('diceRoll', $parameter->getName());
     }

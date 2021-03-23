@@ -7,7 +7,7 @@ use Granam\DiceRolls\DiceRollEvaluator;
 use Granam\DiceRolls\Templates\Dices\Dice1d6;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\PositiveIntegerObject;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 abstract class AbstractDice1d6RollTest extends TestWithMockery
 {
@@ -48,7 +48,7 @@ abstract class AbstractDice1d6RollTest extends TestWithMockery
     public function I_can_not_create_it_with_zero_or_less(): void
     {
         $this->expectException(\Granam\DiceRolls\Templates\DiceRolls\Exceptions\Invalid1d6DiceRollValue::class);
-        $this->expectExceptionMessageRegExp('~got 0~');
+        $this->expectExceptionMessageMatches('~got 0~');
         $sutClass = self::getSutClass();
         new $sutClass($rolledNumber = $this->createRolledNumber(0), 1);
     }
@@ -59,7 +59,7 @@ abstract class AbstractDice1d6RollTest extends TestWithMockery
     public function I_can_not_create_it_with_greater_number_than_six(): void
     {
         $this->expectException(\Granam\DiceRolls\Templates\DiceRolls\Exceptions\Invalid1d6DiceRollValue::class);
-        $this->expectExceptionMessageRegExp('~got 7~');
+        $this->expectExceptionMessageMatches('~got 7~');
         $sutClass = self::getSutClass();
         new $sutClass($rolledNumber = $this->createRolledNumber(7), 1);
     }
@@ -70,7 +70,7 @@ abstract class AbstractDice1d6RollTest extends TestWithMockery
     public function I_can_not_create_it_with_zero_or_less_sequence_number(): void
     {
         $this->expectException(\Granam\DiceRolls\Exceptions\InvalidSequenceNumber::class);
-        $this->expectExceptionMessageRegExp('~got 0~');
+        $this->expectExceptionMessageMatches('~got 0~');
         $sutClass = self::getSutClass();
         new $sutClass($rolledNumber = $this->createRolledNumber(5), 0);
     }

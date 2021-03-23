@@ -7,7 +7,7 @@ use Granam\DiceRolls\DiceRollEvaluator;
 use Granam\DiceRolls\Templates\Evaluators\OneToOneEvaluator;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\PositiveInteger;
-use Granam\Tests\Tools\TestWithMockery;
+use Granam\TestWithMockery\TestWithMockery;
 
 abstract class AbstractEvaluatorTest extends TestWithMockery
 {
